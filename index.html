@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>리즈온 · 나답게 다이어트</title>
+<title>리즈온 · 다시, 나답게</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="리즈온">
@@ -127,6 +127,22 @@ textarea{resize:none;line-height:1.6}
 /* 토스트 */
 .toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-b) + 12px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:#fff;padding:11px 22px;border-radius:30px;font-size:13px;font-weight:500;z-index:9999;transition:transform .3s,opacity .3s;opacity:0;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+/* 모달 */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,.6);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:24px;padding:28px 24px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px}
+.modal-desc{font-size:13px;color:var(--sub);line-height:1.6;margin-bottom:20px}
+.modal-btn{width:100%;padding:14px;border:none;border-radius:14px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:8px}
+.modal-btn.primary{background:var(--grad);color:#fff;box-shadow:0 4px 16px rgba(0,201,167,.3)}
+.modal-btn.secondary{background:#F0FAF8;color:var(--sub)}
+/* 알림 설정 */
+.alarm-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)}
+.alarm-row:last-child{border-bottom:none}
+.alarm-label{font-size:14px;font-weight:600;color:var(--text)}
+.alarm-sub{font-size:11px;color:var(--sub);margin-top:2px}
+.alarm-time-input{border:1.5px solid var(--border);border-radius:10px;padding:8px 10px;font-size:14px;font-family:inherit;color:var(--text);background:#FAFBFC;outline:none}
+.alarm-time-input:focus{border-color:var(--mint)}
 @media(max-width:380px){.app-header h1{font-size:40px}.dday-num{font-size:42px}.form-row{grid-template-columns:1fr}}
 </style>
 </head>
@@ -209,6 +225,10 @@ textarea{resize:none;line-height:1.6}
       <div class="card" style="padding:14px">
         <div class="chat-wrap">
           <div class="chat-messages" id="chat-messages"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <span id="chat-counter" style="font-size:11px;font-weight:600;color:var(--mint2)">오늘 남은 무료 횟수: 5회</span>
+            <button onclick="showAlarmSettings()" style="font-size:11px;color:var(--sub);background:none;border:1px solid var(--border);border-radius:20px;padding:4px 10px;cursor:pointer;font-family:inherit">🔔 알림 설정</button>
+          </div>
           <div class="chat-input-area">
             <textarea id="chat-input" placeholder="오늘 식단이나 질문을 입력하세요..." rows="1"
               onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat();}"></textarea>
@@ -235,6 +255,44 @@ textarea{resize:none;line-height:1.6}
   <button class="nav-item" id="tab4" onclick="goStep(4)"><span class="nav-icon">💬</span><span class="nav-label">코칭채팅</span><span class="nav-dot"></span></button>
 </nav>
 
+<!-- 채팅 제한 모달 -->
+<div class="modal-overlay" id="limit-modal">
+  <div class="modal-box">
+    <div style="font-size:36px;text-align:center;margin-bottom:12px">⏰</div>
+    <div class="modal-title" style="text-align:center">오늘 무료 횟수 5회를 다 썼어요!</div>
+    <div class="modal-desc" style="text-align:center">
+      무료 코칭은 하루 5회예요.<br>내일 자정이 지나면 다시 사용 가능해요.<br><br>
+      <strong style="color:var(--mint2)">더 많이 쓰고 싶다면?</strong><br>
+      곧 유료 플랜을 오픈할 예정이에요 🙌
+    </div>
+    <button class="modal-btn primary" onclick="document.getElementById('limit-modal').classList.remove('show')">확인</button>
+  </div>
+</div>
+
+<!-- 알림 설정 모달 -->
+<div class="modal-overlay" id="alarm-modal">
+  <div class="modal-box">
+    <div style="font-size:28px;margin-bottom:6px">🔔</div>
+    <div class="modal-title">식단 기록 알림 설정</div>
+    <div class="modal-desc">식사 시간에 맞춰 알림을 드릴게요.<br>홈화면 앱으로 실행 중일 때 작동해요.</div>
+    <div class="alarm-row">
+      <div><div class="alarm-label">🌅 아침</div><div class="alarm-sub">아침 식단 체크</div></div>
+      <input type="time" class="alarm-time-input" id="alarm-morning" value="08:00">
+    </div>
+    <div class="alarm-row">
+      <div><div class="alarm-label">☀️ 점심</div><div class="alarm-sub">점심 식단 체크</div></div>
+      <input type="time" class="alarm-time-input" id="alarm-lunch" value="12:30">
+    </div>
+    <div class="alarm-row">
+      <div><div class="alarm-label">🌙 저녁</div><div class="alarm-sub">저녁 식단 체크</div></div>
+      <input type="time" class="alarm-time-input" id="alarm-dinner" value="19:00">
+    </div>
+    <div id="alarm-perm-msg" style="display:none;margin-top:12px;padding:10px 14px;background:#FFF3CD;border-radius:10px;font-size:12px;color:#856404;line-height:1.5"></div>
+    <button class="modal-btn primary" onclick="saveAlarmSettings()" style="margin-top:16px">✅ 알림 저장하기</button>
+    <button class="modal-btn secondary" onclick="document.getElementById('alarm-modal').classList.remove('show')">닫기</button>
+  </div>
+</div>
+
 <div class="loading-overlay" id="loading"><div class="loading-spinner"></div><div class="loading-text" id="loading-text">처리 중...</div></div>
 <div class="toast" id="toast"></div>
 
@@ -242,17 +300,18 @@ textarea{resize:none;line-height:1.6}
 // ── 설정 ─────────────────────────────────────
 // ★ 아래 두 값을 본인 것으로 교체하세요 ★
 const GEMINI_API_KEY = "AIzaSyBzFF2qjZer9bzIhN983ZPrLcvJduLl7To";
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwNyQ66YKCNCe4rgymFLmFyJLvmbbGexBMrx3uwK3Yumrlhj0IwrcLxs8k_r2ys-dU20g/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyxY9iEwks1NarFAoMPm3tC-QyHe4UoL5Z2z84AvrJRbm8SGB23uBBKSXV3t1ZZEHPk3g/exec";
 
-const GEMINI_MODEL = "gemini-2.5-flash"; // 
+const GEMINI_MODEL = "gemini-2.5-flash-preview-05-20";
 const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
-const LS_KEY = "leeson_v2";
+const LS_KEY = "leeson_v3";
 
 // ── 상태 ─────────────────────────────────────
 const state = {
   gender:"여성", userId:null, dday:null, tier:null,
   name:null, currentWeight:null, targetWeight:null, notes:null,
   chatHistory:[], chatTurn:0, dietRaw:null,
+  dailyChatCount:0, lastChatDate:"", alarmTimes:{morning:"08:00",lunch:"12:30",dinner:"19:00"},
 };
 
 // ── localStorage ─────────────────────────────
@@ -277,7 +336,7 @@ function loadState() {
       state.gender = data.gender;
       document.querySelectorAll(".gender-btn").forEach(b => b.classList.toggle("active", b.textContent.includes(data.gender)));
     }
-    ["userId","dday","tier","name","currentWeight","targetWeight","notes","chatHistory","chatTurn","dietRaw"].forEach(k => { if(data[k]!==undefined) state[k]=data[k]; });
+    ["userId","dday","tier","name","currentWeight","targetWeight","notes","chatHistory","chatTurn","dietRaw","dailyChatCount","lastChatDate","alarmTimes"].forEach(k => { if(data[k]!==undefined) state[k]=data[k]; });
     return true;
   } catch(e){ return false; }
 }
@@ -486,8 +545,24 @@ async function sendChat() {
   if (!msg) return;
   if (!state.userId) { showToast("먼저 식단을 시작해주세요!"); goStep(1); return; }
 
+  // 하루 5회 제한
+  const today = new Date().toISOString().split("T")[0];
+  if (state.lastChatDate !== today) {
+    state.dailyChatCount = 0;
+    state.lastChatDate = today;
+  }
+  const FREE_LIMIT = 5;
+  if (state.dailyChatCount >= FREE_LIMIT) {
+    showChatLimitModal();
+    return;
+  }
+
   input.value=""; input.style.height="auto";
   state.chatTurn++;
+  state.dailyChatCount++;
+  saveState();
+  updateChatCounter();
+
   appendMsg("user", msg);
   appendMsg("ai","···");
   const typingEl = document.getElementById("chat-messages").lastElementChild;
@@ -511,6 +586,21 @@ async function sendChat() {
     typingEl.remove();
     appendMsg("ai","오류: "+e.message);
   }
+}
+
+function updateChatCounter() {
+  const today = new Date().toISOString().split("T")[0];
+  if (state.lastChatDate !== today) { state.dailyChatCount = 0; }
+  const remain = Math.max(0, 5 - state.dailyChatCount);
+  const el = document.getElementById("chat-counter");
+  if (el) {
+    el.textContent = `오늘 남은 무료 횟수: ${remain}회`;
+    el.style.color = remain <= 1 ? "#FF7675" : "var(--mint2)";
+  }
+}
+
+function showChatLimitModal() {
+  document.getElementById("limit-modal").classList.add("show");
 }
 
 // ── 렌더링 ────────────────────────────────────
@@ -617,6 +707,76 @@ function showLoading(t){document.getElementById("loading-text").textContent=t||"
 function hideLoading(){document.getElementById("loading").classList.remove("show")}
 function showToast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800)}
 
+// ── 알림 설정 ─────────────────────────────────
+function showAlarmSettings() {
+  const m = state.alarmTimes;
+  document.getElementById("alarm-morning").value = m.morning || "08:00";
+  document.getElementById("alarm-lunch").value   = m.lunch   || "12:30";
+  document.getElementById("alarm-dinner").value  = m.dinner  || "19:00";
+  document.getElementById("alarm-modal").classList.add("show");
+}
+
+async function saveAlarmSettings() {
+  state.alarmTimes = {
+    morning: document.getElementById("alarm-morning").value,
+    lunch:   document.getElementById("alarm-lunch").value,
+    dinner:  document.getElementById("alarm-dinner").value,
+  };
+  saveState();
+
+  const permMsg = document.getElementById("alarm-perm-msg");
+
+  if (!("Notification" in window)) {
+    permMsg.style.display = "block";
+    permMsg.textContent = "이 브라우저는 알림을 지원하지 않아요. 홈화면에 추가 후 앱으로 실행해주세요!";
+    return;
+  }
+
+  const perm = await Notification.requestPermission();
+  if (perm === "granted") {
+    scheduleAlarms();
+    document.getElementById("alarm-modal").classList.remove("show");
+    showToast("알림이 설정됐어요! 🔔");
+  } else {
+    permMsg.style.display = "block";
+    permMsg.textContent = "알림 권한이 거부됐어요. 기기 설정 > Safari(또는 Chrome) > 알림을 허용해주세요.";
+  }
+}
+
+function scheduleAlarms() {
+  // 기존 타이머 클리어
+  if (window._alarmTimers) window._alarmTimers.forEach(t => clearTimeout(t));
+  window._alarmTimers = [];
+
+  const meals = [
+    { key: "morning", label: "🌅 아침 식단 체크!", body: `${state.name||""}님, 오늘 아침 드셨나요? 식단을 기록해주세요!` },
+    { key: "lunch",   label: "☀️ 점심 식단 체크!", body: `${state.name||""}님, 점심 뭐 드셨어요? 기록해주세요 🍽` },
+    { key: "dinner",  label: "🌙 저녁 식단 체크!", body: `${state.name||""}님, 오늘 하루 수고했어요! 저녁 식단을 기록해주세요.` },
+  ];
+
+  meals.forEach(({ key, label, body }) => {
+    const timeStr = state.alarmTimes[key];
+    if (!timeStr) return;
+
+    const [h, m] = timeStr.split(":").map(Number);
+    const now = new Date();
+    const fire = new Date();
+    fire.setHours(h, m, 0, 0);
+    if (fire <= now) fire.setDate(fire.getDate() + 1); // 이미 지난 시간이면 내일
+
+    const delay = fire - now;
+    const timer = setTimeout(() => {
+      new Notification(label, { body, icon: "https://em-content.zobj.net/source/apple/391/green-salad_1f957.png" });
+      // 다음날 같은 시간 재설정
+      const dailyTimer = setInterval(() => {
+        new Notification(label, { body, icon: "https://em-content.zobj.net/source/apple/391/green-salad_1f957.png" });
+      }, 24 * 60 * 60 * 1000);
+      window._alarmTimers.push(dailyTimer);
+    }, delay);
+    window._alarmTimers.push(timer);
+  });
+}
+
 // ── 초기화 ────────────────────────────────────
 (function init() {
   const minDate=new Date(); minDate.setDate(minDate.getDate()+1);
@@ -642,6 +802,16 @@ function showToast(msg){const t=document.getElementById("toast");t.textContent=m
   document.querySelectorAll("input,textarea").forEach(el=>{
     el.addEventListener("change",()=>saveState());
   });
+
+  // 알람 복원
+  if (restored && state.alarmTimes) {
+    if ("Notification" in window && Notification.permission === "granted") {
+      scheduleAlarms();
+    }
+  }
+
+  // 채팅 카운터 업데이트
+  updateChatCounter();
 })();
 </script>
 </body>
