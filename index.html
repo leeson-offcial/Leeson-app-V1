@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>리즈온 · 다시, 나답게</title>
+<title>리즈온 · 나답게 다이어트</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="리즈온">
@@ -247,12 +247,27 @@ textarea{resize:none;line-height:1.6}
   </div>
 </div>
 
+
+  <!-- STEP 5 -->
+  <div class="panel" id="panel5">
+    <div class="card">
+      <div class="card-title">보유 재료 입력</div>
+      <div class="form-group">
+        <label>지금 집에 있는 재료를 입력해주세요</label>
+        <textarea id="f_ingredients" placeholder="예) 계란, 두부, 김치, 냉동 닭가슴살, 고구마, 양파, 브로콜리..." rows="4"></textarea>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="generateShoppingList()"><div class="btn-shine"></div>🛒 장보기 목록 만들기</button>
+    <div id="shopping-result-wrap" style="margin-top:16px"></div>
+  </div>
+
 <!-- 하단 탭바 -->
 <nav class="bottom-nav">
   <button class="nav-item active" id="tab1" onclick="goStep(1)"><span class="nav-icon">📋</span><span class="nav-label">기본정보</span><span class="nav-dot"></span></button>
   <button class="nav-item" id="tab2" onclick="goStep(2)"><span class="nav-icon">🏃</span><span class="nav-label">생활정보</span><span class="nav-dot"></span></button>
   <button class="nav-item" id="tab3" onclick="goStep(3)"><span class="nav-icon">🥗</span><span class="nav-label">식단출력</span><span class="nav-dot"></span></button>
   <button class="nav-item" id="tab4" onclick="goStep(4)"><span class="nav-icon">💬</span><span class="nav-label">코칭채팅</span><span class="nav-dot"></span></button>
+  <button class="nav-item" id="tab5" onclick="goStep(5)"><span class="nav-icon">🛒</span><span class="nav-label">장보기</span><span class="nav-dot"></span></button>
 </nav>
 
 <!-- 채팅 제한 모달 -->
@@ -774,6 +789,88 @@ function scheduleAlarms() {
       window._alarmTimers.push(dailyTimer);
     }, delay);
     window._alarmTimers.push(timer);
+  });
+}
+
+// ── 장보기 목록 생성 ──────────────────────────
+async function generateShoppingList() {
+  if (!state.dietRaw) {
+    showToast("먼저 식단을 생성해주세요!");
+    goStep(1);
+    return;
+  }
+
+  const ingredients = document.getElementById("f_ingredients").value.trim();
+
+  showLoading("장보기 목록 만드는 중... 🛒");
+
+  const prompt = `당신은 식단 코치 리즈쌤입니다.
+아래 이번 주 맞춤 식단과 보유 재료를 비교해서, 추가로 사야 할 장보기 목록을 작성해주세요.
+
+[이번 주 맞춤 식단]
+${state.dietRaw}
+
+[현재 보유 재료]
+${ingredients || "없음 (전체 목록 작성)"}
+
+[출력 규칙]
+- 보유 재료는 목록에서 제외하고, 이미 있으면 마지막에 "OO은 이미 있으니까 패스!" 형식으로 언급
+- 카테고리별로 나눠서 보기 좋게 작성
+- 각 재료마다 대략적인 수량/용량 포함
+- 마트/편의점에서 구하기 쉬운 것 위주
+- 예산 효율적인 구매 팁 1~2줄 추가
+- 리즈쌤 말투로 친근하게
+
+[출력 형식]
+이번 주 장보기 목록이에요 🛒
+
+🥩 단백질
+- [재료] [수량]
+...
+
+🌾 탄수화물
+- [재료] [수량]
+...
+
+🥦 채소
+- [재료] [수량]
+...
+
+기타
+- [재료] [수량]
+...
+
+[보유재료 언급] (있으면)
+[구매 팁]`;
+
+  try {
+    const result = await callGemini(prompt);
+    const html = markdownToHtml(result);
+    document.getElementById("shopping-result-wrap").innerHTML = `
+      <div class="diet-output">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div class="card-title" style="margin-bottom:0">🛒 장보기 목록</div>
+          <button onclick="copyShoppingList()" style="font-size:11px;color:var(--sub);background:none;border:1px solid var(--border);border-radius:20px;padding:4px 10px;cursor:pointer;font-family:inherit">📋 복사</button>
+        </div>
+        <div class="diet-content" id="shopping-content">${html}</div>
+      </div>`;
+    // 결과로 스크롤
+    document.getElementById("shopping-result-wrap").scrollIntoView({behavior:"smooth"});
+  } catch(e) {
+    showToast("오류: " + e.message);
+  } finally {
+    hideLoading();
+  }
+}
+
+function copyShoppingList() {
+  const el = document.getElementById("shopping-content");
+  if (!el) return;
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("클립보드에 복사됐어요! 📋");
+  }).catch(() => {
+    showToast("복사 실패 - 직접 선택해서 복사해주세요");
   });
 }
 
