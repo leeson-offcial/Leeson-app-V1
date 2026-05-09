@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>리즈온 · 다시, 나답게</title>
+<title>리즈온 · 나답게 다이어트</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="리즈온">
@@ -314,11 +314,8 @@ textarea{resize:none;line-height:1.6}
 <script>
 // ── 설정 ─────────────────────────────────────
 // ★ 아래 두 값을 본인 것으로 교체하세요 ★
-const GEMINI_API_KEY = "AIzaSyDOmLOsJhqS2e7zQy7uw6a2HqZaRCx_SKs";
-const GAS_URL = "https://script.google.com/macros/s/AKfycbyxY9iEwks1NarFAoMPm3tC-QyHe4UoL5Z2z84AvrJRbm8SGB23uBBKSXV3t1ZZEHPk3g/exec";
-
-const GEMINI_MODEL = "gemini-2.5-flash";
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+// ★ Apps Script URL (키는 Apps Script 안에 보관)
+const GAS_URL = "https://script.google.com/macros/s/AKfycbybKd3JtbJJivXx2g9lGC1TuFAcMqcAq5kHfBcJH28EWfvpql7hiKwH-Shy6-lhgn8iFw/exec";
 const LS_KEY = "leeson_v3";
 
 // ── 상태 ─────────────────────────────────────
@@ -395,54 +392,22 @@ function calcDDay(dateStr) {
 function getTier(d) { return d>=90?"장기":d>=30?"중기":"단기"; }
 function makeUserId(name) { return `${name}_${Date.now()}`; }
 
-// ── 시스템 프롬프트 ───────────────────────────
-function getSystemPrompt() {
-  return `당신은 다이어트 코칭 서비스 "리즈온"의 전문 식단 코치 "리즈쌤"입니다.
+// 시스템 프롬프트는 Apps Script(Code.gs)에서 관리
 
-[코치 페르소나]
-- 엄격하지 않으면서도 의욕을 불태워주는 말투
-- 사람 냄새 나는 따뜻한 코치
-- 칭찬 먼저, 개선점 나중에. 의지가 약해지는 상황에선 적절한 채찍질
-- 회식, 야식, 실수 등 현실적인 상황에 공감하고 현실적인 해결책 제시. 안되는 건 안된다고 명확하게 짚기
-- 완벽주의보다 꾸준함을 강조
-- 짧고 임팩트 있게
-
-[말투 스타일]
-- 이모티콘 최소화, 물결(~) 가끔, ㅎㅎ/ㅠㅠ 가끔
-- 짧게 끊어서 친근하게, 딱딱하지 않게
-
-[플랜 일관성 - 필수]
-- 확정 플랜은 함부로 바꾸지 않기
-- 걱정/불안 → 공감 먼저, 플랜 유지
-- 의료적 이유에 한해서만 변경
-- 컨디션 이상 시: "혹시 너무 힘들면 [비상옵션]만 추가해요. 그 외엔 플랜대로 가볼게요 💪"
-
-[주의사항 - 필수]
-- 의료적 판단 절대 하지 않기
-- 기저질환자 → 병원 먼저
-- AI 코치임을 명심, 의사가 아님`;
-}
-
-// ── Gemini 직접 호출 ──────────────────────────
+// ── Gemini 호출 (Apps Script 프록시) ─────────
 async function callGemini(userText) {
-  const body = {
-    system_instruction: { parts: [{ text: getSystemPrompt() }] },
-    contents: [{ role: "user", parts: [{ text: userText }] }],
-    generationConfig: { temperature: 0.85, maxOutputTokens: 8192 }
-  };
-  const res = await fetch(GEMINI_URL, {
+  const res = await fetch(GAS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
+    body: JSON.stringify({ action: "gemini", payload: { prompt: userText } })
   });
   const json = await res.json();
-  if (json.error) throw new Error(json.error.message);
-  return json.candidates[0].content.parts[0].text;
+  if (!json.ok) throw new Error(json.error || "서버 오류");
+  return json.result;
 }
 
 // ── Apps Script에 기록 (fire & forget) ────────
 function logToSheet(action, payload) {
-  if (!GAS_URL || GAS_URL.includes("여기에")) return;
   fetch(GAS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
