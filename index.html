@@ -394,25 +394,45 @@ function makeUserId(name) { return `${name}_${Date.now()}`; }
 
 // 시스템 프롬프트는 Apps Script(Code.gs)에서 관리
 
-// ── Gemini 호출 (Apps Script 프록시) ─────────
-async function callGemini(userText) {
-  const res = await fetch(GAS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action: "gemini", payload: { prompt: userText } })
+// ── GAS 호출 (iOS CORS 대응 - JSONP 방식) ───
+function callGAS(action, payload) {
+  return new Promise((resolve, reject) => {
+    const cbName = "cb_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+    const params = encodeURIComponent(JSON.stringify({ action, payload }));
+    const url = `${GAS_URL}?callback=${cbName}&data=${params}`;
+
+    window[cbName] = (json) => {
+      delete window[cbName];
+      document.head.removeChild(script);
+      if (json.ok) resolve(json.result || json.reply || json.diet || json);
+      else reject(new Error(json.error || "서버 오류"));
+    };
+
+    const script = document.createElement("script");
+    script.src = url;
+    script.onerror = () => {
+      delete window[cbName];
+      document.head.removeChild(script);
+      reject(new Error("네트워크 오류"));
+    };
+    setTimeout(() => {
+      if (window[cbName]) {
+        delete window[cbName];
+        try { document.head.removeChild(script); } catch(e) {}
+        reject(new Error("응답 시간 초과"));
+      }
+    }, 60000);
+    document.head.appendChild(script);
   });
-  const json = await res.json();
-  if (!json.ok) throw new Error(json.error || "서버 오류");
-  return json.result;
+}
+
+async function callGemini(userText) {
+  return await callGAS("gemini", { prompt: userText });
 }
 
 // ── Apps Script에 기록 (fire & forget) ────────
 function logToSheet(action, payload) {
-  fetch(GAS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action, payload })
-  }).catch(()=>{});
+  callGAS(action, payload).catch(()=>{});
 }
 
 // ── 프롬프트 빌더: 식단 ──────────────────────
