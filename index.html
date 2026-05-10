@@ -290,7 +290,7 @@ textarea{resize:none;line-height:1.6}
     <div style="font-size:36px;text-align:center;margin-bottom:12px">⏰</div>
     <div class="modal-title" style="text-align:center">오늘 무료 횟수 5회를 다 썼어요!</div>
     <div class="modal-desc" style="text-align:center">
-      무료 코칭은 하루 5회예요.<br>내일 자정이 지나면 다시 사용 가능해요.<br><br>
+      식단생성·채팅·장보기를 합산해서 하루 5회예요.<br>내일 자정이 지나면 다시 사용 가능해요.<br><br>
       <strong style="color:var(--mint2)">더 많이 쓰고 싶다면?</strong><br>
       곧 유료 플랜을 오픈할 예정이에요 🙌
     </div>
@@ -336,7 +336,7 @@ textarea{resize:none;line-height:1.6}
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxEQ5g5zLPB4tVk3wrI9gu_NdSxoOTxCKeapIxBnYny7XVnADm0Uq1IskaTKKV-MgXnSw/exec";
 
 // ★ 앱 버전 (업데이트 시 이 숫자만 올리면 됨)
-const APP_VERSION = "1.5.0";
+const APP_VERSION = "1.6.0";
 const VERSION_KEY = "leeson_version";
 const LS_KEY = "leeson_v3";
 
@@ -345,7 +345,7 @@ const state = {
   gender:"여성", userId:null, dday:null, tier:null,
   name:null, currentWeight:null, targetWeight:null, notes:null,
   chatHistory:[], chatTurn:0, dietRaw:null,
-  dailyChatCount:0, lastChatDate:"", alarmTimes:{morning:"08:00",lunch:"12:30",dinner:"19:00",weekly:"08:00"},
+  dailyUseCount:0, lastChatDate:"", alarmTimes:{morning:"08:00",lunch:"12:30",dinner:"19:00",weekly:"08:00"},
 };
 
 // ── localStorage ─────────────────────────────
@@ -370,7 +370,7 @@ function loadState() {
       state.gender = data.gender;
       document.querySelectorAll(".gender-btn").forEach(b => b.classList.toggle("active", b.textContent.includes(data.gender)));
     }
-    ["userId","dday","tier","name","currentWeight","targetWeight","notes","chatHistory","chatTurn","dietRaw","dailyChatCount","lastChatDate","alarmTimes"].forEach(k => { if(data[k]!==undefined) state[k]=data[k]; });
+    ["userId","dday","tier","name","currentWeight","targetWeight","notes","chatHistory","chatTurn","dietRaw","dailyUseCount","lastChatDate","alarmTimes"].forEach(k => { if(data[k]!==undefined) state[k]=data[k]; });
     return true;
   } catch(e){ return false; }
 }
@@ -527,6 +527,15 @@ ${p.message}`;
 // ── 식단 시작 ─────────────────────────────────
 async function startDiet() {
   if (!validate()) return;
+
+  // 하루 사용량 체크
+  const today = new Date().toISOString().split("T")[0];
+  if (state.lastChatDate !== today) { state.dailyUseCount = 0; state.lastChatDate = today; }
+  if (state.dailyUseCount >= 5) { showChatLimitModal(); return; }
+  state.dailyUseCount++;
+  saveState();
+  updateChatCounter();
+
   saveState();
 
   const p = {
@@ -570,18 +579,18 @@ async function sendChat() {
   // 하루 5회 제한
   const today = new Date().toISOString().split("T")[0];
   if (state.lastChatDate !== today) {
-    state.dailyChatCount = 0;
+    state.dailyUseCount = 0;
     state.lastChatDate = today;
   }
   const FREE_LIMIT = 5;
-  if (state.dailyChatCount >= FREE_LIMIT) {
+  if (state.dailyUseCount >= FREE_LIMIT) {
     showChatLimitModal();
     return;
   }
 
   input.value=""; input.style.height="auto";
   state.chatTurn++;
-  state.dailyChatCount++;
+  state.dailyUseCount++;
   saveState();
   updateChatCounter();
 
@@ -612,11 +621,11 @@ async function sendChat() {
 
 function updateChatCounter() {
   const today = new Date().toISOString().split("T")[0];
-  if (state.lastChatDate !== today) { state.dailyChatCount = 0; }
-  const remain = Math.max(0, 5 - state.dailyChatCount);
+  if (state.lastChatDate !== today) { state.dailyUseCount = 0; }
+  const remain = Math.max(0, 5 - state.dailyUseCount);
   const el = document.getElementById("chat-counter");
   if (el) {
-    el.textContent = `오늘 남은 무료 횟수: ${remain}회`;
+    el.textContent = `오늘 남은 무료 횟수: ${remain}회 (식단생성·채팅·장보기 합산)`;
     el.style.color = remain <= 1 ? "#FF7675" : "var(--mint2)";
   }
 }
@@ -867,6 +876,14 @@ async function generateShoppingList() {
     goStep(1);
     return;
   }
+
+  // 하루 사용량 체크
+  const today = new Date().toISOString().split("T")[0];
+  if (state.lastChatDate !== today) { state.dailyUseCount = 0; state.lastChatDate = today; }
+  if (state.dailyUseCount >= 5) { showChatLimitModal(); return; }
+  state.dailyUseCount++;
+  saveState();
+  updateChatCounter();
 
   const ingredients = document.getElementById("f_ingredients").value.trim();
 
