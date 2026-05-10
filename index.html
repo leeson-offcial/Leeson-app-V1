@@ -336,9 +336,8 @@ textarea{resize:none;line-height:1.6}
 const GAS_URL = "https://script.google.com/macros/s/AKfycbxEQ5g5zLPB4tVk3wrI9gu_NdSxoOTxCKeapIxBnYny7XVnADm0Uq1IskaTKKV-MgXnSw/exec";
 
 // ★ 앱 버전 (업데이트 시 이 숫자만 올리면 됨)
-const APP_VERSION = "1.4.0";
+const APP_VERSION = "1.5.0";
 const VERSION_KEY = "leeson_version";
-const CLIENT_VERSION = "1.1.0"; // ← 버전 자동 비교용 (수정 불필요)
 const LS_KEY = "leeson_v3";
 
 // ── 상태 ─────────────────────────────────────
@@ -834,7 +833,7 @@ async function checkUpdate() {
     const serverVersion = await callGAS("version", {});
     const savedVersion = localStorage.getItem("leeson_version") || "0.0.0";
 
-    if (serverVersion !== CLIENT_VERSION || savedVersion !== CLIENT_VERSION) {
+    if (savedVersion !== APP_VERSION) {
       // 버전 다르면 모달 표시
       document.getElementById("update-desc").innerHTML =
         `더 나은 리즈온으로 업데이트됐어요! (v${serverVersion})<br>기존 정보와 대화 기록은 그대로 유지돼요 😊`;
@@ -848,7 +847,7 @@ async function checkUpdate() {
 
 function doUpdate() {
   // localStorage 데이터는 유지하고 버전만 업데이트 후 새로고침
-  localStorage.setItem("leeson_version", CLIENT_VERSION);
+  localStorage.setItem(VERSION_KEY, APP_VERSION);
   document.getElementById("update-modal").classList.remove("show");
 
   // 캐시 지우고 새로고침
