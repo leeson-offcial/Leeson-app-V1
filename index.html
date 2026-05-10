@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -127,6 +128,13 @@ textarea{resize:none;line-height:1.6}
 /* 토스트 */
 .toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-b) + 12px);left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:#fff;padding:11px 22px;border-radius:30px;font-size:13px;font-weight:500;z-index:9999;transition:transform .3s,opacity .3s;opacity:0;white-space:nowrap}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+/* 업데이트 배너 */
+.update-banner{position:fixed;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;z-index:300;background:linear-gradient(135deg,#00C9A7,#74EBD5);padding:14px 20px;display:none;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 4px 20px rgba(0,201,167,.4)}
+.update-banner.show{display:flex}
+.update-banner-text{color:#fff;font-size:13px;font-weight:600;line-height:1.4}
+.update-banner-text span{display:block;font-size:11px;font-weight:400;opacity:.85;margin-top:2px}
+.update-btn{background:#fff;color:var(--mint2);border:none;border-radius:20px;padding:7px 16px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.update-skip{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:20px;padding:7px 12px;font-size:12px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;flex-shrink:0}
 /* 모달 */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(26,35,50,.6);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:24px}
 .modal-overlay.show{display:flex}
@@ -156,7 +164,19 @@ textarea{resize:none;line-height:1.6}
     <p>다시, 나답게 · D-Day 맞춤 식단 코칭</p>
   </div>
 
+  <!-- 업데이트 배너 -->
+
+  <div class="update-banner" id="update-banner">
+    <div class="update-banner-text">
+      🎉 새로운 업데이트가 있어요!
+      <span id="update-desc">더 나은 리즈온으로 업데이트해주세요</span>
+    </div>
+    <button class="update-btn" onclick="doUpdate()">업데이트</button>
+    <button class="update-skip" onclick="skipUpdate()">나중에</button>
+  </div>
+
   <!-- STEP 1 -->
+
   <div class="panel active" id="panel1">
     <div id="saved-info-wrap"></div>
     <div class="card">
@@ -195,6 +215,7 @@ textarea{resize:none;line-height:1.6}
   </div>
 
   <!-- STEP 2 -->
+
   <div class="panel" id="panel2">
     <div class="card">
       <div class="card-title">운동 정보</div>
@@ -210,6 +231,7 @@ textarea{resize:none;line-height:1.6}
   </div>
 
   <!-- STEP 3 -->
+
   <div class="panel" id="panel3">
     <div id="dday-banner-wrap"></div>
     <div id="diet-result-wrap">
@@ -219,6 +241,7 @@ textarea{resize:none;line-height:1.6}
   </div>
 
   <!-- STEP 4 -->
+
   <div class="panel" id="panel4">
     <div id="chat-section" style="display:none">
       <div class="dday-banner" id="chat-dday-banner" style="margin-bottom:14px"></div>
@@ -247,8 +270,8 @@ textarea{resize:none;line-height:1.6}
   </div>
 </div>
 
-
   <!-- STEP 5 -->
+
   <div class="panel" id="panel5">
     <div class="card">
       <div class="card-title">보유 재료 입력</div>
@@ -262,6 +285,7 @@ textarea{resize:none;line-height:1.6}
   </div>
 
 <!-- 하단 탭바 -->
+
 <nav class="bottom-nav">
   <button class="nav-item active" id="tab1" onclick="goStep(1)"><span class="nav-icon">📋</span><span class="nav-label">기본정보</span><span class="nav-dot"></span></button>
   <button class="nav-item" id="tab2" onclick="goStep(2)"><span class="nav-icon">🏃</span><span class="nav-label">생활정보</span><span class="nav-dot"></span></button>
@@ -270,7 +294,23 @@ textarea{resize:none;line-height:1.6}
   <button class="nav-item" id="tab5" onclick="goStep(5)"><span class="nav-icon">🛒</span><span class="nav-label">장보기</span><span class="nav-dot"></span></button>
 </nav>
 
+<!-- 업데이트 알림 모달 -->
+
+<div class="modal-overlay" id="update-modal">
+  <div class="modal-box">
+    <div style="font-size:36px;text-align:center;margin-bottom:12px">🎉</div>
+    <div class="modal-title" style="text-align:center">새로운 업데이트가 있어요!</div>
+    <div class="modal-desc" style="text-align:center" id="update-desc">
+      더 나은 리즈온으로 업데이트됐어요.<br>
+      기존 정보와 대화 기록은 그대로 유지돼요 😊
+    </div>
+    <button class="modal-btn primary" onclick="doUpdate()" style="margin-top:16px">✅ 지금 업데이트하기</button>
+    <button class="modal-btn secondary" onclick="document.getElementById('update-modal').classList.remove('show')">나중에</button>
+  </div>
+</div>
+
 <!-- 채팅 제한 모달 -->
+
 <div class="modal-overlay" id="limit-modal">
   <div class="modal-box">
     <div style="font-size:36px;text-align:center;margin-bottom:12px">⏰</div>
@@ -285,6 +325,7 @@ textarea{resize:none;line-height:1.6}
 </div>
 
 <!-- 알림 설정 모달 -->
+
 <div class="modal-overlay" id="alarm-modal">
   <div class="modal-box">
     <div style="font-size:28px;margin-bottom:6px">🔔</div>
@@ -315,7 +356,12 @@ textarea{resize:none;line-height:1.6}
 // ── 설정 ─────────────────────────────────────
 // ★ 아래 두 값을 본인 것으로 교체하세요 ★
 // ★ Apps Script URL (키는 Apps Script 안에 보관)
-const GAS_URL = "https://script.google.com/macros/s/AKfycbxOgV1j0XAR5mTuMFi4HMApTOgKzQPKdog_6H4iqQpIISoH1p2gFBgtfQu4iWcKpX-Nbw/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbybKd3JtbJJivXx2g9lGC1TuFAcMqcAq5kHfBcJH28EWfvpql7hiKwH-Shy6-lhgn8iFw/exec";
+
+// ★ 앱 버전 (업데이트 시 이 숫자만 올리면 됨)
+const APP_VERSION = "1.0.0";
+const VERSION_KEY = "leeson_version";
+const CLIENT_VERSION = "1.0.0"; // ← 버전 자동 비교용 (수정 불필요)
 const LS_KEY = "leeson_v3";
 
 // ── 상태 ─────────────────────────────────────
@@ -777,6 +823,39 @@ function scheduleAlarms() {
   });
 }
 
+// ── 업데이트 체크 ────────────────────────────
+async function checkUpdate() {
+  try {
+    const serverVersion = await callGAS("version", {});
+    const savedVersion = localStorage.getItem("leeson_version") || "0.0.0";
+
+    if (serverVersion !== CLIENT_VERSION || savedVersion !== CLIENT_VERSION) {
+      // 버전 다르면 모달 표시
+      document.getElementById("update-desc").innerHTML =
+        `더 나은 리즈온으로 업데이트됐어요! (v${serverVersion})<br>기존 정보와 대화 기록은 그대로 유지돼요 😊`;
+      document.getElementById("update-modal").classList.add("show");
+    }
+  } catch(e) {
+    // 버전 체크 실패해도 앱은 정상 작동
+    console.log("버전 체크 실패:", e.message);
+  }
+}
+
+function doUpdate() {
+  // localStorage 데이터는 유지하고 버전만 업데이트 후 새로고침
+  localStorage.setItem("leeson_version", CLIENT_VERSION);
+  document.getElementById("update-modal").classList.remove("show");
+
+  // 캐시 지우고 새로고침
+  if ("caches" in window) {
+    caches.keys().then(names => {
+      names.forEach(name => caches.delete(name));
+    }).finally(() => location.reload(true));
+  } else {
+    location.reload(true);
+  }
+}
+
 // ── 장보기 목록 생성 ──────────────────────────
 async function generateShoppingList() {
   if (!state.dietRaw) {
@@ -859,6 +938,46 @@ function copyShoppingList() {
   });
 }
 
+// ── 버전 체크 & 업데이트 ─────────────────────
+function checkVersion() {
+  const savedVersion = localStorage.getItem(VERSION_KEY);
+  if (!savedVersion) {
+    // 첫 실행 → 버전 저장
+    localStorage.setItem(VERSION_KEY, APP_VERSION);
+    return;
+  }
+  if (savedVersion !== APP_VERSION) {
+    // 버전 다름 → 배너 표시
+    document.getElementById("update-desc").textContent =
+      `v${savedVersion} → v${APP_VERSION} 업데이트 가능`;
+    document.getElementById("update-banner").classList.add("show");
+    // 배너 높이만큼 헤더 내림
+    document.querySelector(".app-header").style.marginTop = "52px";
+  }
+}
+
+function doUpdate() {
+  // 데이터 백업
+  const backup = localStorage.getItem(LS_KEY);
+  // 버전 업데이트
+  localStorage.setItem(VERSION_KEY, APP_VERSION);
+  // 배너 닫기
+  document.getElementById("update-banner").classList.remove("show");
+  document.querySelector(".app-header").style.marginTop = "0";
+  // 캐시 무시하고 새로고침
+  showToast("업데이트 완료! 데이터는 그대로 유지됩니다 ✅");
+  setTimeout(() => {
+    window.location.reload(true);
+  }, 1500);
+}
+
+function skipUpdate() {
+  document.getElementById("update-banner").classList.remove("show");
+  document.querySelector(".app-header").style.marginTop = "0";
+  // 이번 세션만 스킵 (localStorage엔 기존 버전 유지)
+  showToast("다음에 업데이트할게요!");
+}
+
 // ── 초기화 ────────────────────────────────────
 (function init() {
   const minDate=new Date(); minDate.setDate(minDate.getDate()+1);
@@ -894,7 +1013,11 @@ function copyShoppingList() {
 
   // 채팅 카운터 업데이트
   updateChatCounter();
+
+  // 버전 체크 (업데이트 알림)
+  checkVersion();
 })();
 </script>
+
 </body>
 </html>
