@@ -735,6 +735,42 @@
   .modal-btn.primary { background: var(--primary); color: var(--white); }
   .modal-btn.secondary { background: var(--gray1); color: var(--gray4); font-size: 14px; }
 
+  /* ─── 업데이트 배너 ─── */
+  .update-banner {
+    position: fixed;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 448px;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    z-index: 9990;
+    animation: slideUp 0.35s ease;
+  }
+  .update-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    gap: 12px;
+  }
+  .update-btn {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    padding: 9px 16px;
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .update-btn:active { transform: scale(0.96); }
+
   /* 온보딩 */
   .onboarding-overlay {
     position: fixed; inset: 0;
@@ -1156,6 +1192,17 @@
     <div class="modal-sub">이번 주 1회 사용 가능해요. 사용하면 리즈쌤이 남은 기간 식단을 재조정해줄게요.</div>
     <button class="modal-btn primary" onclick="confirmCoupon()">✅ 쿠폰 사용하기</button>
     <button class="modal-btn secondary" onclick="closeModal('modal-coupon')">취소</button>
+  </div>
+</div>
+
+<!-- 업데이트 팝업 -->
+<div class="update-banner" id="update-banner" style="display:none">
+  <div class="update-banner-inner">
+    <div>
+      <div style="font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--dark)">🎉 새 버전이 나왔어요!</div>
+      <div style="font-size:12px;color:var(--gray4);margin-top:2px">업데이트하면 더 좋아진 리즈온을 만날 수 있어요</div>
+    </div>
+    <button class="update-btn" onclick="doUpdate()">업데이트</button>
   </div>
 </div>
 
@@ -2051,6 +2098,46 @@ function obNext() {
     showToast(`환영해요, 리즈쌤이 도와줄게요! 💪`);
   }
 }
+
+// ───────── Service Worker 등록 & 업데이트 감지 ─────────
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          showUpdateBanner();
+        }
+      });
+    });
+  });
+
+  // 컨트롤러 변경 시 자동 새로고침
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
+}
+
+function showUpdateBanner() {
+  document.getElementById('update-banner').style.display = 'block';
+}
+
+function doUpdate() {
+  navigator.serviceWorker.getRegistration().then(reg => {
+    if (reg && reg.waiting) {
+      reg.waiting.postMessage({ type: 'SKIP_WAITING' });
+    }
+  });
+  // 캐시 전체 삭제 후 새로고침
+  if ('caches' in window) {
+    caches.keys().then(keys => {
+      keys.forEach(k => caches.delete(k));
+    });
+  }
+  setTimeout(() => window.location.reload(true), 300);
+}
+
+
 </script>
 </body>
 </html>
