@@ -835,7 +835,7 @@
 
 <!-- 헤더 -->
 <header class="app-header">
-  <div class="logo">리즈온 <span>by 리즈쌤</span></div>
+  <div class="logo" onclick="coachTap()" style="cursor:default">리즈온 <span>by 리즈쌤</span></div>
   <div class="header-dday" id="header-dday">D-??</div>
 </header>
 
@@ -1123,7 +1123,7 @@
     </div>
 
     <!-- GAS 연동 -->
-    <div class="setting-section">
+    <div class="setting-section" style="display:none">
       <div class="setting-section-title">🔗 서버 연동 (코치용)</div>
       <div class="input-group">
         <label class="input-label">GAS 웹앱 URL</label>
@@ -1176,6 +1176,25 @@ let mealData = null;
 let apiCount = 0;
 const MAX_API = 5;
 
+
+
+// ───────── 코치 비밀 진입 (로고 5번 탭) ─────────
+let coachTapCount = 0, coachTapTimer = null;
+function coachTap() {
+  coachTapCount++;
+  clearTimeout(coachTapTimer);
+  coachTapTimer = setTimeout(() => { coachTapCount = 0; }, 2000);
+  if (coachTapCount >= 5) {
+    coachTapCount = 0;
+    const sec = document.querySelector('[onclick*="coachTap"]').closest('header').nextElementSibling;
+    const gasSection = document.querySelector('#screen-setting .setting-section[style*="none"]');
+    if (gasSection) {
+      gasSection.style.display = 'block';
+      switchTab('setting');
+      showToast('🔧 코치 설정 모드');
+    }
+  }
+}
 
 // ───────── 오늘 식사 체크 & 스트릭 ─────────
 const TODAY_CHECK_KEY  = 'leeson_today_check';
