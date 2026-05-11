@@ -2,7 +2,7 @@
 // 리즈온 Service Worker
 // 버전 올릴 때 CACHE_NAME만 바꾸면 돼
 // ================================
-const CACHE_NAME = 'leeson-v2.1.0';
+const CACHE_NAME = 'leeson-v2.2.0';
 
 const CACHE_FILES = [
   '/',
