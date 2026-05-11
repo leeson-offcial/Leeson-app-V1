@@ -1393,19 +1393,20 @@ function selectChip(el, group) {
 }
 
 function saveSettings() {
-  profile.name = getVal('s-name');
-  profile.age = getVal('s-age');
-  profile.gender = getSelectedChip('gender');
+  profile.name      = getVal('s-name');
+  profile.age       = getVal('s-age');
+  profile.gender    = getSelectedChip('gender');
   profile.eventName = getVal('s-event');
   profile.eventDate = getVal('s-date');
   profile.goalWeight = getVal('s-goal-weight');
   profile.foodStyle = getSelectedChip('foodstyle');
-  profile.email = getVal('s-email');
   profile.notifyTime = getVal('s-notify-time');
-  profile.notifyOn = document.getElementById('notify-toggle').classList.contains('on');
-  profile.gasUrl = getVal('s-gas-url');
+  // GAS URL (숨겨진 필드, 있으면 저장)
+  const gasUrlEl = document.getElementById('s-gas-url');
+  if (gasUrlEl && gasUrlEl.value) profile.gasUrl = gasUrlEl.value;
   saveProfile();
   updateDDayUI();
+  applyProfileToSettings();
   showToast('✅ 저장됐어요!');
 }
 
@@ -1507,11 +1508,7 @@ async function generateMealPlan() {
 
   try {
     let result;
-    if (gasUrl) {
-      result = await callGAS(gasUrl, { action: 'generateMeal', prompt, profile });
-    } else {
-      result = await callAnthropicDirect(prompt);
-    }
+    result = await callGAS(GAS_URL_DEFAULT, { action: 'generateMeal', prompt, profile });
     mealData = parseMealResponse(result);
     mealData.date = getTomorrow();
     localStorage.setItem(MEAL_KEY, JSON.stringify(mealData));
@@ -1574,43 +1571,33 @@ JSON 형식:
   }
 }
 
-// ───────── GAS 호출 (GET+JSONP — CORS 우회) ─────────
-function callGAS(url, payload) {
-  return new Promise((resolve, reject) => {
-    const cbName = 'gasCallback_' + Date.now();
-    const dataStr = encodeURIComponent(JSON.stringify(payload));
-    const script = document.createElement('script');
-
-    window[cbName] = function(data) {
-      delete window[cbName];
-      document.body.removeChild(script);
-      if (data.ok === false) reject(new Error(data.error || 'GAS 오류'));
-      else resolve(data.result || data.reply || data.text || '');
-    };
-
-    script.src = `${url}?callback=${cbName}&data=${dataStr}`;
-    script.onerror = () => {
-      delete window[cbName];
-      document.body.removeChild(script);
-      reject(new Error('네트워크 오류'));
-    };
-    document.body.appendChild(script);
+// ───────── GAS 호출 (POST) ─────────
+async function callGAS(url, payload) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(payload)
   });
+  const data = await res.json();
+  if (data.ok === false) throw new Error(data.error || 'GAS 오류');
+  return data.result || data.reply || data.text || '';
 }
 
-// ───────── Anthropic 직접 호출 (개발/테스트용) ─────────
-async function callAnthropicDirect(prompt) {
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
+// ───────── Gemini 직접 호출 ─────────
+async function callGeminiDirect(prompt) {
+  const GEMINI_KEY = 'AIzaSyB6vZPRNBEaw-7wnohywtz8a0s0svnHXBw';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`;
+  const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 1000,
-      messages: [{ role: 'user', content: prompt }]
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      generationConfig: { temperature: 0.85, maxOutputTokens: 2048 }
     })
   });
   const data = await res.json();
-  return data.content?.[0]?.text || '';
+  if (data.error) throw new Error(data.error.message);
+  return data.candidates[0].content.parts[0].text;
 }
 
 // ───────── 식단 파싱 ─────────
@@ -1820,12 +1807,7 @@ async function sendJJ() {
 
   try {
     let result;
-    const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
-    if (gasUrl) {
-      result = await callGAS(gasUrl, { action: 'chat', prompt });
-    } else {
-      result = await callAnthropicDirect(prompt);
-    }
+    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', prompt });
     textEl.textContent = result;
     useApiCall();
   } catch(e) {
@@ -1853,7 +1835,7 @@ async function handleEmergency() {
     if (gasUrl) {
       result = await callGAS(gasUrl, { action: 'chat', prompt });
     } else {
-      result = await callAnthropicDirect(prompt);
+      result = await callGeminiDirect(prompt);
     }
     // 징징대기 탭에 결과 표시
     document.getElementById('jj-custom-input').value = text;
@@ -1891,9 +1873,7 @@ async function confirmCoupon() {
 
   try {
     let result;
-    const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
-    if (gasUrl) result = await callGAS(gasUrl, { action: 'chat', prompt });
-    else result = await callAnthropicDirect(prompt);
+    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', prompt });
 
     document.getElementById('jj-response').classList.add('visible');
     document.getElementById('jj-response-text').textContent = result;
