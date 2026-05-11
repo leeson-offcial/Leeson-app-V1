@@ -1498,7 +1498,6 @@ async function generateMealPlan() {
   btn.disabled = true;
   btn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
 
-  localStorage.removeItem(MEAL_KEY);
   const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
 
   const today = new Date(); today.setHours(0,0,0,0);
@@ -1684,6 +1683,14 @@ function updateActionArea() {
     };
     wrap.appendChild(btn);
   });
+
+  // 쿠팡 장보기 버튼 항상 노출
+  const coupangBtn = document.createElement('button');
+  coupangBtn.className = 'action-btn shopping';
+  coupangBtn.textContent = '🛒 쿠팡으로 사러가기';
+  coupangBtn.style.width = '100%';
+  coupangBtn.onclick = () => window.open('https://www.coupang.com', '_blank');
+  wrap.appendChild(coupangBtn);
 }
 
 function updateMissionGauge() {
@@ -1947,7 +1954,7 @@ const OB_STEPS = [
     q: '어떤 날을 위해 다이어트 중이에요? 🗓️',
     type: 'chips',
     key: 'eventName',
-    options: ['바디프로필', '결혼식', '휴가', '동창회', '생일', '기타']
+    options: ['바디프로필', '결혼식', '여름휴가', '동창회', '생일', '기타']
   },
   {
     q: '그날이 언제예요?',
