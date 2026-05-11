@@ -1508,7 +1508,7 @@ async function generateMealPlan() {
 
   try {
     let result;
-    result = await callGAS(GAS_URL_DEFAULT, { action: 'generateMeal', prompt, profile });
+    result = await callGAS(GAS_URL_DEFAULT, { action: 'generateMeal', payload: { name: profile.name, age: profile.age, gender: profile.gender, targetDate: profile.eventDate, goalWeight: profile.goalWeight, foodStyle: profile.foodStyle, notes: profile.notes || '' } });
     mealData = parseMealResponse(result);
     mealData.date = getTomorrow();
     localStorage.setItem(MEAL_KEY, JSON.stringify(mealData));
@@ -1583,22 +1583,7 @@ async function callGAS(url, payload) {
   return data.result || data.reply || data.text || '';
 }
 
-// ───────── Gemini 직접 호출 ─────────
-async function callGeminiDirect(prompt) {
-  const GEMINI_KEY = 'AIzaSyB6vZPRNBEaw-7wnohywtz8a0s0svnHXBw';
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_KEY}`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.85, maxOutputTokens: 2048 }
-    })
-  });
-  const data = await res.json();
-  if (data.error) throw new Error(data.error.message);
-  return data.candidates[0].content.parts[0].text;
-}
+
 
 // ───────── 식단 파싱 ─────────
 function parseMealResponse(raw) {
@@ -1807,7 +1792,7 @@ async function sendJJ() {
 
   try {
     let result;
-    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', prompt });
+    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', payload: { name: profile.name, message: text, targetDate: profile.eventDate, goalWeight: profile.goalWeight, foodStyle: profile.foodStyle } });
     textEl.textContent = result;
     useApiCall();
   } catch(e) {
@@ -1835,7 +1820,7 @@ async function handleEmergency() {
     if (gasUrl) {
       result = await callGAS(gasUrl, { action: 'chat', prompt });
     } else {
-      result = await callGeminiDirect(prompt);
+      result = await callGAS(GAS_URL_DEFAULT, { action: 'gemini', payload: { prompt } });
     }
     // 징징대기 탭에 결과 표시
     document.getElementById('jj-custom-input').value = text;
@@ -1873,7 +1858,7 @@ async function confirmCoupon() {
 
   try {
     let result;
-    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', prompt });
+    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', payload: { name: profile.name, message: text, targetDate: profile.eventDate, goalWeight: profile.goalWeight, foodStyle: profile.foodStyle } });
 
     document.getElementById('jj-response').classList.add('visible');
     document.getElementById('jj-response-text').textContent = result;
@@ -1961,7 +1946,7 @@ const OB_STEPS = [
     q: '어떤 날을 위해 다이어트 중이에요? 🗓️',
     type: 'chips',
     key: 'eventName',
-    options: ['바디프로필', '결혼식', '여름휴가', '동창회', '생일', '기타']
+    options: ['바디프로필', '결혼식', '휴가', '동창회', '생일', '기타']
   },
   {
     q: '그날이 언제예요?',
