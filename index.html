@@ -1498,6 +1498,7 @@ async function generateMealPlan() {
   btn.disabled = true;
   btn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
 
+  localStorage.removeItem(MEAL_KEY);
   const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
 
   const today = new Date(); today.setHours(0,0,0,0);
