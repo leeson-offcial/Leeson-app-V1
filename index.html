@@ -1165,6 +1165,7 @@
 <script>
 // ───────── 상수 & 상태 ─────────
 const GAS_URL_KEY = 'leeson_gas_url';
+const GAS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbwleaI744Axo273qVKhLAz6OVBBwMR7fal_oG5MMlq2fjeNdwjaoKXL0N11iPD9B8Z8yQ/exec';
 const PROFILE_KEY = 'leeson_profile';
 const MEAL_KEY = 'leeson_meal_today';
 const LOG_KEY = 'leeson_log';
@@ -1496,7 +1497,7 @@ async function generateMealPlan() {
   btn.disabled = true;
   btn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
 
-  const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY);
+  const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
 
   const today = new Date(); today.setHours(0,0,0,0);
   const target = new Date(profile.eventDate); target.setHours(0,0,0,0);
@@ -1806,7 +1807,7 @@ async function sendJJ() {
 
   try {
     let result;
-    const gasUrl = profile.gasUrl;
+    const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
     if (gasUrl) {
       result = await callGAS(gasUrl, { action: 'chat', prompt });
     } else {
@@ -1877,7 +1878,7 @@ async function confirmCoupon() {
 
   try {
     let result;
-    const gasUrl = profile.gasUrl;
+    const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
     if (gasUrl) result = await callGAS(gasUrl, { action: 'chat', prompt });
     else result = await callAnthropicDirect(prompt);
 
