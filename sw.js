@@ -2,7 +2,7 @@
 // 버전만 올리면 홈화면 앱도 업데이트 배너 표시
 // ★ 업데이트 시 아래 CACHE_NAME 숫자만 올리세요
 
-const CACHE_NAME = 'leeson-v2.2.0';
+const CACHE_NAME = 'leeson-v2.4.0';
 
 // 캐시할 파일 목록
 const CACHE_FILES = [
