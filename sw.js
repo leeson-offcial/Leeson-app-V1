@@ -1,8 +1,9 @@
 // ── 리즈온 Service Worker ──
-// 버전만 올리면 홈화면 앱도 업데이트 배너 표시
-// ★ 업데이트 시 아래 CACHE_NAME 숫자만 올리세요
+// ★ 업데이트 시 아래 CACHE_NAME을 index.html의 CACHE_VERSION과 동일하게 올리세요
+//   index.html: const CACHE_VERSION = 'leeson-v2.3.0'
+//   sw.js:      const CACHE_NAME    = 'leeson-v2.3.0'  ← 반드시 일치
 
-const CACHE_NAME = 'leeson-v2.4.0';
+const CACHE_NAME = 'leeson-v2.3.0';
 
 // 캐시할 파일 목록
 const CACHE_FILES = [
@@ -43,6 +44,12 @@ self.addEventListener('activate', event => {
 // 네트워크 우선 → 실패 시 캐시 반환
 // (항상 최신 index.html을 받아오되, 오프라인이면 캐시 사용)
 self.addEventListener('fetch', event => {
+  // GAS API 요청은 캐시하지 않음 (식단이 매번 같아지는 원인 차단)
+  if (event.request.url.includes('script.google.com')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   // html 요청은 항상 네트워크 우선
   if (event.request.mode === 'navigate') {
     event.respondWith(
