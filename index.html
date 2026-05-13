@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>리즈온 — 다시, 나답게 v2.1</title>
+<title>리즈온 — 다시, 나답게 v2.2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Gmarket+Sans:wght@300;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -29,942 +28,301 @@
     --font-display: 'Gmarket Sans', sans-serif;
   }
 
-- { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-body {
-font-family: var(–font-main);
-background: var(–gray1);
-color: var(–dark);
-min-height: 100vh;
-max-width: 480px;
-margin: 0 auto;
-position: relative;
-overflow-x: hidden;
-}
+  body {
+    font-family: var(--font-main);
+    background: var(--gray1);
+    color: var(--dark);
+    min-height: 100vh;
+    max-width: 480px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-/* ─── 헤더 ─── */
-.app-header {
-background: var(–white);
-padding: 16px 20px 12px;
-display: flex;
-align-items: center;
-justify-content: space-between;
-position: sticky;
-top: 0;
-z-index: 100;
-border-bottom: 1px solid var(–gray2);
-}
-.logo {
-font-family: var(–font-display);
-font-size: 22px;
-font-weight: 700;
-color: var(–primary);
-letter-spacing: -0.5px;
-}
-.logo span { color: var(–dark); font-weight: 300; font-size: 13px; margin-left: 4px; vertical-align: middle; }
-.header-dday {
-background: var(–primary);
-color: var(–white);
-font-family: var(–font-display);
-font-size: 13px;
-font-weight: 700;
-padding: 6px 14px;
-border-radius: 20px;
-letter-spacing: 0.5px;
-}
+  /* ─── 헤더 ─── */
+  .app-header {
+    background: #FFFFFF;
+    padding: 16px 20px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #E8E8EE;
+  }
+  .logo { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--primary); letter-spacing: -0.5px; }
+  .logo span { color: var(--dark); font-weight: 300; font-size: 13px; margin-left: 4px; vertical-align: middle; }
+  .header-dday { background: var(--primary); color: #FFFFFF; font-family: var(--font-display); font-size: 13px; font-weight: 700; padding: 6px 14px; border-radius: 20px; letter-spacing: 0.5px; }
 
-/* ─── 탭 ─── */
-.tab-bar {
-display: flex;
-background: var(–white);
-border-bottom: 1px solid var(–gray2);
-position: sticky;
-top: 57px;
-z-index: 99;
-}
-.tab-btn {
-flex: 1;
-padding: 12px 0 10px;
-border: none;
-background: none;
-font-family: var(–font-main);
-font-size: 12px;
-font-weight: 500;
-color: var(–gray3);
-cursor: pointer;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 3px;
-transition: color 0.2s;
-border-bottom: 2.5px solid transparent;
-}
-.tab-btn .tab-icon { font-size: 18px; }
-.tab-btn.active { color: var(–primary); border-bottom-color: var(–primary); }
+  /* ─── 탭 ─── */
+  .tab-bar { display: flex; background: #FFFFFF; border-bottom: 1px solid #E8E8EE; position: sticky; top: 57px; z-index: 99; }
+  .tab-btn { flex: 1; padding: 12px 0 10px; border: none; background: none; font-family: var(--font-main); font-size: 12px; font-weight: 500; color: var(--gray3); cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 3px; transition: color 0.2s; border-bottom: 2.5px solid transparent; }
+  .tab-btn .tab-icon { font-size: 18px; }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
 
-/* ─── 화면 ─── */
-.screen { display: none; padding: 16px 16px 100px; }
-.screen.active { display: block; }
+  /* ─── 화면 ─── */
+  .screen { display: none; padding: 16px 16px 100px; }
+  .screen.active { display: block; }
 
-/* ─── 카드 ─── */
-.card {
-background: var(–white);
-border-radius: var(–card-radius);
-box-shadow: var(–card-shadow);
-padding: 20px;
-margin-bottom: 14px;
-}
-.card-title {
-font-family: var(–font-display);
-font-size: 13px;
-font-weight: 700;
-color: var(–gray4);
-letter-spacing: 0.5px;
-margin-bottom: 14px;
-display: flex;
-align-items: center;
-gap: 6px;
-}
+  /* ─── 카드 ─── */
+  .card { background: #FFFFFF; border-radius: var(--card-radius); box-shadow: var(--card-shadow); padding: 20px; margin-bottom: 14px; }
+  .card-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--gray4); letter-spacing: 0.5px; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
 
-/* ─── D-Day 배너 ─── */
-.dday-banner {
-background: linear-gradient(135deg, var(–dark) 0%, var(–dark2) 100%);
-border-radius: var(–card-radius);
-padding: 22px 20px;
-color: var(–white);
-margin-bottom: 14px;
-position: relative;
-overflow: hidden;
-}
-.dday-banner::before {
-content: ‘’;
-position: absolute;
-right: -20px; top: -20px;
-width: 120px; height: 120px;
-background: var(–primary);
-border-radius: 50%;
-opacity: 0.12;
-}
-.dday-banner::after {
-content: ‘’;
-position: absolute;
-right: 20px; bottom: -30px;
-width: 80px; height: 80px;
-background: var(–accent);
-border-radius: 50%;
-opacity: 0.15;
-}
-.dday-label {
-font-size: 12px;
-color: var(–gray3);
-font-weight: 500;
-letter-spacing: 1px;
-margin-bottom: 4px;
-}
-.dday-event {
-font-family: var(–font-display);
-font-size: 20px;
-font-weight: 700;
-margin-bottom: 10px;
-}
-.dday-row {
-display: flex;
-align-items: baseline;
-gap: 8px;
-}
-.dday-num {
-font-family: var(–font-display);
-font-size: 52px;
-font-weight: 700;
-color: var(–primary);
-line-height: 1;
-}
-.dday-unit { font-size: 16px; color: var(–gray3); }
-.dday-progress-wrap { margin-top: 14px; }
-.dday-progress-label { font-size: 11px; color: var(–gray3); margin-bottom: 5px; display: flex; justify-content: space-between; }
-.progress-bar-bg {
-background: rgba(255,255,255,0.15);
-border-radius: 8px;
-height: 8px;
-overflow: hidden;
-}
-.progress-bar-fill {
-height: 100%;
-border-radius: 8px;
-background: linear-gradient(90deg, var(–primary), var(–accent));
-transition: width 0.6s ease;
-}
+  /* ─── D-Day 배너 ─── */
+  .dday-banner { background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%); border-radius: var(--card-radius); padding: 22px 20px; color: #FFFFFF; margin-bottom: 14px; position: relative; overflow: hidden; }
+  .dday-banner::before { content: ''; position: absolute; right: -20px; top: -20px; width: 120px; height: 120px; background: var(--primary); border-radius: 50%; opacity: 0.12; }
+  .dday-banner::after { content: ''; position: absolute; right: 20px; bottom: -30px; width: 80px; height: 80px; background: var(--accent); border-radius: 50%; opacity: 0.15; }
+  .dday-label { font-size: 12px; color: var(--gray3); font-weight: 500; letter-spacing: 1px; margin-bottom: 4px; }
+  .dday-event { font-family: var(--font-display); font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .dday-row { display: flex; align-items: baseline; gap: 8px; }
+  .dday-num { font-family: var(--font-display); font-size: 52px; font-weight: 700; color: var(--primary); line-height: 1; }
+  .dday-unit { font-size: 16px; color: var(--gray3); }
+  .dday-progress-wrap { margin-top: 14px; }
+  .dday-progress-label { font-size: 11px; color: var(--gray3); margin-bottom: 5px; display: flex; justify-content: space-between; }
+  .progress-bar-bg { background: rgba(255,255,255,0.15); border-radius: 8px; height: 8px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.6s ease; }
 
-/* ─── 미션 게이지 ─── */
-.mission-row {
-display: flex;
-align-items: center;
-gap: 12px;
-}
-.mission-gauge-wrap { flex: 1; }
-.mission-gauge-label { font-size: 12px; color: var(–gray4); margin-bottom: 5px; display: flex; justify-content: space-between; }
-.gauge-bg { background: var(–gray2); border-radius: 8px; height: 10px; overflow: hidden; }
-.gauge-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(–primary), var(–accent)); transition: width 0.6s; }
-.mission-pct {
-font-family: var(–font-display);
-font-size: 28px;
-font-weight: 700;
-color: var(–primary);
-white-space: nowrap;
-}
+  /* ─── 게이지 ─── */
+  .mission-row { display: flex; align-items: center; gap: 12px; }
+  .mission-gauge-wrap { flex: 1; }
+  .mission-gauge-label { font-size: 12px; color: var(--gray4); margin-bottom: 5px; display: flex; justify-content: space-between; }
+  .gauge-bg { background: var(--gray2); border-radius: 8px; height: 10px; overflow: hidden; }
+  .gauge-fill { height: 100%; border-radius: 8px; background: linear-gradient(90deg, var(--primary), var(--accent)); transition: width 0.6s; }
+  .mission-pct { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--primary); white-space: nowrap; }
 
-/* ─── 식단 선택 ─── */
-.meal-section-title {
-font-family: var(–font-display);
-font-size: 16px;
-font-weight: 700;
-color: var(–dark);
-margin-bottom: 4px;
-}
-.meal-section-sub { font-size: 12px; color: var(–gray4); margin-bottom: 16px; }
+  /* ─── 식단 선택 ─── */
+  .meal-section-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+  .meal-section-sub { font-size: 12px; color: var(--gray4); margin-bottom: 16px; }
+  .meal-time-block { margin-bottom: 20px; }
+  .meal-time-label { font-size: 12px; font-weight: 700; color: var(--gray4); letter-spacing: 1px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .meal-time-label::after { content: ''; flex: 1; height: 1px; background: var(--gray2); }
+  .ab-wrap { display: flex; gap: 8px; }
+  .ab-btn { flex: 1; background: var(--gray1); border: 2px solid var(--gray2); border-radius: 14px; padding: 14px 12px; cursor: pointer; transition: all 0.18s; text-align: left; position: relative; }
+  .ab-btn:active { transform: scale(0.97); }
+  .ab-badge { font-family: var(--font-display); font-size: 11px; font-weight: 700; color: #FFFFFF; background: var(--gray3); border-radius: 6px; padding: 2px 7px; display: inline-block; margin-bottom: 6px; transition: background 0.18s; }
+  .ab-btn.selected { border-color: var(--primary); background: var(--primary-pale); }
+  .ab-btn.selected .ab-badge { background: var(--primary); }
+  .ab-menu { font-size: 13px; font-weight: 500; color: var(--dark); line-height: 1.4; }
+  .selected-check { position: absolute; top: 10px; right: 10px; font-size: 16px; display: none; }
+  .ab-btn.selected .selected-check { display: block; }
 
-.meal-time-block { margin-bottom: 20px; }
-.meal-time-label {
-font-size: 12px;
-font-weight: 700;
-color: var(–gray4);
-letter-spacing: 1px;
-margin-bottom: 8px;
-display: flex;
-align-items: center;
-gap: 6px;
-}
-.meal-time-label::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: var(–gray2);
-}
+  /* 액션 버튼 */
+  .action-area { margin-top: 10px; display: none; animation: fadeUp 0.25s ease; }
+  .action-area.visible { display: block; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .action-label { font-size: 12px; color: var(--gray4); margin-bottom: 8px; font-weight: 500; }
+  .action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .action-btn { flex: 1; min-width: 120px; padding: 11px 10px; border: none; border-radius: 12px; font-family: var(--font-main); font-size: 13px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.15s; }
+  .action-btn:active { transform: scale(0.96); }
+  .action-btn.delivery { background: var(--primary); color: #FFFFFF; }
+  .action-btn.shopping { background: var(--accent); color: var(--dark); }
+  .action-btn.convenience { background: var(--dark); color: #FFFFFF; }
 
-.ab-wrap { display: flex; gap: 8px; }
-.ab-btn {
-flex: 1;
-background: var(–gray1);
-border: 2px solid var(–gray2);
-border-radius: 14px;
-padding: 14px 12px;
-cursor: pointer;
-transition: all 0.18s;
-text-align: left;
-position: relative;
-}
-.ab-btn:active { transform: scale(0.97); }
-.ab-badge {
-font-family: var(–font-display);
-font-size: 11px;
-font-weight: 700;
-color: var(–white);
-background: var(–gray3);
-border-radius: 6px;
-padding: 2px 7px;
-display: inline-block;
-margin-bottom: 6px;
-transition: background 0.18s;
-}
-.ab-btn.selected { border-color: var(–primary); background: var(–primary-pale); }
-.ab-btn.selected .ab-badge { background: var(–primary); }
-.ab-menu { font-size: 13px; font-weight: 500; color: var(–dark); line-height: 1.4; }
-.ab-kcal { font-size: 11px; color: var(–gray3); margin-top: 4px; }
-.selected-check {
-position: absolute;
-top: 10px; right: 10px;
-font-size: 16px;
-display: none;
-}
-.ab-btn.selected .selected-check { display: block; }
+  /* 식단 생성 버튼 */
+  .gen-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: #FFFFFF; border: none; border-radius: 14px; font-family: var(--font-display); font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 4px; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 16px rgba(255,92,53,0.3); }
+  .gen-btn:active { transform: scale(0.98); }
+  .gen-btn:disabled { background: var(--gray2); color: var(--gray3); box-shadow: none; cursor: not-allowed; }
 
-/* 액션 버튼 영역 */
-.action-area {
-margin-top: 10px;
-display: none;
-animation: fadeUp 0.25s ease;
-}
-.action-area.visible { display: block; }
-@keyframes fadeUp {
-from { opacity: 0; transform: translateY(8px); }
-to { opacity: 1; transform: translateY(0); }
-}
-.action-label { font-size: 12px; color: var(–gray4); margin-bottom: 8px; font-weight: 500; }
-.action-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-.action-btn {
-flex: 1;
-min-width: 120px;
-padding: 11px 10px;
-border: none;
-border-radius: 12px;
-font-family: var(–font-main);
-font-size: 13px;
-font-weight: 700;
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 6px;
-transition: all 0.15s;
-}
-.action-btn:active { transform: scale(0.96); }
-.action-btn.delivery { background: var(–primary); color: var(–white); }
-.action-btn.shopping { background: var(–accent); color: var(–dark); }
-.action-btn.convenience { background: var(–dark); color: var(–white); }
+  /* API 제한 */
+  .api-limit-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--gray4); margin-top: 8px; justify-content: center; }
+  .limit-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gray2); display: inline-block; }
+  .limit-dot.used { background: var(--primary); }
 
-/* 식단 생성 버튼 */
-.gen-btn {
-width: 100%;
-padding: 16px;
-background: linear-gradient(135deg, var(–primary), var(–primary-light));
-color: var(–white);
-border: none;
-border-radius: 14px;
-font-family: var(–font-display);
-font-size: 16px;
-font-weight: 700;
-cursor: pointer;
-margin-top: 4px;
-transition: all 0.2s;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-box-shadow: 0 4px 16px rgba(255,92,53,0.3);
-}
-.gen-btn:active { transform: scale(0.98); }
-.gen-btn:disabled { background: var(–gray2); color: var(–gray3); box-shadow: none; cursor: not-allowed; }
+  /* 스트릭 */
+  .streak-badge { background: var(--dark); color: #FFFFFF; font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 20px; font-family: var(--font-display); }
 
-/* API 호출 제한 뱃지 */
-.api-limit-badge {
-display: flex;
-align-items: center;
-gap: 6px;
-font-size: 12px;
-color: var(–gray4);
-margin-top: 8px;
-justify-content: center;
-}
-.limit-dot { width: 8px; height: 8px; border-radius: 50%; background: var(–gray2); display: inline-block; }
-.limit-dot.used { background: var(–primary); }
+  /* 식사 체크 */
+  .meal-check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .meal-check-btn { background: var(--gray1); border: 2px solid var(--gray2); border-radius: 16px; padding: 14px 8px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: all 0.2s; }
+  .meal-check-btn:active { transform: scale(0.95); }
+  .meal-check-btn.checked { background: var(--primary-pale); border-color: var(--primary); }
+  .mcheck-icon { font-size: 22px; }
+  .mcheck-label { font-size: 12px; font-weight: 700; color: var(--gray4); }
+  .meal-check-btn.checked .mcheck-label { color: var(--primary); }
+  .mcheck-status { font-size: 11px; color: var(--gray3); font-weight: 500; }
+  .meal-check-btn.checked .mcheck-status { font-size: 16px; color: var(--primary); }
 
-/* ─── 스트릭 배지 ─── */
-.streak-badge {
-background: var(–dark);
-color: var(–white);
-font-size: 12px;
-font-weight: 700;
-padding: 5px 11px;
-border-radius: 20px;
-font-family: var(–font-display);
-}
+  /* 폭죽 */
+  .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 9998; overflow: hidden; }
+  .confetti-piece { position: absolute; width: 8px; height: 8px; border-radius: 2px; animation: confettiFall 1.4s ease-out forwards; }
+  @keyframes confettiFall { 0% { transform: translateY(-20px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
 
-/* ─── 식사 체크 카드 ─── */
-.meal-check-grid {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 8px;
-}
-.meal-check-btn {
-background: var(–gray1);
-border: 2px solid var(–gray2);
-border-radius: 16px;
-padding: 14px 8px;
-cursor: pointer;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 5px;
-transition: all 0.2s;
-position: relative;
-overflow: hidden;
-}
-.meal-check-btn:active { transform: scale(0.95); }
-.meal-check-btn.checked {
-background: var(–primary-pale);
-border-color: var(–primary);
-}
-.mcheck-icon { font-size: 22px; }
-.mcheck-label { font-size: 12px; font-weight: 700; color: var(–gray4); }
-.meal-check-btn.checked .mcheck-label { color: var(–primary); }
-.mcheck-status { font-size: 11px; color: var(–gray3); font-weight: 500; }
-.meal-check-btn.checked .mcheck-status { font-size: 16px; color: var(–primary); }
+  /* 긴급 버튼 */
+  .emergency-wrap { display: flex; gap: 8px; }
+  .emergency-btn { flex: 1; padding: 14px 10px; border: 2px dashed var(--gray2); border-radius: 14px; background: none; cursor: pointer; font-family: var(--font-main); font-size: 13px; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: all 0.18s; }
+  .emergency-btn .em-icon { font-size: 24px; }
+  .emergency-btn.danger { border-color: #FFD0C8; color: var(--danger); }
+  .emergency-btn.danger:hover { background: #FFF5F3; border-color: var(--danger); }
+  .emergency-btn.gold { border-color: #FFE8A0; color: var(--warning); }
+  .emergency-btn.gold:hover { background: #FFFBF0; border-color: var(--accent); }
+  .coupon-count { font-size: 10px; background: var(--accent); color: var(--dark); border-radius: 10px; padding: 1px 6px; font-weight: 700; }
 
-/* 폭죽 */
-.confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 9998; overflow: hidden; }
-.confetti-piece {
-position: absolute;
-width: 8px; height: 8px;
-border-radius: 2px;
-animation: confettiFall 1.4s ease-out forwards;
-}
-@keyframes confettiFall {
-0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
+  /* AI 응답 */
+  .ai-response-box { background: var(--primary-pale); border-left: 3px solid var(--primary); border-radius: 0 12px 12px 12px; padding: 14px 16px; font-size: 14px; line-height: 1.7; color: var(--dark); display: none; animation: fadeUp 0.3s ease; }
+  .ai-response-box.visible { display: block; }
+  .ai-response-box .ai-tag { font-size: 11px; font-weight: 700; color: var(--primary); margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+  .loading-dots { display: inline-flex; gap: 4px; }
+  .loading-dots span { width: 6px; height: 6px; background: var(--primary); border-radius: 50%; animation: bounce 1.2s infinite; display: inline-block; }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-6px); } }
 
-/* ─── 긴급 버튼 영역 ─── */
-.emergency-wrap { display: flex; gap: 8px; }
-.emergency-btn {
-flex: 1;
-padding: 14px 10px;
-border: 2px dashed var(–gray2);
-border-radius: 14px;
-background: none;
-cursor: pointer;
-font-family: var(–font-main);
-font-size: 13px;
-font-weight: 700;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 5px;
-transition: all 0.18s;
-}
-.emergency-btn .em-icon { font-size: 24px; }
-.emergency-btn.danger { border-color: #FFD0C8; color: var(–danger); }
-.emergency-btn.danger:hover { background: #FFF5F3; border-color: var(–danger); }
-.emergency-btn.gold { border-color: #FFE8A0; color: var(–warning); }
-.emergency-btn.gold:hover { background: #FFFBF0; border-color: var(–accent); }
-.coupon-count {
-font-size: 10px;
-background: var(–accent);
-color: var(–dark);
-border-radius: 10px;
-padding: 1px 6px;
-font-weight: 700;
-}
+  /* 징징대기 */
+  .jj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .jj-btn { padding: 18px 12px; background: #FFFFFF; border: 2px solid var(--gray2); border-radius: 16px; cursor: pointer; font-family: var(--font-main); font-size: 13px; font-weight: 500; color: var(--dark); text-align: center; line-height: 1.4; transition: all 0.18s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .jj-btn .jj-icon { font-size: 28px; }
+  .jj-btn:active { transform: scale(0.96); border-color: var(--primary); background: var(--primary-pale); }
+  .jj-btn.selected { border-color: var(--primary); background: var(--primary-pale); }
+  .jj-custom-row { display: flex; gap: 8px; margin-bottom: 14px; }
+  .jj-custom-input { flex: 1; padding: 12px 14px; border: 2px solid var(--gray2); border-radius: 12px; font-family: var(--font-main); font-size: 14px; background: #FFFFFF; color: var(--dark); outline: none; transition: border-color 0.2s; }
+  .jj-custom-input:focus { border-color: var(--primary); }
+  .jj-send-btn { padding: 12px 16px; background: var(--primary); color: #FFFFFF; border: none; border-radius: 12px; font-size: 18px; cursor: pointer; transition: all 0.15s; }
+  .jj-send-btn:active { transform: scale(0.95); }
 
-/* ─── AI 응답 박스 ─── */
-.ai-response-box {
-background: var(–primary-pale);
-border-left: 3px solid var(–primary);
-border-radius: 0 12px 12px 12px;
-padding: 14px 16px;
-font-size: 14px;
-line-height: 1.7;
-color: var(–dark);
-display: none;
-animation: fadeUp 0.3s ease;
-}
-.ai-response-box.visible { display: block; }
-.ai-response-box .ai-tag {
-font-size: 11px;
-font-weight: 700;
-color: var(–primary);
-margin-bottom: 6px;
-display: flex;
-align-items: center;
-gap: 4px;
-}
+  /* 주간 기록 */
+  .week-grid { display: flex; gap: 6px; margin-bottom: 16px; }
+  .day-chip { flex: 1; background: #FFFFFF; border-radius: 12px; padding: 10px 4px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .day-chip .day-label { font-size: 11px; color: var(--gray4); font-weight: 500; margin-bottom: 6px; }
+  .day-chip .day-dots { display: flex; flex-direction: column; gap: 3px; align-items: center; }
+  .day-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gray2); }
+  .day-dot.done { background: var(--primary); }
+  .week-record-list { display: flex; flex-direction: column; gap: 8px; }
+  .week-record-item { background: #FFFFFF; border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .week-record-date { font-size: 12px; color: var(--gray4); font-weight: 500; min-width: 48px; }
+  .week-record-meals { flex: 1; }
+  .week-record-meal-row { font-size: 13px; color: var(--dark); margin-bottom: 2px; display: flex; gap: 6px; }
+  .meal-tag { font-size: 10px; padding: 1px 6px; border-radius: 6px; font-weight: 700; background: var(--gray2); color: var(--gray4); white-space: nowrap; }
+  .meal-tag.morning { background: #FFF3E0; color: #E67E22; }
+  .meal-tag.lunch { background: #E8F5E9; color: #27AE60; }
+  .meal-tag.dinner { background: #EDE7F6; color: #7B5EA7; }
+  .week-record-badge { font-size: 18px; }
 
-/* loading */
-.loading-dots { display: inline-flex; gap: 4px; }
-.loading-dots span {
-width: 6px; height: 6px;
-background: var(–primary);
-border-radius: 50%;
-animation: bounce 1.2s infinite;
-display: inline-block;
-}
-.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
-.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes bounce {
-0%, 80%, 100% { transform: translateY(0); }
-40% { transform: translateY(-6px); }
-}
+  /* 설정 */
+  .setting-section { margin-bottom: 20px; }
+  .setting-section-title { font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--gray4); letter-spacing: 0.5px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--gray2); }
+  .input-group { margin-bottom: 12px; }
+  .input-label { font-size: 12px; font-weight: 700; color: var(--gray4); margin-bottom: 6px; display: block; }
+  .input-field { width: 100%; padding: 13px 14px; border: 2px solid var(--gray2); border-radius: 12px; font-family: var(--font-main); font-size: 15px; color: var(--dark); background: #FFFFFF; outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
+  .input-field:focus { border-color: var(--primary); }
+  select.input-field { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23B0B0C0' stroke-width='1.5' fill='none'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+  .chip-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip-option { padding: 8px 14px; border: 2px solid var(--gray2); border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--gray4); background: #FFFFFF; cursor: pointer; transition: all 0.15s; }
+  .chip-option.selected { border-color: var(--primary); color: var(--primary); background: var(--primary-pale); }
+  .save-btn { width: 100%; padding: 16px; background: var(--dark); color: #FFFFFF; border: none; border-radius: 14px; font-family: var(--font-display); font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 4px; }
+  .save-btn:active { transform: scale(0.98); background: var(--dark2); }
 
-/* ─── 징징대기 탭 ─── */
-.jj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
-.jj-btn {
-padding: 18px 12px;
-background: var(–white);
-border: 2px solid var(–gray2);
-border-radius: 16px;
-cursor: pointer;
-font-family: var(–font-main);
-font-size: 13px;
-font-weight: 500;
-color: var(–dark);
-text-align: center;
-line-height: 1.4;
-transition: all 0.18s;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 8px;
-}
-.jj-btn .jj-icon { font-size: 28px; }
-.jj-btn:active { transform: scale(0.96); border-color: var(–primary); background: var(–primary-pale); }
-.jj-btn.selected { border-color: var(–primary); background: var(–primary-pale); }
+  /* 식단 확정 */
+  .meal-confirm-area { display: none; margin-top: 14px; gap: 8px; flex-direction: column; animation: fadeUp 0.3s ease; }
+  .meal-confirm-area.visible { display: flex; }
+  .confirm-btn { width: 100%; padding: 15px; border: none; border-radius: 14px; font-family: var(--font-display); font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.15s; }
+  .confirm-btn:active { transform: scale(0.97); }
+  .confirm-btn.primary { background: var(--dark); color: #FFFFFF; }
+  .confirm-btn.secondary { background: var(--gray1); color: var(--gray4); border: 2px solid var(--gray2); }
 
-.jj-custom-row {
-display: flex;
-gap: 8px;
-margin-bottom: 14px;
-}
-.jj-custom-input {
-flex: 1;
-padding: 12px 14px;
-border: 2px solid var(–gray2);
-border-radius: 12px;
-font-family: var(–font-main);
-font-size: 14px;
-background: var(–white);
-color: var(–dark);
-outline: none;
-transition: border-color 0.2s;
-}
-.jj-custom-input:focus { border-color: var(–primary); }
-.jj-send-btn {
-padding: 12px 16px;
-background: var(–primary);
-color: var(–white);
-border: none;
-border-radius: 12px;
-font-size: 18px;
-cursor: pointer;
-transition: all 0.15s;
-}
-.jj-send-btn:active { transform: scale(0.95); }
+  /* 히스토리 모달 */
+  .history-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 300; display: none; align-items: flex-end; justify-content: center; }
+  .history-modal.open { display: flex; }
+  .history-modal-sheet { background: #FFFFFF; border-radius: 24px 24px 0 0; padding: 24px 20px 48px; width: 100%; max-width: 480px; animation: slideUp 0.3s ease; max-height: 80vh; overflow-y: auto; }
+  .history-meal-row { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--gray2); }
+  .history-meal-row:last-child { border-bottom: none; }
+  .history-meal-content { flex: 1; font-size: 14px; color: var(--dark); line-height: 1.5; }
+  .history-selected-badge { font-size: 10px; background: var(--primary); color: #FFFFFF; padding: 2px 7px; border-radius: 6px; font-weight: 700; margin-left: 6px; }
 
-/* ─── 주간 기록 탭 ─── */
-.week-grid { display: flex; gap: 6px; margin-bottom: 16px; }
-.day-chip {
-flex: 1;
-background: var(–white);
-border-radius: 12px;
-padding: 10px 4px;
-text-align: center;
-box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-}
-.day-chip .day-label { font-size: 11px; color: var(–gray4); font-weight: 500; margin-bottom: 6px; }
-.day-chip .day-dots { display: flex; flex-direction: column; gap: 3px; align-items: center; }
-.day-dot { width: 10px; height: 10px; border-radius: 50%; background: var(–gray2); }
-.day-dot.done { background: var(–primary); }
-.day-dot.partial { background: var(–accent); }
+  /* 토스트 */
+  .toast { position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--dark); color: #FFFFFF; padding: 12px 20px; border-radius: 24px; font-size: 14px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 9999; white-space: nowrap; pointer-events: none; max-width: 90vw; text-align: center; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-.week-record-list { display: flex; flex-direction: column; gap: 8px; }
-.week-record-item {
-background: var(–white);
-border-radius: 14px;
-padding: 14px 16px;
-display: flex;
-align-items: center;
-gap: 12px;
-box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.week-record-date { font-size: 12px; color: var(–gray4); font-weight: 500; min-width: 48px; }
-.week-record-meals { flex: 1; }
-.week-record-meal-row { font-size: 13px; color: var(–dark); margin-bottom: 2px; display: flex; gap: 6px; }
-.meal-tag {
-font-size: 10px;
-padding: 1px 6px;
-border-radius: 6px;
-font-weight: 700;
-background: var(–gray2);
-color: var(–gray4);
-white-space: nowrap;
-}
-.meal-tag.morning { background: #FFF3E0; color: #E67E22; }
-.meal-tag.lunch { background: #E8F5E9; color: #27AE60; }
-.meal-tag.dinner { background: #EDE7F6; color: #7B5EA7; }
-.week-record-badge {
-font-size: 18px;
-}
+  /* 모달 */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200; display: none; align-items: flex-end; justify-content: center; }
+  .modal-overlay.open { display: flex; }
+  .modal-sheet { background: #FFFFFF; border-radius: 24px 24px 0 0; padding: 24px 20px 40px; width: 100%; max-width: 480px; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .modal-handle { width: 36px; height: 4px; background: var(--gray2); border-radius: 2px; margin: 0 auto 20px; }
+  .modal-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .modal-sub { font-size: 13px; color: var(--gray4); margin-bottom: 20px; line-height: 1.5; }
+  .modal-btn { width: 100%; padding: 15px; border: none; border-radius: 14px; font-family: var(--font-display); font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 10px; transition: all 0.15s; }
+  .modal-btn:active { transform: scale(0.98); }
+  .modal-btn.primary { background: var(--primary); color: #FFFFFF; }
+  .modal-btn.secondary { background: var(--gray1); color: var(--gray4); font-size: 14px; }
 
-/* ─── 설정 탭 ─── */
-.setting-section { margin-bottom: 20px; }
-.setting-section-title {
-font-family: var(–font-display);
-font-size: 13px;
-font-weight: 700;
-color: var(–gray4);
-letter-spacing: 0.5px;
-margin-bottom: 12px;
-padding-bottom: 8px;
-border-bottom: 1px solid var(–gray2);
-}
-.input-group { margin-bottom: 12px; }
-.input-label {
-font-size: 12px;
-font-weight: 700;
-color: var(–gray4);
-margin-bottom: 6px;
-display: block;
-}
-.input-field {
-width: 100%;
-padding: 13px 14px;
-border: 2px solid var(–gray2);
-border-radius: 12px;
-font-family: var(–font-main);
-font-size: 15px;
-color: var(–dark);
-background: var(–white);
-outline: none;
-transition: border-color 0.2s;
--webkit-appearance: none;
-}
-.input-field:focus { border-color: var(–primary); }
-select.input-field { background-image: url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘12’ height=‘8’ viewBox=‘0 0 12 8’%3E%3Cpath d=‘M1 1l5 5 5-5’ stroke=’%23B0B0C0’ stroke-width=‘1.5’ fill=‘none’/%3E%3C/svg%3E”); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+  /* 업데이트 배너 */
+  .update-banner { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 448px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); z-index: 9990; animation: slideUp 0.35s ease; }
+  .update-banner-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; gap: 12px; }
+  .update-btn { background: var(--primary); color: #FFFFFF; border: none; border-radius: 10px; padding: 9px 16px; font-family: var(--font-display); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .update-btn:active { transform: scale(0.96); }
 
-.chip-group { display: flex; gap: 8px; flex-wrap: wrap; }
-.chip-option {
-padding: 8px 14px;
-border: 2px solid var(–gray2);
-border-radius: 20px;
-font-size: 13px;
-font-weight: 500;
-color: var(–gray4);
-background: var(–white);
-cursor: pointer;
-transition: all 0.15s;
-}
-.chip-option.selected { border-color: var(–primary); color: var(–primary); background: var(–primary-pale); }
+  /* ─── 온보딩 ─── [핵심 수정] background 하드코딩 + hidden 클래스로 완전 숨김 */
+  .onboarding-overlay {
+    position: fixed;
+    inset: 0;
+    background: #FFFFFF;   /* var() 대신 하드코딩 — CSS변수 미적용 타이밍 방지 */
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    text-align: center;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .onboarding-overlay.hidden {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+  .onboarding-logo { font-family: var(--font-display); font-size: 36px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .onboarding-slogan { font-size: 14px; color: var(--gray4); margin-bottom: 40px; }
+  .onboarding-card { background: var(--gray1); border-radius: 20px; padding: 28px 20px; width: 100%; margin-bottom: 16px; }
+  .onboarding-step { font-size: 12px; color: var(--primary); font-weight: 700; margin-bottom: 12px; }
+  .onboarding-q { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 16px; line-height: 1.4; }
 
-.save-btn {
-width: 100%;
-padding: 16px;
-background: var(–dark);
-color: var(–white);
-border: none;
-border-radius: 14px;
-font-family: var(–font-display);
-font-size: 16px;
-font-weight: 700;
-cursor: pointer;
-transition: all 0.2s;
-margin-top: 4px;
-}
-.save-btn:active { transform: scale(0.98); background: var(–dark2); }
+  /* 빈 상태 */
+  .empty-state { text-align: center; padding: 40px 20px; }
+  .empty-state .em-icon { font-size: 48px; margin-bottom: 12px; }
+  .empty-state .em-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .empty-state .em-sub { font-size: 13px; color: var(--gray4); line-height: 1.6; }
 
-.notify-toggle-row {
-display: flex;
-align-items: center;
-justify-content: space-between;
-margin-bottom: 12px;
-}
-.notify-toggle-label { font-size: 14px; font-weight: 500; color: var(–dark); }
-.toggle-switch {
-width: 46px; height: 26px;
-background: var(–gray2);
-border-radius: 13px;
-position: relative;
-cursor: pointer;
-transition: background 0.2s;
-}
-.toggle-switch.on { background: var(–primary); }
-.toggle-switch::after {
-content: ‘’;
-position: absolute;
-width: 20px; height: 20px;
-background: var(–white);
-border-radius: 50%;
-top: 3px; left: 3px;
-transition: left 0.2s;
-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-.toggle-switch.on::after { left: 23px; }
+  /* 카카오 */
+  .kakao-connect-btn { width: 100%; padding: 15px 16px; background: #FEE500; color: #3B1D1D; border: none; border-radius: 14px; font-family: var(--font-display); font-size: 15px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.15s; box-shadow: 0 2px 12px rgba(254,229,0,0.4); }
+  .kakao-connect-btn:active { transform: scale(0.97); background: #F5D800; }
 
-/* ─── 식단 확정 버튼 ─── */
-.meal-confirm-area {
-display: none;
-margin-top: 14px;
-gap: 8px;
-flex-direction: column;
-animation: fadeUp 0.3s ease;
-}
-.meal-confirm-area.visible { display: flex; }
-.confirm-btn {
-width: 100%;
-padding: 15px;
-border: none;
-border-radius: 14px;
-font-family: var(–font-display);
-font-size: 15px;
-font-weight: 700;
-cursor: pointer;
-transition: all 0.15s;
-}
-.confirm-btn:active { transform: scale(0.97); }
-.confirm-btn.primary { background: var(–dark); color: var(–white); }
-.confirm-btn.secondary { background: var(–gray1); color: var(–gray4); border: 2px solid var(–gray2); }
-
-/* ─── 히스토리 모달 ─── */
-.history-modal {
-position: fixed; inset: 0;
-background: rgba(0,0,0,0.5);
-z-index: 300;
-display: none;
-align-items: flex-end;
-justify-content: center;
-}
-.history-modal.open { display: flex; }
-.history-modal-sheet {
-background: var(–white);
-border-radius: 24px 24px 0 0;
-padding: 24px 20px 48px;
-width: 100%;
-max-width: 480px;
-animation: slideUp 0.3s ease;
-max-height: 80vh;
-overflow-y: auto;
-}
-.history-meal-row {
-display: flex;
-align-items: flex-start;
-gap: 10px;
-padding: 12px 0;
-border-bottom: 1px solid var(–gray2);
-}
-.history-meal-row:last-child { border-bottom: none; }
-.history-meal-content { flex: 1; font-size: 14px; color: var(–dark); line-height: 1.5; }
-.history-selected-badge {
-font-size: 10px;
-background: var(–primary);
-color: var(–white);
-padding: 2px 7px;
-border-radius: 6px;
-font-weight: 700;
-margin-left: 6px;
-}
-
-/* ─── 토스트 ─── */
-.toast {
-position: fixed;
-bottom: 90px;
-left: 50%;
-transform: translateX(-50%) translateY(20px);
-background: var(–dark);
-color: var(–white);
-padding: 12px 20px;
-border-radius: 24px;
-font-size: 14px;
-font-weight: 500;
-opacity: 0;
-transition: all 0.3s;
-z-index: 9999;
-white-space: nowrap;
-pointer-events: none;
-max-width: 90vw;
-text-align: center;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-/* ─── 모달 ─── */
-.modal-overlay {
-position: fixed; inset: 0;
-background: rgba(0,0,0,0.5);
-z-index: 200;
-display: none;
-align-items: flex-end;
-justify-content: center;
-}
-.modal-overlay.open { display: flex; }
-.modal-sheet {
-background: var(–white);
-border-radius: 24px 24px 0 0;
-padding: 24px 20px 40px;
-width: 100%;
-max-width: 480px;
-animation: slideUp 0.3s ease;
-}
-@keyframes slideUp {
-from { transform: translateY(100%); }
-to { transform: translateY(0); }
-}
-.modal-handle { width: 36px; height: 4px; background: var(–gray2); border-radius: 2px; margin: 0 auto 20px; }
-.modal-title {
-font-family: var(–font-display);
-font-size: 18px;
-font-weight: 700;
-color: var(–dark);
-margin-bottom: 6px;
-}
-.modal-sub { font-size: 13px; color: var(–gray4); margin-bottom: 20px; line-height: 1.5; }
-.modal-btn {
-width: 100%;
-padding: 15px;
-border: none;
-border-radius: 14px;
-font-family: var(–font-display);
-font-size: 16px;
-font-weight: 700;
-cursor: pointer;
-margin-bottom: 10px;
-transition: all 0.15s;
-}
-.modal-btn:active { transform: scale(0.98); }
-.modal-btn.primary { background: var(–primary); color: var(–white); }
-.modal-btn.secondary { background: var(–gray1); color: var(–gray4); font-size: 14px; }
-
-/* ─── 업데이트 배너 ─── */
-.update-banner {
-position: fixed;
-bottom: 80px;
-left: 50%;
-transform: translateX(-50%);
-width: calc(100% - 32px);
-max-width: 448px;
-background: var(–white);
-border-radius: 16px;
-box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-z-index: 9990;
-animation: slideUp 0.35s ease;
-}
-.update-banner-inner {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 14px 16px;
-gap: 12px;
-}
-.update-btn {
-background: var(–primary);
-color: var(–white);
-border: none;
-border-radius: 10px;
-padding: 9px 16px;
-font-family: var(–font-display);
-font-size: 13px;
-font-weight: 700;
-cursor: pointer;
-white-space: nowrap;
-transition: all 0.15s;
-}
-.update-btn:active { transform: scale(0.96); }
-
-/* 온보딩 */
-.onboarding-overlay {
-position: fixed; inset: 0;
-background: var(–white);
-z-index: 9999;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 32px 24px;
-text-align: center;
-}
-.onboarding-logo {
-font-family: var(–font-display);
-font-size: 36px;
-font-weight: 700;
-color: var(–primary);
-margin-bottom: 6px;
-}
-.onboarding-slogan { font-size: 14px; color: var(–gray4); margin-bottom: 40px; }
-.onboarding-card {
-background: var(–gray1);
-border-radius: 20px;
-padding: 28px 20px;
-width: 100%;
-margin-bottom: 16px;
-}
-.onboarding-step {
-font-size: 12px;
-color: var(–primary);
-font-weight: 700;
-margin-bottom: 12px;
-}
-.onboarding-q {
-font-family: var(–font-display);
-font-size: 18px;
-font-weight: 700;
-color: var(–dark);
-margin-bottom: 16px;
-line-height: 1.4;
-}
-
-/* 하단 여백 */
-.bottom-safe { height: 20px; }
-
-/* 초기 프로필 없을 때 */
-.empty-state {
-text-align: center;
-padding: 40px 20px;
-}
-.empty-state .em-icon { font-size: 48px; margin-bottom: 12px; }
-.empty-state .em-title { font-family: var(–font-display); font-size: 18px; font-weight: 700; color: var(–dark); margin-bottom: 6px; }
-.empty-state .em-sub { font-size: 13px; color: var(–gray4); line-height: 1.6; }
-
-/* ─── 카카오 연결 버튼 ─── */
-.kakao-connect-btn {
-width: 100%;
-padding: 15px 16px;
-background: #FEE500;
-color: #3B1D1D;
-border: none;
-border-radius: 14px;
-font-family: var(–font-display);
-font-size: 15px;
-font-weight: 700;
-cursor: pointer;
-display: flex;
-align-items: center;
-justify-content: center;
-gap: 8px;
-transition: all 0.15s;
-box-shadow: 0 2px 12px rgba(254,229,0,0.4);
-}
-.kakao-connect-btn:active { transform: scale(0.97); background: #F5D800; }
-
-/* 반응형 */
-@media (max-width: 360px) {
-.ab-menu { font-size: 12px; }
-.jj-btn { font-size: 12px; }
-}
+  @media (max-width: 360px) { .ab-menu { font-size: 12px; } .jj-btn { font-size: 12px; } }
 </style>
-
 </head>
 <body>
 
-<!-- 온보딩 오버레이 -->
-
+<!-- ─── 온보딩 ─── -->
 <div class="onboarding-overlay" id="onboarding">
   <div class="onboarding-logo">리즈온</div>
   <div class="onboarding-slogan">다시, 나답게</div>
-
-  <div class="onboarding-card" id="ob-card">
+  <div class="onboarding-card">
     <div class="onboarding-step" id="ob-step">STEP 1 / 4</div>
     <div class="onboarding-q" id="ob-q">어떤 날을 위해 다이어트 중이에요? 🗓️</div>
     <div id="ob-input-wrap"></div>
   </div>
-
-<button class="gen-btn" id="ob-next-btn" onclick="obNext()">다음 →</button>
-
+  <button class="gen-btn" id="ob-next-btn" onclick="obNext()">다음 →</button>
 </div>
 
-<!-- 헤더 -->
-
+<!-- ─── 헤더 ─── -->
 <header class="app-header">
-  <div class="logo" onclick="coachTap()" style="cursor:default">리즈온 <span>by 리즈쌤</span></div>
+  <div class="logo" id="logo-tap">리즈온 <span>by 리즈쌤</span></div>
   <div class="header-dday" id="header-dday">D-??</div>
 </header>
 
-<!-- 탭 바 -->
-
+<!-- ─── 탭 바 ─── -->
 <nav class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('main')" id="tab-main">
-    <span class="tab-icon">🏠</span>메인
-  </button>
-  <button class="tab-btn" onclick="switchTab('jj')" id="tab-jj">
-    <span class="tab-icon">😩</span>징징대기
-  </button>
-  <button class="tab-btn" onclick="switchTab('week')" id="tab-week">
-    <span class="tab-icon">📊</span>주간기록
-  </button>
-  <button class="tab-btn" onclick="switchTab('setting')" id="tab-setting">
-    <span class="tab-icon">⚙️</span>설정
-  </button>
+  <button class="tab-btn active" onclick="switchTab('main')" id="tab-main"><span class="tab-icon">🏠</span>메인</button>
+  <button class="tab-btn" onclick="switchTab('jj')" id="tab-jj"><span class="tab-icon">😩</span>징징대기</button>
+  <button class="tab-btn" onclick="switchTab('week')" id="tab-week"><span class="tab-icon">📊</span>주간기록</button>
+  <button class="tab-btn" onclick="switchTab('setting')" id="tab-setting"><span class="tab-icon">⚙️</span>설정</button>
 </nav>
 
-<!-- ─────────────────── 메인 화면 ─────────────────── -->
-
+<!-- ═══ 메인 ═══ -->
 <div class="screen active" id="screen-main">
-
-  <!-- D-Day 배너 -->
 
   <div class="dday-banner">
     <div class="dday-label">나의 D-DAY</div>
@@ -974,295 +332,170 @@ box-shadow: 0 2px 12px rgba(254,229,0,0.4);
       <div class="dday-unit">일 남았어요</div>
     </div>
     <div class="dday-progress-wrap">
-      <div class="dday-progress-label">
-        <span>시작</span>
-        <span id="main-progress-pct">50% 진행</span>
-        <span>D-Day</span>
-      </div>
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="main-progress-bar" style="width:50%"></div>
-      </div>
+      <div class="dday-progress-label"><span>시작</span><span id="main-progress-pct">50% 진행</span><span>D-Day</span></div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="main-progress-bar" style="width:50%"></div></div>
     </div>
   </div>
 
-  <!-- 오늘 식사 체크 카드 -->
-
-  <div class="card" id="today-check-card">
+  <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <div class="card-title" style="margin-bottom:0">⚡ 오늘 식단 체크</div>
       <div class="streak-badge">🔥 <span id="streak-num">0</span>일 연속</div>
     </div>
-
-```
-<div class="meal-check-grid">
-  <button class="meal-check-btn" id="check-morning" onclick="toggleMealCheck('morning')">
-    <span class="mcheck-icon">🌅</span>
-    <span class="mcheck-label">아침</span>
-    <span class="mcheck-status" id="mstatus-morning">-</span>
-  </button>
-  <button class="meal-check-btn" id="check-lunch" onclick="toggleMealCheck('lunch')">
-    <span class="mcheck-icon">☀️</span>
-    <span class="mcheck-label">점심</span>
-    <span class="mcheck-status" id="mstatus-lunch">-</span>
-  </button>
-  <button class="meal-check-btn" id="check-dinner" onclick="toggleMealCheck('dinner')">
-    <span class="mcheck-icon">🌙</span>
-    <span class="mcheck-label">저녁</span>
-    <span class="mcheck-status" id="mstatus-dinner">-</span>
-  </button>
-</div>
-
-<div style="margin-top:14px">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-    <span style="font-size:12px;color:var(--gray4)">오늘 달성률</span>
-    <span style="font-size:13px;font-weight:700;color:var(--primary)" id="today-pct-label">0 / 3 완료</span>
+    <div class="meal-check-grid">
+      <button class="meal-check-btn" id="check-morning" onclick="toggleMealCheck('morning')"><span class="mcheck-icon">🌅</span><span class="mcheck-label">아침</span><span class="mcheck-status" id="mstatus-morning">-</span></button>
+      <button class="meal-check-btn" id="check-lunch" onclick="toggleMealCheck('lunch')"><span class="mcheck-icon">☀️</span><span class="mcheck-label">점심</span><span class="mcheck-status" id="mstatus-lunch">-</span></button>
+      <button class="meal-check-btn" id="check-dinner" onclick="toggleMealCheck('dinner')"><span class="mcheck-icon">🌙</span><span class="mcheck-label">저녁</span><span class="mcheck-status" id="mstatus-dinner">-</span></button>
+    </div>
+    <div style="margin-top:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:12px;color:var(--gray4)">오늘 달성률</span>
+        <span style="font-size:13px;font-weight:700;color:var(--primary)" id="today-pct-label">0 / 3 완료</span>
+      </div>
+      <div class="gauge-bg"><div class="gauge-fill" id="today-gauge" style="width:0%"></div></div>
+    </div>
+    <div id="all-done-badge" style="display:none;margin-top:14px;background:linear-gradient(135deg,#FF5C35,#FFD166);border-radius:14px;padding:14px;text-align:center;animation:fadeUp 0.4s ease">
+      <div style="font-size:22px;margin-bottom:4px">🎉</div>
+      <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:#fff">오늘 완벽해요!</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.85);margin-top:2px">3끼 모두 달성 · 내일도 파이팅!</div>
+    </div>
   </div>
-  <div class="gauge-bg">
-    <div class="gauge-fill" id="today-gauge" style="width:0%"></div>
-  </div>
-</div>
-
-<div id="all-done-badge" style="display:none;margin-top:14px;background:linear-gradient(135deg,#FF5C35,#FFD166);border-radius:14px;padding:14px;text-align:center;animation:fadeUp 0.4s ease">
-  <div style="font-size:22px;margin-bottom:4px">🎉</div>
-  <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:#fff">오늘 완벽해요!</div>
-  <div style="font-size:12px;color:rgba(255,255,255,0.85);margin-top:2px">3끼 모두 달성 · 내일도 파이팅!</div>
-</div>
-```
-
-  </div>
-
-  <!-- 내일 식단 미리 고르기 -->
 
   <div class="card" id="meal-plan-card">
     <div class="meal-section-title">🍽️ 내일 식단 미리 고르기</div>
-    <div class="meal-section-sub" id="meal-plan-sub">리즈쌤이 A안·B안을 준비했어요. 지금 골라두면 내일 편해요!</div>
+    <div class="meal-section-sub">리즈쌤이 A안·B안을 준비했어요. 지금 골라두면 내일 편해요!</div>
 
-```
-<div id="meal-plan-content">
-  <!-- 식단 없을 때 -->
-  <div class="empty-state" id="meal-empty">
-    <div class="em-icon">🤖</div>
-    <div class="em-title">아직 식단이 없어요</div>
-    <div class="em-sub">아래 버튼을 누르면<br>리즈쌤이 내일 식단을 뚝딱 만들어줄게요!</div>
+    <!-- 선택 게이지 -->
+    <div class="mission-row" style="margin-bottom:14px">
+      <div class="mission-gauge-wrap">
+        <div class="mission-gauge-label"><span>내일 식단 선택</span><span id="mission-pct-label">0/3 완료</span></div>
+        <div class="gauge-bg"><div class="gauge-fill" id="mission-gauge" style="width:0%"></div></div>
+      </div>
+      <div class="mission-pct" id="mission-pct-num">0%</div>
+    </div>
+
+    <div id="meal-plan-content">
+      <div class="empty-state" id="meal-empty">
+        <div class="em-icon">🤖</div>
+        <div class="em-title">아직 식단이 없어요</div>
+        <div class="em-sub">아래 버튼을 누르면<br>리즈쌤이 내일 식단을 뚝딱 만들어줄게요!</div>
+      </div>
+      <div id="meal-ab-area" style="display:none"></div>
+      <div class="action-area" id="action-area">
+        <div class="action-label">📦 바로 준비하기</div>
+        <div class="action-btns" id="action-btns-wrap"></div>
+      </div>
+    </div>
+
+    <div class="meal-confirm-area" id="meal-confirm-area">
+      <button class="confirm-btn primary" onclick="confirmMeal()">✅ 이 식단으로 확정!</button>
+      <button class="confirm-btn secondary" onclick="resetMeal()">🔄 다시 고를게요</button>
+    </div>
+
+    <button class="gen-btn" id="gen-btn" onclick="generateMealPlan()" style="margin-top:14px"><span>✨ 내일 식단 짜줘!</span></button>
+    <div class="api-limit-badge">
+      <span class="limit-dot" id="dot1"></span><span class="limit-dot" id="dot2"></span><span class="limit-dot" id="dot3"></span><span class="limit-dot" id="dot4"></span><span class="limit-dot" id="dot5"></span>
+      <span style="margin-left:4px" id="limit-text">오늘 5회 중 0회 사용</span>
+    </div>
   </div>
-
-  <!-- 식단 있을 때 (동적 생성) -->
-  <div id="meal-ab-area" style="display:none"></div>
-
-  <!-- 액션 버튼 (선택 후 노출) -->
-  <div class="action-area" id="action-area">
-    <div class="action-label">📦 바로 준비하기</div>
-    <div class="action-btns" id="action-btns-wrap"></div>
-  </div>
-</div>
-
-<button class="gen-btn" id="gen-btn" onclick="generateMealPlan()" style="margin-top:14px">
-  <span>✨ 내일 식단 짜줘!</span>
-</button>
-<div class="api-limit-badge" id="limit-badge">
-  <span class="limit-dot" id="dot1"></span>
-  <span class="limit-dot" id="dot2"></span>
-  <span class="limit-dot" id="dot3"></span>
-  <span class="limit-dot" id="dot4"></span>
-  <span class="limit-dot" id="dot5"></span>
-  <span style="margin-left:4px" id="limit-text">오늘 5회 중 0회 사용</span>
-</div>
-```
-
-  </div>
-
-  <!-- 긴급 버튼 -->
 
   <div class="card">
     <div class="card-title">🚨 긴급 상황</div>
     <div class="emergency-wrap">
-      <button class="emergency-btn danger" onclick="openModal('modal-emergency')">
-        <span class="em-icon">💀</span>
-        <span>망했어요<br>(폭식함)</span>
-      </button>
-      <button class="emergency-btn gold" onclick="useCoupon()">
-        <span class="em-icon">🎟️</span>
-        <span>치팅쿠폰<br>사용하기</span>
-        <span class="coupon-count" id="coupon-count">주 1회 남음</span>
-      </button>
+      <button class="emergency-btn danger" onclick="openModal('modal-emergency')"><span class="em-icon">💀</span><span>망했어요<br>(폭식함)</span></button>
+      <button class="emergency-btn gold" onclick="useCoupon()"><span class="em-icon">🎟️</span><span>치팅쿠폰<br>사용하기</span><span class="coupon-count" id="coupon-count">주 1회 남음</span></button>
     </div>
   </div>
-
 </div>
 
-<!-- ─────────────────── 징징대기 화면 ─────────────────── -->
-
+<!-- ═══ 징징대기 ═══ -->
 <div class="screen" id="screen-jj">
-
   <div class="card">
     <div class="card-title">😩 무슨 일이에요?</div>
     <div class="jj-grid">
-      <button class="jj-btn" onclick="selectJJ(this, '너무 배고파요 🥺 참을 수가 없어요')">
-        <span class="jj-icon">😭</span>너무 배고파요
-      </button>
-      <button class="jj-btn" onclick="selectJJ(this, '갑자기 회식이 잡혔어요 😱 어떡하죠')">
-        <span class="jj-icon">🍻</span>갑자기 회식 잡혔어요
-      </button>
-      <button class="jj-btn" onclick="selectJJ(this, '오늘 너무 힘들어서 운동 못했어요 😓')">
-        <span class="jj-icon">🛋️</span>운동 못했어요
-      </button>
-      <button class="jj-btn" onclick="selectJJ(this, '야식이 너무 먹고 싶어요 🌙 어떻게 버텨요')">
-        <span class="jj-icon">🌙</span>야식 너무 먹고 싶어요
-      </button>
+      <button class="jj-btn" onclick="selectJJ(this,'너무 배고파요 🥺 참을 수가 없어요')"><span class="jj-icon">😭</span>너무 배고파요</button>
+      <button class="jj-btn" onclick="selectJJ(this,'갑자기 회식이 잡혔어요 😱 어떡하죠')"><span class="jj-icon">🍻</span>갑자기 회식 잡혔어요</button>
+      <button class="jj-btn" onclick="selectJJ(this,'오늘 너무 힘들어서 운동 못했어요 😓')"><span class="jj-icon">🛋️</span>운동 못했어요</button>
+      <button class="jj-btn" onclick="selectJJ(this,'야식이 너무 먹고 싶어요 🌙 어떻게 버텨요')"><span class="jj-icon">🌙</span>야식 너무 먹고 싶어요</button>
     </div>
-
-```
-<div class="jj-custom-row">
-  <input class="jj-custom-input" id="jj-custom-input" placeholder="직접 입력 (예: 마라탕 먹었어요 ㅠ)" maxlength="80">
-  <button class="jj-send-btn" onclick="sendJJ()">↑</button>
-</div>
-```
-
+    <div class="jj-custom-row">
+      <input class="jj-custom-input" id="jj-custom-input" placeholder="직접 입력 (예: 마라탕 먹었어요 ㅠ)" maxlength="80">
+      <button class="jj-send-btn" onclick="sendJJ()">↑</button>
+    </div>
   </div>
-
-  <div class="ai-response-box" id="jj-response">
-    <div class="ai-tag">🤖 리즈쌤</div>
-    <div id="jj-response-text"></div>
-  </div>
-
+  <div class="ai-response-box" id="jj-response"><div class="ai-tag">🤖 리즈쌤</div><div id="jj-response-text"></div></div>
 </div>
 
-<!-- ─────────────────── 주간 기록 화면 ─────────────────── -->
-
+<!-- ═══ 주간기록 ═══ -->
 <div class="screen" id="screen-week">
-
   <div class="card">
     <div class="card-title">📅 이번 주 달성률</div>
     <div class="week-grid" id="week-grid"></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
-      <span style="font-size:12px;color:var(--gray4)">● 완료 &nbsp; ○ 부분 &nbsp; ○ 미완료</span>
+      <span style="font-size:12px;color:var(--gray4)">● 완료 &nbsp; ○ 미완료</span>
       <span class="mission-pct" id="week-total-pct" style="font-size:22px">0%</span>
     </div>
   </div>
-
   <div class="card">
     <div class="card-title">🍽️ 식단 히스토리</div>
     <div class="week-record-list" id="week-record-list">
-      <div class="empty-state" style="padding:20px 0">
-        <div class="em-icon">📭</div>
-        <div class="em-title">기록이 없어요</div>
-        <div class="em-sub">메인에서 식단을 선택하면<br>자동으로 기록돼요!</div>
-      </div>
+      <div class="empty-state" style="padding:20px 0"><div class="em-icon">📭</div><div class="em-title">기록이 없어요</div><div class="em-sub">메인에서 식단을 선택하면<br>자동으로 기록돼요!</div></div>
     </div>
   </div>
-
 </div>
 
-<!-- ─────────────────── 설정 화면 ─────────────────── -->
-
+<!-- ═══ 설정 ═══ -->
 <div class="screen" id="screen-setting">
-
   <div class="card">
-    <!-- 기본 정보 -->
     <div class="setting-section">
       <div class="setting-section-title">👤 기본 정보</div>
-      <div class="input-group">
-        <label class="input-label">이름 (닉네임)</label>
-        <input class="input-field" id="s-name" placeholder="예: 새벽런닝맘" maxlength="12">
-      </div>
-      <div class="input-group">
-        <label class="input-label">나이</label>
-        <input class="input-field" id="s-age" type="number" placeholder="예: 32" min="10" max="80">
-      </div>
-      <div class="input-group">
-        <label class="input-label">성별</label>
-        <div class="chip-group">
-          <div class="chip-option" onclick="selectChip(this,'gender')" data-val="female">여성</div>
-          <div class="chip-option" onclick="selectChip(this,'gender')" data-val="male">남성</div>
-        </div>
+      <div class="input-group"><label class="input-label">이름 (닉네임)</label><input class="input-field" id="s-name" placeholder="예: 새벽런닝맘" maxlength="12"></div>
+      <div class="input-group"><label class="input-label">나이</label><input class="input-field" id="s-age" type="number" placeholder="예: 32" min="10" max="80"></div>
+      <div class="input-group"><label class="input-label">성별</label><div class="chip-group"><div class="chip-option" onclick="selectChip(this,'gender')" data-val="female">여성</div><div class="chip-option" onclick="selectChip(this,'gender')" data-val="male">남성</div></div></div>
+    </div>
+    <div class="setting-section">
+      <div class="setting-section-title">🗓️ D-Day 설정</div>
+      <div class="input-group"><label class="input-label">이벤트 이름</label><input class="input-field" id="s-event" placeholder="예: 바디프로필, 결혼식, 여름휴가" maxlength="15"></div>
+      <div class="input-group"><label class="input-label">목표 날짜</label><input class="input-field" id="s-date" type="date"></div>
+      <div class="input-group"><label class="input-label">목표 감량 (kg)</label><input class="input-field" id="s-goal-weight" type="number" placeholder="예: 5" min="1" max="30" step="0.5"></div>
+    </div>
+    <div class="setting-section">
+      <div class="setting-section-title">🍱 주로 어떻게 먹어요?</div>
+      <div class="chip-group">
+        <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="convenience">편의점</div>
+        <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="delivery">배달음식</div>
+        <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="cafeteria">구내식당</div>
+        <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="cook">집밥</div>
+        <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="mixed">혼합</div>
       </div>
     </div>
-
-```
-<!-- D-Day 설정 -->
-<div class="setting-section">
-  <div class="setting-section-title">🗓️ D-Day 설정</div>
-  <div class="input-group">
-    <label class="input-label">이벤트 이름</label>
-    <input class="input-field" id="s-event" placeholder="예: 바디프로필, 결혼식, 여름휴가" maxlength="15">
-  </div>
-  <div class="input-group">
-    <label class="input-label">목표 날짜</label>
-    <input class="input-field" id="s-date" type="date">
-  </div>
-  <div class="input-group">
-    <label class="input-label">목표 감량 (kg)</label>
-    <input class="input-field" id="s-goal-weight" type="number" placeholder="예: 5" min="1" max="30" step="0.5">
-  </div>
-</div>
-
-<!-- 식단 스타일 -->
-<div class="setting-section">
-  <div class="setting-section-title">🍱 주로 어떻게 먹어요?</div>
-  <div class="chip-group" id="food-style-chips">
-    <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="convenience">편의점</div>
-    <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="delivery">배달음식</div>
-    <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="cafeteria">구내식당</div>
-    <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="cook">집밥</div>
-    <div class="chip-option" onclick="selectChip(this,'foodstyle')" data-val="mixed">혼합</div>
-  </div>
-</div>
-
-<!-- 알림 설정 -->
-<div class="setting-section">
-  <div class="setting-section-title">🔔 리즈쌤 카톡 알림</div>
-
-  <!-- 시간 선택 -->
-  <div class="input-group">
-    <label class="input-label">리즈쌤이 카톡 보내줄 시간</label>
-    <select class="input-field" id="s-notify-time">
-      <option value="07:00">오전 7:00</option>
-      <option value="08:00">오전 8:00</option>
-      <option value="09:00">오전 9:00</option>
-      <option value="20:00">오후 8:00</option>
-      <option value="21:00">오후 9:00</option>
-      <option value="22:00" selected>오후 10:00</option>
-    </select>
-    <div style="font-size:11px;color:var(--gray3);margin-top:5px">
-      💡 선택한 시간에 리즈쌤이 직접 카톡으로 내일 식단을 알려줄게요
+    <div class="setting-section">
+      <div class="setting-section-title">🔔 리즈쌤 카톡 알림</div>
+      <div class="input-group">
+        <label class="input-label">리즈쌤이 카톡 보내줄 시간</label>
+        <select class="input-field" id="s-notify-time">
+          <option value="07:00">오전 7:00</option><option value="08:00">오전 8:00</option><option value="09:00">오전 9:00</option>
+          <option value="20:00">오후 8:00</option><option value="21:00">오후 9:00</option><option value="22:00" selected>오후 10:00</option>
+        </select>
+        <div style="font-size:11px;color:var(--gray3);margin-top:5px">💡 선택한 시간에 리즈쌤이 직접 카톡으로 내일 식단을 알려줄게요</div>
+      </div>
+      <button class="kakao-connect-btn" onclick="connectKakao()">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C5.582 2 2 4.91 2 8.5c0 2.27 1.388 4.267 3.5 5.462L4.75 17l3.893-2.07C9.09 15.04 9.54 15.07 10 15.07c4.418 0 8-2.91 8-6.57S14.418 2 10 2z" fill="#3B1D1D"/></svg>
+        리즈쌤과 1:1 카톡 연결하기
+      </button>
+      <div style="font-size:11px;color:var(--gray3);margin-top:8px;text-align:center;line-height:1.5">버튼을 누르면 입장 메시지가 자동 복사돼요<br>카톡 열리면 바로 붙여넣기(길게 누르기)만 하면 돼요!</div>
+      <div id="kakao-status" style="display:none;margin-top:10px;padding:10px 14px;background:var(--gray1);border-radius:10px;font-size:12px;color:var(--gray4);text-align:center">✅ 연결 신청 완료! 리즈쌤이 곧 확인할게요</div>
     </div>
-  </div>
-
-  <!-- 카카오 연결 버튼 -->
-  <button class="kakao-connect-btn" onclick="connectKakao()">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="flex-shrink:0">
-      <path fill-rule="evenodd" clip-rule="evenodd" d="M10 2C5.582 2 2 4.91 2 8.5c0 2.27 1.388 4.267 3.5 5.462L4.75 17l3.893-2.07C9.09 15.04 9.54 15.07 10 15.07c4.418 0 8-2.91 8-6.57S14.418 2 10 2z" fill="#3B1D1D"/>
-    </svg>
-    리즈쌤과 1:1 카톡 연결하기
-  </button>
-  <div style="font-size:11px;color:var(--gray3);margin-top:8px;text-align:center;line-height:1.5">
-    버튼을 누르면 입장 메시지가 자동 복사돼요<br>카톡 열리면 바로 붙여넣기(길게 누르기)만 하면 돼요!
-  </div>
-
-  <!-- 연결 상태 표시 -->
-  <div id="kakao-status" style="display:none;margin-top:10px;padding:10px 14px;background:var(--gray1);border-radius:10px;font-size:12px;color:var(--gray4);text-align:center">
-    ✅ 연결 신청 완료! 리즈쌤이 곧 확인할게요
+    <!-- GAS 코치용 숨김 -->
+    <div class="setting-section" id="gas-section" style="display:none">
+      <div class="setting-section-title">🔗 서버 연동 (코치용)</div>
+      <div class="input-group"><label class="input-label">GAS 웹앱 URL</label><input class="input-field" id="s-gas-url" placeholder="https://script.google.com/..." type="url"></div>
+    </div>
+    <button class="save-btn" onclick="saveSettings()">💾 저장하기</button>
   </div>
 </div>
 
-<!-- GAS 연동 -->
-<div class="setting-section" style="display:none">
-  <div class="setting-section-title">🔗 서버 연동 (코치용)</div>
-  <div class="input-group">
-    <label class="input-label">GAS 웹앱 URL</label>
-    <input class="input-field" id="s-gas-url" placeholder="https://script.google.com/..." type="url">
-  </div>
-</div>
-
-<button class="save-btn" onclick="saveSettings()">💾 저장하기</button>
-```
-
-  </div>
-
-</div>
-
-<!-- 긴급 복구 모달 -->
-
+<!-- 모달들 -->
 <div class="modal-overlay" id="modal-emergency">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -1273,9 +506,6 @@ box-shadow: 0 2px 12px rgba(254,229,0,0.4);
     <button class="modal-btn secondary" onclick="closeModal('modal-emergency')">취소</button>
   </div>
 </div>
-
-<!-- 치팅쿠폰 모달 -->
-
 <div class="modal-overlay" id="modal-coupon">
   <div class="modal-sheet">
     <div class="modal-handle"></div>
@@ -1286,1022 +516,430 @@ box-shadow: 0 2px 12px rgba(254,229,0,0.4);
   </div>
 </div>
 
-<!-- 업데이트 팝업 -->
-
 <div class="update-banner" id="update-banner" style="display:none">
   <div class="update-banner-inner">
-    <div>
-      <div style="font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--dark)">🎉 새 버전이 나왔어요!</div>
-      <div style="font-size:12px;color:var(--gray4);margin-top:2px">업데이트하면 더 좋아진 리즈온을 만날 수 있어요</div>
-    </div>
+    <div><div style="font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--dark)">🎉 새 버전이 나왔어요!</div><div style="font-size:12px;color:var(--gray4);margin-top:2px">업데이트하면 더 좋아진 리즈온을 만날 수 있어요</div></div>
     <button class="update-btn" onclick="doUpdate()">업데이트</button>
   </div>
 </div>
 
-<!-- 히스토리 상세 모달 -->
-
 <div class="history-modal" id="history-modal" onclick="closeHistoryModal(event)">
-  <div class="history-modal-sheet">
-    <div class="modal-handle"></div>
-    <div class="modal-title" id="hm-date"></div>
-    <div style="margin-top:16px" id="hm-content"></div>
-  </div>
+  <div class="history-modal-sheet"><div class="modal-handle"></div><div class="modal-title" id="hm-date"></div><div style="margin-top:16px" id="hm-content"></div></div>
 </div>
-
-<!-- 토스트 -->
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ───────── 상수 & 상태 ─────────
-const GAS_URL_KEY = 'leeson_gas_url';
+// ══ 상수 ══
 const GAS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbylMsxryrxDW7Ak5-z013OKmfYam_2FwzXQWAxhk-B1imfVe-53S08p6BbcllnDVKQB-g/exec';
-const PROFILE_KEY = 'leeson_profile';
-const MEAL_KEY = 'leeson_meal_today';
-const LOG_KEY = 'leeson_log';
-const API_COUNT_KEY = 'leeson_api_count';
-const COUPON_KEY = 'leeson_coupon';
-
-let profile = {};
-let mealData = null;
-let apiCount = 0;
+const PROFILE_KEY = 'leeson_profile', MEAL_KEY = 'leeson_meal_today', LOG_KEY = 'leeson_log';
+const API_COUNT_KEY = 'leeson_api_count', COUPON_KEY = 'leeson_coupon';
+const TODAY_CHECK_KEY = 'leeson_today_check', STREAK_KEY = 'leeson_streak';
+const CACHE_VERSION = 'leeson-v2.2.0';
 const MAX_API = 5;
-
-
-
-// ───────── 코치 비밀 진입 (로고 5번 탭) ─────────
-let coachTapCount = 0, coachTapTimer = null;
-function coachTap() {
-  coachTapCount++;
-  clearTimeout(coachTapTimer);
-  coachTapTimer = setTimeout(() => { coachTapCount = 0; }, 2000);
-  if (coachTapCount >= 5) {
-    coachTapCount = 0;
-    const sec = document.querySelector('[onclick*="coachTap"]').closest('header').nextElementSibling;
-    const gasSection = document.querySelector('#screen-setting .setting-section[style*="none"]');
-    if (gasSection) {
-      gasSection.style.display = 'block';
-      switchTab('setting');
-      showToast('🔧 코치 설정 모드');
-    }
-  }
-}
-
-
-// ───────── 식단 확정/다시선택 ─────────
-let mealConfirmed = false;
-
-function showConfirmArea() {
-  const area = document.getElementById('meal-confirm-area');
-  if (area) area.classList.add('visible');
-}
-
-function confirmMeal() {
-  mealConfirmed = true;
-  // 선택된 식단을 로그에 confirmed로 저장
-  const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
-  const tomorrow = getTomorrow();
-  const idx = logs.findIndex(l => l.date === tomorrow);
-  if (idx >= 0) {
-    logs[idx].confirmed = true;
-    logs[idx].selected = selectedMeals;
-    localStorage.setItem(LOG_KEY, JSON.stringify(logs));
-  }
-  document.getElementById('meal-confirm-area').classList.remove('visible');
-  document.getElementById('gen-btn').style.display = 'none';
-  showToast('🎉 식단 확정! 내일도 파이팅!');
-  renderWeek();
-}
-
-function resetMeal() {
-  // 선택 초기화
-  selectedMeals = {};
-  document.querySelectorAll('.ab-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('action-area').classList.remove('visible');
-  document.getElementById('meal-confirm-area').classList.remove('visible');
-  updateMissionGauge();
-  showToast('다시 골라봐요!');
-}
-
-// ───────── 히스토리 모달 ─────────
-function openHistoryModal(mm, dd, meals, selected) {
-  const MEAL_LABELS = { morning: '🌅 아침', lunch: '☀️ 점심', dinner: '🌙 저녁' };
-  const MEAL_ORDER  = ['morning', 'lunch', 'dinner'];
-
-  document.getElementById('hm-date').textContent = `${mm}월 ${dd}일 식단`;
-
-  let html = '';
-  MEAL_ORDER.forEach(time => {
-    if (!meals[time]) return;
-    const sel = selected[time];
-    const aMenu = meals[time].A?.menu || '-';
-    const bMenu = meals[time].B?.menu || '-';
-    html += `<div class="history-meal-row">
-      <span class="meal-tag ${time === 'morning' ? 'morning' : time === 'lunch' ? 'lunch' : 'dinner'}">${MEAL_LABELS[time].split(' ')[1]}</span>
-      <div class="history-meal-content">
-        <div>A안 ${aMenu}${sel?.ab === 'A' ? '<span class="history-selected-badge">선택</span>' : ''}</div>
-        <div style="margin-top:4px;color:var(--gray4)">B안 ${bMenu}${sel?.ab === 'B' ? '<span class="history-selected-badge">선택</span>' : ''}</div>
-      </div>
-    </div>`;
-  });
-
-  document.getElementById('hm-content').innerHTML = html;
-  document.getElementById('history-modal').classList.add('open');
-}
-
-function closeHistoryModal(e) {
-  if (e.target === document.getElementById('history-modal')) {
-    document.getElementById('history-modal').classList.remove('open');
-  }
-}
-
-// ───────── 오늘 식사 체크 & 스트릭 ─────────
-const TODAY_CHECK_KEY  = 'leeson_today_check';
-const STREAK_KEY       = 'leeson_streak';
-
-function loadTodayCheck() {
-  const raw = localStorage.getItem(TODAY_CHECK_KEY);
-  if (!raw) return {};
-  const data = JSON.parse(raw);
-  // 날짜 바뀌면 초기화
-  if (data.date !== new Date().toDateString()) return {};
-  return data.checks || {};
-}
-
-function saveTodayCheck(checks) {
-  localStorage.setItem(TODAY_CHECK_KEY, JSON.stringify({
-    date: new Date().toDateString(),
-    checks
-  }));
-}
-
-function renderTodayCheck() {
-  const checks = loadTodayCheck();
-  ['morning','lunch','dinner'].forEach(m => {
-    const btn  = document.getElementById('check-' + m);
-    const stat = document.getElementById('mstatus-' + m);
-    if (!btn || !stat) return;
-    if (checks[m]) {
-      btn.classList.add('checked');
-      stat.textContent = '✅';
-    } else {
-      btn.classList.remove('checked');
-      stat.textContent = '-';
-    }
-  });
-  updateTodayGauge(checks);
-  renderStreak();
-}
-
-function toggleMealCheck(meal) {
-  const checks = loadTodayCheck();
-  checks[meal] = !checks[meal];
-  saveTodayCheck(checks);
-
-  const btn  = document.getElementById('check-' + meal);
-  const stat = document.getElementById('mstatus-' + meal);
-
-  if (checks[meal]) {
-    btn.classList.add('checked');
-    stat.textContent = '✅';
-    // 체크 시 작은 진동 피드백
-    if (navigator.vibrate) navigator.vibrate(30);
-  } else {
-    btn.classList.remove('checked');
-    stat.textContent = '-';
-  }
-
-  updateTodayGauge(checks);
-
-  // 3끼 완료 시 폭죽
-  const doneCount = Object.values(checks).filter(Boolean).length;
-  if (doneCount === 3) {
-    showAllDoneBadge();
-    launchConfetti();
-    updateStreak();
-  } else {
-    document.getElementById('all-done-badge').style.display = 'none';
-  }
-}
-
-function updateTodayGauge(checks) {
-  const done  = Object.values(checks).filter(Boolean).length;
-  const pct   = Math.round((done / 3) * 100);
-  const gauge = document.getElementById('today-gauge');
-  const label = document.getElementById('today-pct-label');
-  if (gauge) gauge.style.width = pct + '%';
-  if (label) label.textContent = done + ' / 3 완료';
-}
-
-function showAllDoneBadge() {
-  const badge = document.getElementById('all-done-badge');
-  if (badge) badge.style.display = 'block';
-}
-
-// ── 스트릭 ──
-function updateStreak() {
-  const raw      = localStorage.getItem(STREAK_KEY);
-  const today    = new Date().toDateString();
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-  let streak = { count: 0, lastDate: '' };
-  if (raw) streak = JSON.parse(raw);
-
-  if (streak.lastDate === today) return; // 이미 오늘 업데이트
-  if (streak.lastDate === yesterday) {
-    streak.count++;
-  } else {
-    streak.count = 1;
-  }
-  streak.lastDate = today;
-  localStorage.setItem(STREAK_KEY, JSON.stringify(streak));
-  renderStreak();
-}
-
-function renderStreak() {
-  const raw = localStorage.getItem(STREAK_KEY);
-  const el  = document.getElementById('streak-num');
-  if (!el) return;
-  el.textContent = raw ? JSON.parse(raw).count : 0;
-}
-
-// ── 폭죽 효과 ──
-function launchConfetti() {
-  const colors = ['#FF5C35','#FFD166','#2ECC71','#3498DB','#9B59B6','#FF8B6B'];
-  const wrap   = document.createElement('div');
-  wrap.className = 'confetti-wrap';
-  document.body.appendChild(wrap);
-
-  for (let i = 0; i < 40; i++) {
-    const piece = document.createElement('div');
-    piece.className = 'confetti-piece';
-    piece.style.cssText = [
-      'left:' + Math.random() * 100 + 'vw',
-      'top:' + (Math.random() * -60) + 'px',
-      'background:' + colors[Math.floor(Math.random() * colors.length)],
-      'animation-delay:' + (Math.random() * 0.5) + 's',
-      'animation-duration:' + (1 + Math.random() * 0.6) + 's',
-      'width:' + (6 + Math.random() * 6) + 'px',
-      'height:' + (6 + Math.random() * 6) + 'px',
-      'border-radius:' + (Math.random() > 0.5 ? '50%' : '2px')
-    ].join(';');
-    wrap.appendChild(piece);
-  }
-  setTimeout(() => wrap.remove(), 2200);
-}
-
-// ───────── 초기화 ─────────
-window.onload = function() {
-  loadProfile();
-  loadApiCount();
-  loadMealData();
-  renderWeek();
-  renderTodayCheck();
-
-  if (!profile.eventDate) {
-    document.getElementById('onboarding').style.display = 'flex';
-    initOnboarding();
-  } else {
-    document.getElementById('onboarding').style.display = 'none';
-    updateDDayUI();
-  }
+const MEAL_ORDER = ['morning','lunch','dinner'];
+const MEAL_LABELS = { morning:'🌅 아침', lunch:'☀️ 점심', dinner:'🌙 저녁' };
+const ACTION_MAP = {
+  '배달앱주문': { label:'🛵 배달앱 열기', cls:'delivery', url:'baemin://' },
+  '쿠팡주문':  { label:'📦 쿠팡이츠', cls:'delivery', url:'https://www.coupangeats.com' },
+  '편의점구매': { label:'🏪 편의점 찾기', cls:'convenience', url:'https://map.naver.com/v5/search/편의점' },
+  '쿠팡이츠':  { label:'🛵 쿠팡이츠', cls:'delivery', url:'https://www.coupangeats.com' },
+  '직접구매':  { label:'🏃 직접 사기', cls:'convenience', url:'#' },
+  '마트구매':  { label:'🛒 쿠팡 주문', cls:'shopping', url:'https://www.coupang.com' }
 };
 
-// ───────── 프로필 ─────────
-function loadProfile() {
-  const raw = localStorage.getItem(PROFILE_KEY);
-  if (raw) profile = JSON.parse(raw);
-  applyProfileToSettings();
-}
-function saveProfile() {
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-}
+let profile = {}, mealData = null, apiCount = 0, selectedMeals = {};
 
-function applyProfileToSettings() {
-  if (!profile) return;
-  setVal('s-name', profile.name);
-  setVal('s-age', profile.age);
-  setVal('s-event', profile.eventName);
-  setVal('s-date', profile.eventDate);
-  setVal('s-goal-weight', profile.goalWeight);
-  setVal('s-email', profile.email);
-  setVal('s-notify-time', profile.notifyTime);
-  setVal('s-gas-url', profile.gasUrl);
-  if (profile.gender) setChip('gender', profile.gender);
-  if (profile.foodStyle) setChip('foodstyle', profile.foodStyle);
-  if (profile.notifyOn) {
-    document.getElementById('notify-toggle').classList.add('on');
-    document.getElementById('notify-fields').style.display = 'block';
-  }
-}
+// ══ 초기화 ══
+window.onload = function () {
+  loadProfile(); loadApiCount(); loadMealData(); renderWeek(); renderTodayCheck(); checkUpdateVersion(); setupCoachTap();
+  const ob = document.getElementById('onboarding');
+  if (!profile.eventDate) { ob.classList.remove('hidden'); initOnboarding(); }
+  else { ob.classList.add('hidden'); updateDDayUI(); }
+};
 
-function setVal(id, val) {
-  const el = document.getElementById(id);
-  if (el && val !== undefined && val !== null) el.value = val;
-}
-
-function setChip(group, val) {
-  document.querySelectorAll(`[onclick*="${group}"]`).forEach(c => {
-    c.classList.toggle('selected', c.dataset.val === val);
+// ══ 코치 탭 ══
+function setupCoachTap() {
+  let count = 0, timer = null;
+  document.getElementById('logo-tap').addEventListener('click', () => {
+    count++; clearTimeout(timer); timer = setTimeout(() => count = 0, 2000);
+    if (count >= 5) { count = 0; document.getElementById('gas-section').style.display = 'block'; switchTab('setting'); showToast('🔧 코치 설정 모드'); }
   });
 }
 
-function selectChip(el, group) {
-  document.querySelectorAll(`[onclick*="'${group}'"]`).forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function saveSettings() {
-  profile.name      = getVal('s-name');
-  profile.age       = getVal('s-age');
-  profile.gender    = getSelectedChip('gender');
-  profile.eventName = getVal('s-event');
-  profile.eventDate = getVal('s-date');
-  profile.goalWeight = getVal('s-goal-weight');
-  profile.foodStyle = getSelectedChip('foodstyle');
-  profile.notifyTime = getVal('s-notify-time');
-  // GAS URL (숨겨진 필드, 있으면 저장)
-  const gasUrlEl = document.getElementById('s-gas-url');
-  if (gasUrlEl && gasUrlEl.value) profile.gasUrl = gasUrlEl.value;
-  saveProfile();
-  updateDDayUI();
-  applyProfileToSettings();
-  showToast('✅ 저장됐어요!');
-}
-
-function getVal(id) {
-  return document.getElementById(id)?.value || '';
-}
-function getSelectedChip(group) {
-  return document.querySelector(`[onclick*="'${group}'"].selected`)?.dataset.val || '';
-}
-
-// ───────── D-Day UI ─────────
-function updateDDayUI() {
-  if (!profile.eventDate) return;
-  const today = new Date(); today.setHours(0,0,0,0);
-  const target = new Date(profile.eventDate); target.setHours(0,0,0,0);
-  const diff = Math.ceil((target - today) / 86400000);
-  const ddayText = diff > 0 ? `D-${diff}` : diff === 0 ? 'D-Day!' : `D+${Math.abs(diff)}`;
-
-  document.getElementById('header-dday').textContent = ddayText;
-  document.getElementById('main-dday-num').textContent = diff > 0 ? diff : 0;
-  document.getElementById('main-event-name').textContent = profile.eventName || 'D-Day';
-
-  // 진행률 계산 (시작일 없으면 diff 기준 추정)
-  const totalDays = diff + 14; // 시작은 2주 전으로 가정
-  const passed = totalDays - diff;
-  const pct = Math.max(0, Math.min(100, Math.round((passed / totalDays) * 100)));
-  document.getElementById('main-progress-bar').style.width = pct + '%';
-  document.getElementById('main-progress-pct').textContent = pct + '% 진행';
-}
-
-// ───────── API 횟수 관리 ─────────
-function loadApiCount() {
-  const raw = localStorage.getItem(API_COUNT_KEY);
-  if (raw) {
-    const data = JSON.parse(raw);
-    const today = new Date().toDateString();
-    if (data.date === today) apiCount = data.count;
-    else apiCount = 0;
-  }
-  updateLimitUI();
-}
-
-function useApiCall() {
-  apiCount++;
-  localStorage.setItem(API_COUNT_KEY, JSON.stringify({
-    date: new Date().toDateString(),
-    count: apiCount
-  }));
-  updateLimitUI();
-}
-
-function updateLimitUI() {
-  for (let i = 1; i <= 5; i++) {
-    const dot = document.getElementById('dot' + i);
-    if (dot) dot.className = 'limit-dot' + (i <= apiCount ? ' used' : '');
-  }
-  const left = MAX_API - apiCount;
-  const txt = document.getElementById('limit-text');
-  if (txt) txt.textContent = `오늘 ${MAX_API}회 중 ${apiCount}회 사용`;
-  const btn = document.getElementById('gen-btn');
-  if (btn) btn.disabled = apiCount >= MAX_API;
-}
-
-// ───────── 식단 데이터 ─────────
-function loadMealData() {
-  const raw = localStorage.getItem(MEAL_KEY);
-  if (raw) {
-    const data = JSON.parse(raw);
-    const tomorrow = getTomorrow();
-    if (data.date === tomorrow) {
-      mealData = data;
-      renderMealPlan(mealData);
-    }
-  }
-}
-
-function getTomorrow() {
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  return d.toDateString();
-}
-
-// ───────── 식단 생성 ─────────
-async function generateMealPlan() {
-  if (apiCount >= MAX_API) { showToast('오늘 AI 호출 횟수를 다 썼어요 😅'); return; }
-  if (!profile.eventDate) { showToast('먼저 설정에서 D-Day를 입력해주세요!'); switchTab('setting'); return; }
-
-  const btn = document.getElementById('gen-btn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
-
-  const gasUrl = profile.gasUrl || localStorage.getItem(GAS_URL_KEY) || GAS_URL_DEFAULT;
-
-  const today = new Date(); today.setHours(0,0,0,0);
-  const target = new Date(profile.eventDate); target.setHours(0,0,0,0);
-  const dday = Math.ceil((target - today) / 86400000);
-
-  const prompt = buildPrompt(dday, 'generate');
-
-  try {
-    let result;
-    result = await callGAS(GAS_URL_DEFAULT, { action: 'generateMeal', payload: { name: profile.name, age: profile.age, gender: profile.gender, targetDate: profile.eventDate, goalWeight: profile.goalWeight, foodStyle: profile.foodStyle, notes: profile.notes || '' } });
-    mealData = parseMealResponse(result);
-    mealData.date = getTomorrow();
-    localStorage.setItem(MEAL_KEY, JSON.stringify(mealData));
-    useApiCall();
-    renderMealPlan(mealData);
-    logTodayRecord(mealData);
-  } catch(e) {
-    showToast('AI 호출 실패 😥 잠시 후 다시 시도해주세요');
-    console.error(e);
-  }
-
-  btn.disabled = false;
-  btn.innerHTML = '<span>✨ 다시 짜줘!</span>';
-}
-
-function buildPrompt(dday, type, extra) {
-  const foodStyleMap = {
-    convenience:'편의점', delivery:'배달음식', cafeteria:'구내식당', cook:'집밥', mixed:'편의점·배달 혼합'
-  };
-  const foodStyle = foodStyleMap[profile.foodStyle] || '편의점·배달';
-  const name = profile.name || '사용자';
-  const goal = profile.goalWeight ? `${profile.goalWeight}kg 감량` : '체중 감량';
-
-  if (type === 'generate') {
-    return `너는 '리즈쌤'이라는 따뜻하고 현실적인 D-day 다이어트 코치야.
-${name}님의 D-day까지 ${dday}일 남았고, 목표는 ${goal}이야.
-주로 ${foodStyle}을 이용해.
-
-내일 아침/점심/저녁 식단을 A안·B안으로 총 6가지 제안해줘.
-조건:
-- 칼로리·영양소 수치는 적지 마 (귀찮아함)
-- 정확한 브랜드명·제품명으로 딱 정해줘 (예: GS25 감동란 2개, 굽네 황올리브)
-- 각 메뉴 옆에 "배달앱으로 주문" 또는 "편의점/마트 구매" 또는 "배민/쿠팡이츠" 중 적절한 액션 태그를 달아줘
-- 말투는 따뜻하고 짧게, 군말 없이
-- JSON으로만 응답해 (마크다운 없이)
-
-JSON 형식:
-{
-  "morning": {"A": {"menu": "메뉴명", "action": "편의점구매"}, "B": {"menu": "메뉴명", "action": "쿠팡주문"}},
-  "lunch": {"A": {"menu": "메뉴명", "action": "배달앱주문"}, "B": {"menu": "메뉴명", "action": "편의점구매"}},
-  "dinner": {"A": {"menu": "메뉴명", "action": "배달앱주문"}, "B": {"menu": "메뉴명", "action": "쿠팡주문"}},
-  "coach_comment": "한 줄 응원 메시지"
-}`;
-  }
-
-  if (type === 'emergency') {
-    return `너는 리즈쌤이야. ${name}님이 "${extra}"라고 했어.
-혼내지 말고, 따뜻하게 공감하면서 내일 식단 플랜B를 간단히 제시해줘.
-2-3문장으로 짧게, 친근하게. JSON 없이 텍스트로만.`;
-  }
-
-  if (type === 'jj') {
-    return `너는 리즈쌤이야. ${name}님이 "${extra}"라고 했어.
-공감하면서 현실적인 조언을 줘. 2-3문장, 따뜻하고 짧게. 텍스트로만.`;
-  }
-
-  if (type === 'coupon') {
-    return `너는 리즈쌤이야. ${name}님이 치팅데이 쿠폰을 사용했어. D-day까지 ${dday}일 남았어.
-오늘 먹고 싶은 걸 마음껏 먹어도 된다고 하면서, 내일부터 다시 시작하는 간단한 플랜을 2-3문장으로 알려줘. 텍스트로만.`;
-  }
-}
-
-// ───────── GAS 호출 (POST) ─────────
-async function callGAS(url, payload) {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload)
-  });
+// ══ GAS 호출 — GET 방식 (iOS Safari CORS 대응) ══
+async function callGAS(action, payload) {
+  const gasUrl = profile.gasUrl || GAS_URL_DEFAULT;
+  const params = new URLSearchParams({ action, payload: JSON.stringify(payload) });
+  const res = await fetch(gasUrl + '?' + params.toString(), { method: 'GET' });
   const data = await res.json();
   if (data.ok === false) throw new Error(data.error || 'GAS 오류');
   return data.result || data.reply || data.text || '';
 }
 
+// ══ 프로필 ══
+function loadProfile() { const r = localStorage.getItem(PROFILE_KEY); if (r) profile = JSON.parse(r); applyProfileToSettings(); }
+function saveProfile() { localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); }
+function applyProfileToSettings() {
+  setVal('s-name', profile.name); setVal('s-age', profile.age); setVal('s-event', profile.eventName);
+  setVal('s-date', profile.eventDate); setVal('s-goal-weight', profile.goalWeight);
+  setVal('s-notify-time', profile.notifyTime); setVal('s-gas-url', profile.gasUrl);
+  if (profile.gender) setChip('gender', profile.gender);
+  if (profile.foodStyle) setChip('foodstyle', profile.foodStyle);
+}
+function setVal(id, v) { const e = document.getElementById(id); if (e && v !== undefined && v !== null) e.value = v; }
+function getVal(id) { return document.getElementById(id)?.value || ''; }
+function setChip(g, v) { document.querySelectorAll(`[onclick*="'${g}'"]`).forEach(c => c.classList.toggle('selected', c.dataset.val === v)); }
+function selectChip(el, g) { document.querySelectorAll(`[onclick*="'${g}'"]`).forEach(c => c.classList.remove('selected')); el.classList.add('selected'); }
+function getSelectedChip(g) { return document.querySelector(`[onclick*="'${g}'"].selected`)?.dataset.val || ''; }
+function saveSettings() {
+  profile.name = getVal('s-name'); profile.age = getVal('s-age'); profile.gender = getSelectedChip('gender');
+  profile.eventName = getVal('s-event'); profile.eventDate = getVal('s-date'); profile.goalWeight = getVal('s-goal-weight');
+  profile.foodStyle = getSelectedChip('foodstyle'); profile.notifyTime = getVal('s-notify-time');
+  const gasEl = document.getElementById('s-gas-url'); if (gasEl && gasEl.value) profile.gasUrl = gasEl.value;
+  saveProfile(); updateDDayUI(); showToast('✅ 저장됐어요!');
+}
 
+// ══ D-Day UI ══
+function updateDDayUI() {
+  if (!profile.eventDate) return;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const target = new Date(profile.eventDate); target.setHours(0,0,0,0);
+  const diff = Math.ceil((target - today) / 86400000);
+  document.getElementById('header-dday').textContent = diff > 0 ? `D-${diff}` : diff === 0 ? 'D-Day!' : `D+${Math.abs(diff)}`;
+  document.getElementById('main-dday-num').textContent = Math.max(0, diff);
+  document.getElementById('main-event-name').textContent = profile.eventName || 'D-Day';
+  const totalDays = diff + 14, passed = totalDays - diff;
+  const pct = Math.max(0, Math.min(100, Math.round((passed / totalDays) * 100)));
+  document.getElementById('main-progress-bar').style.width = pct + '%';
+  document.getElementById('main-progress-pct').textContent = pct + '% 진행';
+}
 
-// ───────── 식단 파싱 ─────────
+// ══ API 횟수 ══
+function loadApiCount() {
+  const r = localStorage.getItem(API_COUNT_KEY);
+  if (r) { const d = JSON.parse(r); apiCount = d.date === new Date().toDateString() ? d.count : 0; }
+  updateLimitUI();
+}
+function useApiCall() { apiCount++; localStorage.setItem(API_COUNT_KEY, JSON.stringify({ date: new Date().toDateString(), count: apiCount })); updateLimitUI(); }
+function updateLimitUI() {
+  for (let i = 1; i <= 5; i++) { const d = document.getElementById('dot'+i); if (d) d.className = 'limit-dot' + (i <= apiCount ? ' used' : ''); }
+  const t = document.getElementById('limit-text'); if (t) t.textContent = `오늘 ${MAX_API}회 중 ${apiCount}회 사용`;
+  const b = document.getElementById('gen-btn'); if (b) b.disabled = apiCount >= MAX_API;
+}
+
+// ══ 식단 로드 ══
+function loadMealData() {
+  const r = localStorage.getItem(MEAL_KEY);
+  if (!r) return;
+  const d = JSON.parse(r);
+  if (d.date === getTomorrow()) { mealData = d; renderMealPlan(mealData); }
+}
+function getTomorrow() { const d = new Date(); d.setDate(d.getDate() + 1); return d.toDateString(); }
+
+// ══ 식단 생성 ══
+async function generateMealPlan() {
+  if (apiCount >= MAX_API) { showToast('오늘 AI 호출 횟수를 다 썼어요 😅'); return; }
+  if (!profile.eventDate) { showToast('먼저 설정에서 D-Day를 입력해주세요!'); switchTab('setting'); return; }
+  const btn = document.getElementById('gen-btn');
+  btn.disabled = true; btn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
+  localStorage.removeItem(MEAL_KEY); selectedMeals = {};
+  try {
+    const result = await callGAS('generateMeal', { name: profile.name, age: profile.age, gender: profile.gender, targetDate: profile.eventDate, goalWeight: profile.goalWeight, foodStyle: profile.foodStyle, notes: profile.notes || '' });
+    mealData = parseMealResponse(result);
+    mealData.date = getTomorrow();
+    localStorage.setItem(MEAL_KEY, JSON.stringify(mealData));
+    useApiCall(); renderMealPlan(mealData); logTodayRecord(mealData);
+  } catch (e) { showToast('AI 호출 실패 😥 잠시 후 다시 시도해주세요'); console.error(e); }
+  btn.disabled = (apiCount >= MAX_API); btn.innerHTML = '<span>✨ 다시 짜줘!</span>';
+}
+
+// ══ 파싱 ══
 function parseMealResponse(raw) {
   try {
-    const cleaned = raw.replace(/```json|```/g, '').trim();
-    return JSON.parse(cleaned);
-  } catch(e) {
+    const c = (typeof raw === 'string') ? raw.replace(/```json|```/g, '').trim() : JSON.stringify(raw);
+    return JSON.parse(c);
+  } catch (e) {
     return {
       morning: { A: { menu: 'GS25 닭가슴살 소시지 + 감동란 2개', action: '편의점구매' }, B: { menu: '그릭요거트 + 바나나 1개', action: '편의점구매' } },
-      lunch: { A: { menu: '서브웨이 로스트치킨 6인치 (소스 없이)', action: '배달앱주문' }, B: { menu: '구내식당 국밥 (밥 반 공기)', action: '직접구매' } },
-      dinner: { A: { menu: '굽네 오리지널 반마리 + 샐러드', action: '배달앱주문' }, B: { menu: 'CU 닭가슴살 도시락', action: '편의점구매' } },
+      lunch:   { A: { menu: '서브웨이 로스트치킨 6인치 (소스 없이)', action: '배달앱주문' }, B: { menu: '구내식당 국밥 (밥 반 공기)', action: '직접구매' } },
+      dinner:  { A: { menu: '굽네 오리지널 반마리 + 샐러드', action: '배달앱주문' }, B: { menu: 'CU 닭가슴살 도시락', action: '편의점구매' } },
       coach_comment: '오늘도 파이팅! 하루하루가 쌓이면 달라져요 💪'
     };
   }
 }
 
-// ───────── 식단 렌더링 ─────────
-const ACTION_MAP = {
-  '배달앱주문': { label: '🛵 배달앱 열기', cls: 'delivery', url: 'baemin://' },
-  '쿠팡주문': { label: '📦 쿠팡이츠', cls: 'delivery', url: 'https://www.coupangeats.com' },
-  '편의점구매': { label: '🏪 편의점 찾기', cls: 'convenience', url: 'https://map.naver.com/v5/search/편의점' },
-  '쿠팡이츠': { label: '🛵 쿠팡이츠', cls: 'delivery', url: 'https://www.coupangeats.com' },
-  '직접구매': { label: '🏃 직접 사기', cls: 'convenience', url: '#' },
-  '마트구매': { label: '🛒 쿠팡 주문', cls: 'shopping', url: 'https://www.coupang.com' }
-};
-
-const MEAL_LABELS = { morning: '🌅 아침', lunch: '☀️ 점심', dinner: '🌙 저녁' };
-const MEAL_ORDER = ['morning', 'lunch', 'dinner'];
-
+// ══ 렌더링 ══
 function renderMealPlan(data) {
   document.getElementById('meal-empty').style.display = 'none';
-  const area = document.getElementById('meal-ab-area');
-  area.style.display = 'block';
-  area.innerHTML = '';
-
+  const area = document.getElementById('meal-ab-area'); area.style.display = 'block'; area.innerHTML = '';
   MEAL_ORDER.forEach(time => {
     if (!data[time]) return;
-    const block = document.createElement('div');
-    block.className = 'meal-time-block';
-    block.innerHTML = `<div class="meal-time-label">${MEAL_LABELS[time]}</div>
-    <div class="ab-wrap">
-      ${renderAbBtn('A', time, data[time].A)}
-      ${renderAbBtn('B', time, data[time].B)}
-    </div>`;
+    const block = document.createElement('div'); block.className = 'meal-time-block';
+    block.innerHTML = `<div class="meal-time-label">${MEAL_LABELS[time]}</div><div class="ab-wrap">${renderAbBtn('A',time,data[time].A)}${renderAbBtn('B',time,data[time].B)}</div>`;
     area.appendChild(block);
   });
-
   if (data.coach_comment) {
-    const comment = document.createElement('div');
-    comment.style.cssText = 'font-size:13px;color:var(--primary);font-weight:500;margin-top:10px;padding:10px 14px;background:var(--primary-pale);border-radius:10px;';
-    comment.textContent = '💬 ' + data.coach_comment;
-    area.appendChild(comment);
+    const c = document.createElement('div');
+    c.style.cssText = 'font-size:13px;color:var(--primary);font-weight:500;margin-top:10px;padding:10px 14px;background:var(--primary-pale);border-radius:10px;';
+    c.textContent = '💬 ' + data.coach_comment; area.appendChild(c);
   }
-  showConfirmArea();
+  document.getElementById('meal-confirm-area').classList.add('visible');
+  updateMissionGauge();
 }
-
 function renderAbBtn(ab, time, meal) {
-  const mealStr = meal?.menu || '';
-  const actionKey = meal?.action || '배달앱주문';
-  return `<button class="ab-btn" onclick="selectAB(this,'${time}','${ab}','${actionKey}')" data-time="${time}" data-ab="${ab}">
-    <span class="ab-badge">${ab}안</span>
-    <div class="ab-menu">${mealStr}</div>
-    <span class="selected-check">✅</span>
-  </button>`;
+  const menu = (meal?.menu || '').replace(/'/g,"&#39;");
+  const act  = (meal?.action || '배달앱주문').replace(/'/g,"&#39;");
+  return `<button class="ab-btn" onclick="selectAB(this,'${time}','${ab}','${act}')" data-time="${time}" data-ab="${ab}"><span class="ab-badge">${ab}안</span><div class="ab-menu">${meal?.menu||''}</div><span class="selected-check">✅</span></button>`;
 }
-
-let selectedMeals = {};
-
 function selectAB(el, time, ab, actionKey) {
-  // 같은 시간대 선택 해제
   document.querySelectorAll(`.ab-btn[data-time="${time}"]`).forEach(b => b.classList.remove('selected'));
   el.classList.add('selected');
   selectedMeals[time] = { ab, actionKey, menu: el.querySelector('.ab-menu').textContent };
-
-  // 액션 버튼 업데이트
-  updateActionArea();
-  updateMissionGauge();
+  updateActionArea(); updateMissionGauge();
 }
-
 function updateActionArea() {
-  const keys = Object.keys(selectedMeals);
-  if (keys.length === 0) return;
-
-  const area = document.getElementById('action-area');
-  area.classList.add('visible');
-
+  if (!Object.keys(selectedMeals).length) return;
+  document.getElementById('action-area').classList.add('visible');
   const wrap = document.getElementById('action-btns-wrap');
-  const actionSet = new Set(Object.values(selectedMeals).map(m => m.actionKey));
+  const keys = new Set(Object.values(selectedMeals).map(m => m.actionKey));
   wrap.innerHTML = '';
-
-  actionSet.forEach(key => {
+  keys.forEach(key => {
     const info = ACTION_MAP[key] || ACTION_MAP['배달앱주문'];
-    const btn = document.createElement('button');
-    btn.className = `action-btn ${info.cls}`;
-    btn.textContent = info.label;
-    btn.onclick = () => {
-      if (info.url && info.url !== '#') window.open(info.url, '_blank');
-    };
+    const btn = document.createElement('button'); btn.className = `action-btn ${info.cls}`; btn.textContent = info.label;
+    btn.onclick = () => { if (info.url && info.url !== '#') window.open(info.url, '_blank'); };
     wrap.appendChild(btn);
   });
-
-  // 쿠팡 장보기 버튼 항상 노출
-  const coupangBtn = document.createElement('button');
-  coupangBtn.className = 'action-btn shopping';
-  coupangBtn.textContent = '🛒 쿠팡으로 사러가기';
-  coupangBtn.style.width = '100%';
-  coupangBtn.onclick = () => window.open('https://www.coupang.com', '_blank');
-  wrap.appendChild(coupangBtn);
+  const cb = document.createElement('button'); cb.className = 'action-btn shopping'; cb.textContent = '🛒 쿠팡으로 사러가기'; cb.style.width = '100%';
+  cb.onclick = () => window.open('https://www.coupang.com', '_blank'); wrap.appendChild(cb);
 }
-
 function updateMissionGauge() {
-  const done = Object.keys(selectedMeals).length;
-  const total = 3;
-  const pct = Math.round((done / total) * 100);
-  document.getElementById('mission-gauge').style.width = pct + '%';
-  document.getElementById('mission-pct-num').textContent = pct + '%';
-  document.getElementById('mission-pct-label').textContent = `${done}/${total} 완료`;
+  const done = Object.keys(selectedMeals).length, pct = Math.round((done/3)*100);
+  const g = document.getElementById('mission-gauge'), p = document.getElementById('mission-pct-num'), l = document.getElementById('mission-pct-label');
+  if (g) g.style.width = pct+'%'; if (p) p.textContent = pct+'%'; if (l) l.textContent = done+'/3 완료';
 }
 
-// ───────── 로그 기록 ─────────
-function logTodayRecord(data) {
-  const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
-  const tomorrow = getTomorrow();
-  const existing = logs.findIndex(l => l.date === tomorrow);
-  const entry = { date: tomorrow, meals: data, selected: {} };
-  if (existing >= 0) logs[existing] = entry;
-  else logs.unshift(entry);
-  if (logs.length > 30) logs.pop();
+// ══ 확정 / 초기화 ══
+function confirmMeal() {
+  const logs = JSON.parse(localStorage.getItem(LOG_KEY)||'[]'), tomorrow = getTomorrow();
+  const idx = logs.findIndex(l => l.date === tomorrow);
+  if (idx >= 0) { logs[idx].confirmed = true; logs[idx].selected = selectedMeals; }
   localStorage.setItem(LOG_KEY, JSON.stringify(logs));
-  renderWeek();
+  document.getElementById('meal-confirm-area').classList.remove('visible');
+  document.getElementById('gen-btn').style.display = 'none';
+  showToast('🎉 식단 확정! 내일도 파이팅!'); renderWeek();
+}
+function resetMeal() {
+  selectedMeals = {}; document.querySelectorAll('.ab-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('action-area').classList.remove('visible');
+  document.getElementById('meal-confirm-area').classList.remove('visible');
+  updateMissionGauge(); showToast('다시 골라봐요!');
 }
 
-// ───────── 주간 기록 렌더링 ─────────
-function renderWeek() {
-  const days = ['일','월','화','수','목','금','토'];
-  const logs = JSON.parse(localStorage.getItem(LOG_KEY) || '[]');
-  const grid = document.getElementById('week-grid');
-  if (!grid) return;
-  grid.innerHTML = '';
+// ══ 로그 ══
+function logTodayRecord(data) {
+  const logs = JSON.parse(localStorage.getItem(LOG_KEY)||'[]'), tomorrow = getTomorrow();
+  const idx = logs.findIndex(l => l.date === tomorrow);
+  const entry = { date: tomorrow, meals: data, selected: {} };
+  if (idx >= 0) logs[idx] = entry; else logs.unshift(entry);
+  if (logs.length > 30) logs.pop();
+  localStorage.setItem(LOG_KEY, JSON.stringify(logs)); renderWeek();
+}
 
-  const today = new Date();
-  let totalDone = 0, totalMeals = 0;
-
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(today);
-    d.setDate(today.getDate() - i);
-    const label = days[d.getDay()];
-    const dateStr = d.toDateString();
-    const log = logs.find(l => l.date === dateStr);
-
-    const chip = document.createElement('div');
-    chip.className = 'day-chip';
-
-    const isToday = i === 0;
-    chip.innerHTML = `<div class="day-label" style="${isToday ? 'color:var(--primary);font-weight:700' : ''}">${label}</div>
-    <div class="day-dots">
-      ${['morning','lunch','dinner'].map(m => {
-        const done = log?.selected?.[m];
-        totalMeals++;
-        if (done) totalDone++;
-        return `<div class="day-dot${done ? ' done' : ''}"></div>`;
-      }).join('')}
-    </div>`;
-    grid.appendChild(chip);
-  }
-
-  const pct = totalMeals > 0 ? Math.round((totalDone / totalMeals) * 100) : 0;
-  const pctEl = document.getElementById('week-total-pct');
-  if (pctEl) pctEl.textContent = pct + '%';
-
-  // 히스토리 리스트
-  const list = document.getElementById('week-record-list');
-  if (!list) return;
-  if (logs.length === 0) return;
-  list.innerHTML = '';
-  logs.slice(0, 7).forEach(log => {
-    const d = new Date(log.date);
-    const mm = d.getMonth() + 1, dd = d.getDate();
-    const item = document.createElement('div');
-    item.className = 'week-record-item';
-    item.style.cursor = 'pointer';
-    const meals = log.meals;
-    const selected = log.selected || {};
-    item.onclick = () => openHistoryModal(mm, dd, meals, selected);
-    item.innerHTML = `<div class="week-record-date">${mm}/${dd}</div>
-    <div class="week-record-meals">
-      ${meals.morning ? `<div class="week-record-meal-row"><span class="meal-tag morning">아침</span>${meals.morning.A?.menu?.slice(0,14) || '-'}</div>` : ''}
-      ${meals.lunch ? `<div class="week-record-meal-row"><span class="meal-tag lunch">점심</span>${meals.lunch.A?.menu?.slice(0,14) || '-'}</div>` : ''}
-      ${meals.dinner ? `<div class="week-record-meal-row"><span class="meal-tag dinner">저녁</span>${meals.dinner.A?.menu?.slice(0,14) || '-'}</div>` : ''}
-    </div>
-    <div class="week-record-badge">📋</div>`;
-    list.appendChild(item);
+// ══ 오늘 체크 ══
+function loadTodayCheck() { const r = localStorage.getItem(TODAY_CHECK_KEY); if (!r) return {}; const d = JSON.parse(r); return d.date !== new Date().toDateString() ? {} : (d.checks||{}); }
+function saveTodayCheck(c) { localStorage.setItem(TODAY_CHECK_KEY, JSON.stringify({ date: new Date().toDateString(), checks: c })); }
+function renderTodayCheck() {
+  const c = loadTodayCheck();
+  ['morning','lunch','dinner'].forEach(m => {
+    const btn = document.getElementById('check-'+m), stat = document.getElementById('mstatus-'+m);
+    if (!btn||!stat) return;
+    if (c[m]) { btn.classList.add('checked'); stat.textContent='✅'; } else { btn.classList.remove('checked'); stat.textContent='-'; }
   });
+  updateTodayGauge(c); renderStreak();
+}
+function toggleMealCheck(meal) {
+  const c = loadTodayCheck(); c[meal] = !c[meal]; saveTodayCheck(c);
+  const btn = document.getElementById('check-'+meal), stat = document.getElementById('mstatus-'+meal);
+  if (c[meal]) { btn.classList.add('checked'); stat.textContent='✅'; if (navigator.vibrate) navigator.vibrate(30); }
+  else { btn.classList.remove('checked'); stat.textContent='-'; }
+  updateTodayGauge(c);
+  if (Object.values(c).filter(Boolean).length === 3) { document.getElementById('all-done-badge').style.display='block'; launchConfetti(); updateStreak(); }
+  else document.getElementById('all-done-badge').style.display='none';
+}
+function updateTodayGauge(c) {
+  const done = Object.values(c).filter(Boolean).length, pct = Math.round((done/3)*100);
+  const g = document.getElementById('today-gauge'), l = document.getElementById('today-pct-label');
+  if (g) g.style.width=pct+'%'; if (l) l.textContent=done+' / 3 완료';
+}
+function updateStreak() {
+  const r = localStorage.getItem(STREAK_KEY), today = new Date().toDateString(), yest = new Date(Date.now()-86400000).toDateString();
+  let s = { count:0, lastDate:'' }; if (r) s = JSON.parse(r);
+  if (s.lastDate===today) return;
+  s.count = (s.lastDate===yest) ? s.count+1 : 1; s.lastDate=today;
+  localStorage.setItem(STREAK_KEY, JSON.stringify(s)); renderStreak();
+}
+function renderStreak() { const r = localStorage.getItem(STREAK_KEY), e = document.getElementById('streak-num'); if (e) e.textContent = r ? JSON.parse(r).count : 0; }
+function launchConfetti() {
+  const cols=['#FF5C35','#FFD166','#2ECC71','#3498DB','#9B59B6','#FF8B6B'], wrap=document.createElement('div');
+  wrap.className='confetti-wrap'; document.body.appendChild(wrap);
+  for (let i=0;i<40;i++) { const p=document.createElement('div'); p.className='confetti-piece'; p.style.cssText=['left:'+Math.random()*100+'vw','top:'+(Math.random()*-60)+'px','background:'+cols[Math.floor(Math.random()*cols.length)],'animation-delay:'+(Math.random()*0.5)+'s','animation-duration:'+(1+Math.random()*0.6)+'s','width:'+(6+Math.random()*6)+'px','height:'+(6+Math.random()*6)+'px','border-radius:'+(Math.random()>0.5?'50%':'2px')].join(';'); wrap.appendChild(p); }
+  setTimeout(() => wrap.remove(), 2200);
 }
 
-// ───────── 징징대기 ─────────
-function selectJJ(el, text) {
-  document.querySelectorAll('.jj-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
-  document.getElementById('jj-custom-input').value = text;
-  sendJJ();
-}
-
+// ══ 징징대기 ══
+function selectJJ(el, text) { document.querySelectorAll('.jj-btn').forEach(b=>b.classList.remove('selected')); el.classList.add('selected'); document.getElementById('jj-custom-input').value=text; sendJJ(); }
 async function sendJJ() {
   const text = document.getElementById('jj-custom-input').value.trim();
   if (!text) { showToast('내용을 입력해주세요'); return; }
   if (apiCount >= MAX_API) { showToast('오늘 AI 호출 횟수를 다 썼어요 😅'); return; }
-
-  const box = document.getElementById('jj-response');
-  const textEl = document.getElementById('jj-response-text');
-  box.classList.add('visible');
-  textEl.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span>';
-
-  const today = new Date(); today.setHours(0,0,0,0);
-  const target = profile.eventDate ? new Date(profile.eventDate) : today;
-  const dday = Math.ceil((target - today) / 86400000);
-  const prompt = buildPrompt(dday, 'jj', text);
-
+  const box=document.getElementById('jj-response'), textEl=document.getElementById('jj-response-text');
+  box.classList.add('visible'); textEl.innerHTML='<span class="loading-dots"><span></span><span></span><span></span></span>';
   try {
-    let result;
-    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', payload: { name: profile.name, message: text, targetDate: profile.eventDate, goalWeight: profile.goalWeight, foodStyle: profile.foodStyle } });
-    textEl.textContent = result;
-    useApiCall();
-  } catch(e) {
-    textEl.textContent = '잠깐 연결이 안 됐어요. 다시 눌러봐요! 😅';
-  }
+    const r = await callGAS('chat', { name:profile.name, message:text, targetDate:profile.eventDate, goalWeight:profile.goalWeight, foodStyle:profile.foodStyle });
+    textEl.textContent=r; useApiCall();
+  } catch(e) { textEl.textContent='잠깐 연결이 안 됐어요. 다시 눌러봐요! 😅'; }
 }
 
-// ───────── 긴급 복구 ─────────
+// ══ 긴급 복구 ══
 async function handleEmergency() {
   const text = document.getElementById('emergency-input').value.trim();
   if (!text) { showToast('뭘 먹었는지 알려주세요!'); return; }
   closeModal('modal-emergency');
   if (apiCount >= MAX_API) { showToast('오늘 AI 호출 횟수를 다 썼어요 😅'); return; }
-
-  const today = new Date(); today.setHours(0,0,0,0);
-  const target = profile.eventDate ? new Date(profile.eventDate) : today;
-  const dday = Math.ceil((target - today) / 86400000);
-  const prompt = buildPrompt(dday, 'emergency', text);
-
   showToast('🔥 긴급 복구 플랜 생성 중...');
-
   try {
-    let result;
-    const gasUrl = profile.gasUrl;
-    if (gasUrl) {
-      result = await callGAS(gasUrl, { action: 'chat', prompt });
-    } else {
-      result = await callGAS(GAS_URL_DEFAULT, { action: 'gemini', payload: { prompt } });
-    }
-    // 징징대기 탭에 결과 표시
-    document.getElementById('jj-custom-input').value = text;
+    const r = await callGAS('emergency', { name:profile.name, message:text, targetDate:profile.eventDate, goalWeight:profile.goalWeight });
+    document.getElementById('jj-custom-input').value=text;
     document.getElementById('jj-response').classList.add('visible');
-    document.getElementById('jj-response-text').textContent = result;
-    useApiCall();
-    switchTab('jj');
-  } catch(e) {
-    showToast('연결 실패 😥 다시 시도해주세요');
-  }
+    document.getElementById('jj-response-text').textContent=r;
+    useApiCall(); switchTab('jj');
+  } catch(e) { showToast('연결 실패 😥 다시 시도해주세요'); }
 }
 
-// ───────── 치팅쿠폰 ─────────
-function useCoupon() {
-  const used = localStorage.getItem(COUPON_KEY);
-  const thisWeek = getWeekString();
-  if (used === thisWeek) {
-    showToast('이번 주 쿠폰은 이미 썼어요 🎟️');
-    return;
-  }
-  openModal('modal-coupon');
-}
-
+// ══ 치팅쿠폰 ══
+function useCoupon() { if (localStorage.getItem(COUPON_KEY)===getWeekString()) { showToast('이번 주 쿠폰은 이미 썼어요 🎟️'); return; } openModal('modal-coupon'); }
 async function confirmCoupon() {
-  closeModal('modal-coupon');
-  localStorage.setItem(COUPON_KEY, getWeekString());
-  document.getElementById('coupon-count').textContent = '이번 주 사용 완료';
-
-  const today = new Date(); today.setHours(0,0,0,0);
-  const target = profile.eventDate ? new Date(profile.eventDate) : today;
-  const dday = Math.ceil((target - today) / 86400000);
-  const prompt = buildPrompt(dday, 'coupon');
-
+  closeModal('modal-coupon'); localStorage.setItem(COUPON_KEY, getWeekString());
+  document.getElementById('coupon-count').textContent='이번 주 사용 완료';
   if (apiCount >= MAX_API) { showToast('오늘 먹고 싶은 거 다 먹어요! 내일부터 다시 화이팅 🎉'); return; }
-
   try {
-    let result;
-    result = await callGAS(GAS_URL_DEFAULT, { action: 'chat', payload: { name: profile.name, message: text, targetDate: profile.eventDate, goalWeight: profile.goalWeight, foodStyle: profile.foodStyle } });
-
+    // [수정] text 변수 미정의 버그 수정
+    const r = await callGAS('coupon', { name:profile.name, targetDate:profile.eventDate, goalWeight:profile.goalWeight, message:'치팅데이 쿠폰 사용했어요' });
     document.getElementById('jj-response').classList.add('visible');
-    document.getElementById('jj-response-text').textContent = result;
-    useApiCall();
-    switchTab('jj');
-  } catch(e) {
-    showToast('오늘 먹고 싶은 거 다 먹어요! 내일부터 다시 화이팅 🎉');
+    document.getElementById('jj-response-text').textContent=r;
+    useApiCall(); switchTab('jj');
+  } catch(e) { showToast('오늘 먹고 싶은 거 다 먹어요! 내일부터 다시 화이팅 🎉'); }
+}
+function getWeekString() { const d=new Date(), j=new Date(d.getFullYear(),0,1), w=Math.ceil((((d-j)/86400000)+j.getDay()+1)/7); return `${d.getFullYear()}-W${w}`; }
+
+// ══ 주간 기록 ══
+function renderWeek() {
+  const days=['일','월','화','수','목','금','토'], logs=JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
+  const grid=document.getElementById('week-grid'); if (!grid) return;
+  grid.innerHTML=''; const today=new Date(); let td=0, tm=0;
+  for (let i=6;i>=0;i--) {
+    const d=new Date(today); d.setDate(today.getDate()-i);
+    const log=logs.find(l=>l.date===d.toDateString()), chip=document.createElement('div');
+    chip.className='day-chip';
+    chip.innerHTML=`<div class="day-label" style="${i===0?'color:var(--primary);font-weight:700':''}">${days[d.getDay()]}</div><div class="day-dots">${['morning','lunch','dinner'].map(m=>{ const done=log?.selected?.[m]; tm++; if(done) td++; return `<div class="day-dot${done?' done':''}"></div>`; }).join('')}</div>`;
+    grid.appendChild(chip);
   }
+  const pe=document.getElementById('week-total-pct'); if (pe) pe.textContent=(tm>0?Math.round((td/tm)*100):0)+'%';
+  const list=document.getElementById('week-record-list'); if (!list||!logs.length) return;
+  list.innerHTML='';
+  logs.slice(0,7).forEach(log=>{
+    const d=new Date(log.date), mm=d.getMonth()+1, dd=d.getDate(), item=document.createElement('div');
+    item.className='week-record-item'; item.style.cursor='pointer';
+    const meals=log.meals||{}, sel=log.selected||{};
+    item.onclick=()=>openHistoryModal(mm,dd,meals,sel);
+    item.innerHTML=`<div class="week-record-date">${mm}/${dd}</div><div class="week-record-meals">${meals.morning?`<div class="week-record-meal-row"><span class="meal-tag morning">아침</span>${(meals.morning.A?.menu||'-').slice(0,14)}</div>`:''}${meals.lunch?`<div class="week-record-meal-row"><span class="meal-tag lunch">점심</span>${(meals.lunch.A?.menu||'-').slice(0,14)}</div>`:''}${meals.dinner?`<div class="week-record-meal-row"><span class="meal-tag dinner">저녁</span>${(meals.dinner.A?.menu||'-').slice(0,14)}</div>`:''}</div><div class="week-record-badge">📋</div>`;
+    list.appendChild(item);
+  });
 }
 
-function getWeekString() {
-  const d = new Date();
-  const jan1 = new Date(d.getFullYear(), 0, 1);
-  const week = Math.ceil((((d - jan1) / 86400000) + jan1.getDay() + 1) / 7);
-  return `${d.getFullYear()}-W${week}`;
+// ══ 히스토리 모달 ══
+function openHistoryModal(mm,dd,meals,selected) {
+  document.getElementById('hm-date').textContent=`${mm}월 ${dd}일 식단`;
+  let html='';
+  MEAL_ORDER.forEach(time=>{
+    if (!meals[time]) return;
+    const sel=selected[time], a=meals[time].A?.menu||'-', b=meals[time].B?.menu||'-';
+    const cls=time==='morning'?'morning':time==='lunch'?'lunch':'dinner', lbl=time==='morning'?'아침':time==='lunch'?'점심':'저녁';
+    html+=`<div class="history-meal-row"><span class="meal-tag ${cls}">${lbl}</span><div class="history-meal-content"><div>A안 ${a}${sel?.ab==='A'?'<span class="history-selected-badge">선택</span>':''}</div><div style="margin-top:4px;color:var(--gray4)">B안 ${b}${sel?.ab==='B'?'<span class="history-selected-badge">선택</span>':''}</div></div></div>`;
+  });
+  document.getElementById('hm-content').innerHTML=html;
+  document.getElementById('history-modal').classList.add('open');
 }
+function closeHistoryModal(e) { if (e.target===document.getElementById('history-modal')) document.getElementById('history-modal').classList.remove('open'); }
 
-// ───────── 카카오 1:1 연결 ─────────
+// ══ 카카오 ══
 function connectKakao() {
-  const name       = profile.name || getVal('s-name') || '리즈온 유저';
-  const notifyTime = getVal('s-notify-time') || '22:00';
-  const timeLabel  = document.getElementById('s-notify-time')?.selectedOptions[0]?.text || notifyTime;
-  const eventName  = profile.eventName || getVal('s-event') || 'D-Day';
-
-  const msg = `안녕하세요! 리즈온 알림 신청합니다 🙋\n이름: ${name}\n이벤트: ${eventName}\n알림 희망 시간: 매일 ${timeLabel}`;
-
-  // 클립보드 복사
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(msg).then(() => {
-      showToast('📋 입장 메시지가 복사됐어요! 카톡 열리면 붙여넣기 해주세요', 3000);
-    }).catch(() => fallbackCopy(msg));
-  } else {
-    fallbackCopy(msg);
-  }
-
-  // 카카오 오픈프로필 링크 열기 (약간의 딜레이로 복사 토스트 먼저 보이게)
-  setTimeout(() => {
-    const KAKAO_LINK = 'https://open.kakao.com/o/seU4a0li';
-    window.open(KAKAO_LINK, '_blank');
-    document.getElementById('kakao-status').style.display = 'block';
-  }, 800);
+  const name=profile.name||getVal('s-name')||'리즈온 유저', tl=document.getElementById('s-notify-time')?.selectedOptions[0]?.text||'22:00', ev=profile.eventName||getVal('s-event')||'D-Day';
+  const msg=`안녕하세요! 리즈온 알림 신청합니다 🙋\n이름: ${name}\n이벤트: ${ev}\n알림 희망 시간: 매일 ${tl}`;
+  if (navigator.clipboard?.writeText) navigator.clipboard.writeText(msg).then(()=>showToast('📋 입장 메시지가 복사됐어요! 카톡 열리면 붙여넣기 해주세요',3000)).catch(()=>fallbackCopy(msg));
+  else fallbackCopy(msg);
+  setTimeout(()=>{ window.open('https://open.kakao.com/o/seU4a0li','_blank'); document.getElementById('kakao-status').style.display='block'; },800);
 }
-
 function fallbackCopy(text) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px';
-  document.body.appendChild(ta);
-  ta.select();
-  try {
-    document.execCommand('copy');
-    showToast('📋 입장 메시지가 복사됐어요! 카톡 열리면 붙여넣기 해주세요', 3000);
-  } catch(e) {
-    showToast('카카오톡 링크로 이동할게요!');
-  }
+  const ta=document.createElement('textarea'); ta.value=text; ta.style.cssText='position:fixed;top:-9999px;left:-9999px'; document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); showToast('📋 입장 메시지가 복사됐어요!',3000); } catch(e) { showToast('카카오톡 링크로 이동할게요!'); }
   document.body.removeChild(ta);
 }
 
-// ───────── 탭 전환 ─────────
-function switchTab(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('screen-' + name).classList.add('active');
-  document.getElementById('tab-' + name).classList.add('active');
-}
-
-// ───────── 모달 ─────────
+// ══ 탭 / 모달 / 토스트 ══
+function switchTab(n) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); document.getElementById('screen-'+n).classList.add('active'); document.getElementById('tab-'+n).classList.add('active'); }
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
-});
+document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.remove('open'); }));
+function showToast(msg, dur=2500) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),dur); }
 
-// ───────── 토스트 ─────────
-function showToast(msg, duration = 2500) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), duration);
-}
-
-// ───────── 온보딩 ─────────
-const OB_STEPS = [
-  {
-    q: '어떤 날을 위해 다이어트 중이에요? 🗓️',
-    type: 'chips',
-    key: 'eventName',
-    options: ['바디프로필', '결혼식', '여름휴가', '동창회', '생일', '기타']
-  },
-  {
-    q: '그날이 언제예요?',
-    type: 'date',
-    key: 'eventDate'
-  },
-  {
-    q: '몇 kg 빼고 싶어요?',
-    type: 'chips',
-    key: 'goalWeight',
-    options: ['1~2kg', '3~5kg', '5~10kg', '10kg 이상']
-  },
-  {
-    q: '주로 어떻게 식사해요?',
-    type: 'chips',
-    key: 'foodStyle',
-    options: [
-      {label: '🏪 편의점', val: 'convenience'},
-      {label: '🛵 배달음식', val: 'delivery'},
-      {label: '🏢 구내식당', val: 'cafeteria'},
-      {label: '🍳 집밥', val: 'cook'},
-      {label: '🔀 혼합', val: 'mixed'}
-    ]
-  }
+// ══ 온보딩 ══
+const OB_STEPS=[
+  {q:'어떤 날을 위해 다이어트 중이에요? 🗓️',type:'chips',key:'eventName',options:['바디프로필','결혼식','여름휴가','동창회','생일','기타']},
+  {q:'그날이 언제예요?',type:'date',key:'eventDate'},
+  {q:'몇 kg 빼고 싶어요?',type:'chips',key:'goalWeight',options:['1~2kg','3~5kg','5~10kg','10kg 이상']},
+  {q:'주로 어떻게 식사해요?',type:'chips',key:'foodStyle',options:[{label:'🏪 편의점',val:'convenience'},{label:'🛵 배달음식',val:'delivery'},{label:'🏢 구내식당',val:'cafeteria'},{label:'🍳 집밥',val:'cook'},{label:'🔀 혼합',val:'mixed'}]}
 ];
-
-let obStep = 0;
-let obAnswers = {};
-
-function initOnboarding() {
-  obStep = 0;
-  renderObStep();
-}
-
+let obStep=0, obAnswers={};
+function initOnboarding() { obStep=0; obAnswers={}; renderObStep(); }
 function renderObStep() {
-  const step = OB_STEPS[obStep];
-  document.getElementById('ob-step').textContent = `STEP ${obStep + 1} / ${OB_STEPS.length}`;
-  document.getElementById('ob-q').textContent = step.q;
-  document.getElementById('ob-next-btn').textContent = obStep < OB_STEPS.length - 1 ? '다음 →' : '시작하기 🎉';
-
-  const wrap = document.getElementById('ob-input-wrap');
-  wrap.innerHTML = '';
-
-  if (step.type === 'chips') {
-    const grid = document.createElement('div');
-    grid.className = 'chip-group';
-    grid.style.flexWrap = 'wrap';
-    step.options.forEach(opt => {
-      const label = typeof opt === 'string' ? opt : opt.label;
-      const val = typeof opt === 'string' ? opt : opt.val;
-      const chip = document.createElement('div');
-      chip.className = 'chip-option';
-      chip.textContent = label;
-      chip.dataset.val = val;
-      chip.onclick = () => {
-        grid.querySelectorAll('.chip-option').forEach(c => c.classList.remove('selected'));
-        chip.classList.add('selected');
-        obAnswers[step.key] = val;
-      };
-      // 이전 답변 복원
-      if (obAnswers[step.key] === val) chip.classList.add('selected');
+  const step=OB_STEPS[obStep];
+  document.getElementById('ob-step').textContent=`STEP ${obStep+1} / ${OB_STEPS.length}`;
+  document.getElementById('ob-q').textContent=step.q;
+  document.getElementById('ob-next-btn').textContent=obStep<OB_STEPS.length-1?'다음 →':'시작하기 🎉';
+  const wrap=document.getElementById('ob-input-wrap'); wrap.innerHTML='';
+  if (step.type==='chips') {
+    const grid=document.createElement('div'); grid.className='chip-group'; grid.style.flexWrap='wrap';
+    step.options.forEach(opt=>{
+      const label=typeof opt==='string'?opt:opt.label, val=typeof opt==='string'?opt:opt.val;
+      const chip=document.createElement('div'); chip.className='chip-option'; chip.textContent=label; chip.dataset.val=val;
+      chip.onclick=()=>{ grid.querySelectorAll('.chip-option').forEach(c=>c.classList.remove('selected')); chip.classList.add('selected'); obAnswers[step.key]=val; };
+      if (obAnswers[step.key]===val) chip.classList.add('selected');
       grid.appendChild(chip);
-    });
-    wrap.appendChild(grid);
-  } else if (step.type === 'date') {
-    const input = document.createElement('input');
-    input.className = 'input-field';
-    input.type = 'date';
-    const minDate = new Date(); minDate.setDate(minDate.getDate() + 7);
-    input.min = minDate.toISOString().split('T')[0];
-    if (obAnswers[step.key]) input.value = obAnswers[step.key];
-    input.oninput = () => { obAnswers[step.key] = input.value; };
-    wrap.appendChild(input);
+    }); wrap.appendChild(grid);
+  } else if (step.type==='date') {
+    const input=document.createElement('input'); input.className='input-field'; input.type='date';
+    const min=new Date(); min.setDate(min.getDate()+7); input.min=min.toISOString().split('T')[0];
+    if (obAnswers[step.key]) input.value=obAnswers[step.key];
+    input.oninput=()=>{ obAnswers[step.key]=input.value; }; wrap.appendChild(input);
   }
 }
-
 function obNext() {
-  const step = OB_STEPS[obStep];
-  if (!obAnswers[step.key]) {
-    showToast('선택해주세요!');
-    return;
-  }
-
-  if (obStep < OB_STEPS.length - 1) {
-    obStep++;
-    renderObStep();
-  } else {
-    // 완료
-    profile = { ...obAnswers };
-    saveProfile();
-    document.getElementById('onboarding').style.display = 'none';
-    updateDDayUI();
-    applyProfileToSettings();
-    showToast(`환영해요, 리즈쌤이 도와줄게요! 💪`);
+  const step=OB_STEPS[obStep];
+  if (!obAnswers[step.key]) { showToast('선택해주세요!'); return; }
+  if (obStep<OB_STEPS.length-1) { obStep++; renderObStep(); }
+  else {
+    profile={...obAnswers}; saveProfile();
+    // [핵심 수정] hidden 클래스로 완전히 숨김
+    document.getElementById('onboarding').classList.add('hidden');
+    updateDDayUI(); applyProfileToSettings(); showToast('환영해요, 리즈쌤이 도와줄게요! 💪');
   }
 }
 
-// ───────── 업데이트 감지 (버전 기반) ─────────
-// 업데이트 시 아래 CACHE_VERSION 숫자만 올리세요
-const CACHE_VERSION = 'leeson-v2.1.0';
-
-(function checkUpdate() {
-  const saved = localStorage.getItem('leeson_cache_version');
-  if (saved && saved !== CACHE_VERSION) {
-    // 버전 다르면 배너 표시
-    setTimeout(showUpdateBanner, 500);
-  }
-  localStorage.setItem('leeson_cache_version', CACHE_VERSION);
-})();
-
-function showUpdateBanner() {
-  const b = document.getElementById('update-banner');
-  if (b) b.style.display = 'block';
-}
-
-function doUpdate() {
-  if ('caches' in window) {
-    caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
-  }
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
-  }
-  setTimeout(() => window.location.reload(true), 300);
-}
+// ══ 버전 업데이트 ══
+function checkUpdateVersion() { const s=localStorage.getItem('leeson_cache_version'); if(s&&s!==CACHE_VERSION) setTimeout(()=>{ const b=document.getElementById('update-banner'); if(b) b.style.display='block'; },500); localStorage.setItem('leeson_cache_version',CACHE_VERSION); }
+function doUpdate() { if('caches'in window) caches.keys().then(ks=>ks.forEach(k=>caches.delete(k))); if('serviceWorker'in navigator) navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())); setTimeout(()=>window.location.reload(true),300); }
 </script>
-
 </body>
 </html>
