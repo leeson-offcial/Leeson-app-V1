@@ -531,11 +531,11 @@
 
 <script>
 // ══ 상수 ══
-const GAS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbylMsxryrxDW7Ak5-z013OKmfYam_2FwzXQWAxhk-B1imfVe-53S08p6BbcllnDVKQB-g/exec';
+const GAS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbz1bHD0d-cBUXvu_dcBeijgEDdqG0qF9qOFQWK35qWJ0d1Ad0As4GfEm0oLeUuJ4x-Ocw/exec';
 const PROFILE_KEY = 'leeson_profile', MEAL_KEY = 'leeson_meal_today', LOG_KEY = 'leeson_log';
 const API_COUNT_KEY = 'leeson_api_count', COUPON_KEY = 'leeson_coupon';
 const TODAY_CHECK_KEY = 'leeson_today_check', STREAK_KEY = 'leeson_streak';
-const CACHE_VERSION = 'leeson-v2.2.0';
+const CACHE_VERSION = 'leeson-v2.3.0';
 const MAX_API = 5;
 const MEAL_ORDER = ['morning','lunch','dinner'];
 const MEAL_LABELS = { morning:'🌅 아침', lunch:'☀️ 점심', dinner:'🌙 저녁' };
@@ -568,13 +568,19 @@ function setupCoachTap() {
 }
 
 // ══ GAS 호출 — GET 방식 (iOS Safari CORS 대응) ══
+// GAS doGet은 e.parameter.action + e.parameter.payload 를 읽음
 async function callGAS(action, payload) {
   const gasUrl = profile.gasUrl || GAS_URL_DEFAULT;
-  const params = new URLSearchParams({ action, payload: JSON.stringify(payload) });
-  const res = await fetch(gasUrl + '?' + params.toString(), { method: 'GET' });
+  const params = new URLSearchParams({
+    action:  action,
+    payload: JSON.stringify(payload)
+  });
+  const res  = await fetch(gasUrl + '?' + params.toString(), { method: 'GET' });
   const data = await res.json();
   if (data.ok === false) throw new Error(data.error || 'GAS 오류');
-  return data.result || data.reply || data.text || '';
+  // chat/emergency/coupon → data.reply (문자열)
+  // generateMeal         → data.result (JSON 문자열 or 객체)
+  return data.reply || data.result || data.text || '';
 }
 
 // ══ 프로필 ══
@@ -655,15 +661,20 @@ async function generateMealPlan() {
 }
 
 // ══ 파싱 ══
+// GAS generateMeal은 result: JSON.stringify(mealJson) 으로 반환
+// → raw가 문자열이면 파싱, 이미 객체면 그대로 사용
 function parseMealResponse(raw) {
   try {
-    const c = (typeof raw === 'string') ? raw.replace(/```json|```/g, '').trim() : JSON.stringify(raw);
-    return JSON.parse(c);
+    if (typeof raw === 'object' && raw !== null) return raw;  // 이미 객체
+    const cleaned = raw.replace(/```json[\s\S]*?```|```[\s\S]*?```/g, s => s.replace(/```json|```/g,'')).replace(/```/g,'').trim();
+    const match   = cleaned.match(/\{[\s\S]*\}/);             // JSON 블록만 추출
+    return JSON.parse(match ? match[0] : cleaned);
   } catch (e) {
+    console.error('parseMealResponse 실패:', e, '\nraw:', raw);
     return {
-      morning: { A: { menu: 'GS25 닭가슴살 소시지 + 감동란 2개', action: '편의점구매' }, B: { menu: '그릭요거트 + 바나나 1개', action: '편의점구매' } },
-      lunch:   { A: { menu: '서브웨이 로스트치킨 6인치 (소스 없이)', action: '배달앱주문' }, B: { menu: '구내식당 국밥 (밥 반 공기)', action: '직접구매' } },
-      dinner:  { A: { menu: '굽네 오리지널 반마리 + 샐러드', action: '배달앱주문' }, B: { menu: 'CU 닭가슴살 도시락', action: '편의점구매' } },
+      morning: { A:{menu:'GS25 닭가슴살 소시지 + 감동란 2개',action:'편의점구매'}, B:{menu:'그릭요거트 + 바나나 1개',action:'편의점구매'} },
+      lunch:   { A:{menu:'서브웨이 로스트치킨 6인치 (소스 없이)',action:'배달앱주문'}, B:{menu:'구내식당 국밥 (밥 반 공기)',action:'직접구매'} },
+      dinner:  { A:{menu:'굽네 오리지널 반마리 + 샐러드',action:'배달앱주문'}, B:{menu:'CU 닭가슴살 도시락',action:'편의점구매'} },
       coach_comment: '오늘도 파이팅! 하루하루가 쌓이면 달라져요 💪'
     };
   }
