@@ -531,11 +531,11 @@
 
 <script>
 // ══ 상수 ══
-const GAS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbz1bHD0d-cBUXvu_dcBeijgEDdqG0qF9qOFQWK35qWJ0d1Ad0As4GfEm0oLeUuJ4x-Ocw/exec';
+const GAS_URL_DEFAULT = 'https://script.google.com/macros/s/AKfycbylMsxryrxDW7Ak5-z013OKmfYam_2FwzXQWAxhk-B1imfVe-53S08p6BbcllnDVKQB-g/exec';
 const PROFILE_KEY = 'leeson_profile', MEAL_KEY = 'leeson_meal_today', LOG_KEY = 'leeson_log';
 const API_COUNT_KEY = 'leeson_api_count', COUPON_KEY = 'leeson_coupon';
 const TODAY_CHECK_KEY = 'leeson_today_check', STREAK_KEY = 'leeson_streak';
-const CACHE_VERSION = 'leeson-v2.3.0';
+const CACHE_VERSION = 'leeson-v2.3.0'; // ★ 업데이트 시 sw.js CACHE_NAME과 함께 동일하게 올리세요
 const MAX_API = 5;
 const MEAL_ORDER = ['morning','lunch','dinner'];
 const MEAL_LABELS = { morning:'🌅 아침', lunch:'☀️ 점심', dinner:'🌙 저녁' };
@@ -949,8 +949,62 @@ function obNext() {
 }
 
 // ══ 버전 업데이트 ══
-function checkUpdateVersion() { const s=localStorage.getItem('leeson_cache_version'); if(s&&s!==CACHE_VERSION) setTimeout(()=>{ const b=document.getElementById('update-banner'); if(b) b.style.display='block'; },500); localStorage.setItem('leeson_cache_version',CACHE_VERSION); }
-function doUpdate() { if('caches'in window) caches.keys().then(ks=>ks.forEach(k=>caches.delete(k))); if('serviceWorker'in navigator) navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())); setTimeout(()=>window.location.reload(true),300); }
+// ── 버전 체크 (localStorage 기반 — 브라우저 새탭/새로고침용) ──
+function checkUpdateVersion() {
+  const saved = localStorage.getItem('leeson_cache_version');
+  if (saved && saved !== CACHE_VERSION) {
+    setTimeout(() => { const b = document.getElementById('update-banner'); if (b) b.style.display = 'block'; }, 500);
+  }
+  localStorage.setItem('leeson_cache_version', CACHE_VERSION);
+}
+
+// ── 업데이트 실행 ──
+function doUpdate() {
+  localStorage.setItem('leeson_cache_version', CACHE_VERSION);
+  const banner = document.getElementById('update-banner');
+  if (banner) banner.style.display = 'none';
+  // SW에 skipWaiting 요청 후 새로고침
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage('SKIP_WAITING');
+    setTimeout(() => window.location.reload(true), 300);
+  } else {
+    if ('caches' in window) caches.keys().then(ks => ks.forEach(k => caches.delete(k)));
+    setTimeout(() => window.location.reload(true), 300);
+  }
+}
+
+// ── Service Worker 등록 & 업데이트 감지 ──
+// 홈화면 앱에서도 새 버전 감지 → 업데이트 배너 표시
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+
+    // 새 SW가 대기 중이면 즉시 배너 표시
+    if (reg.waiting) {
+      const b = document.getElementById('update-banner');
+      if (b) b.style.display = 'block';
+    }
+
+    // 설치 중 → 대기 상태 진입 시 배너 표시
+    reg.addEventListener('updatefound', () => {
+      const newWorker = reg.installing;
+      if (!newWorker) return;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // 새 버전 설치 완료 → 배너 표시
+          const b = document.getElementById('update-banner');
+          if (b) b.style.display = 'block';
+        }
+      });
+    });
+
+  }).catch(err => console.log('SW 등록 실패:', err));
+
+  // SW 교체 완료 시 자동 새로고침
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) { refreshing = true; window.location.reload(true); }
+  });
+}
 </script>
 </body>
 </html>
