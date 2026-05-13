@@ -2274,57 +2274,18 @@ function obNext() {
   }
 }
 
-// ───────── SW 인라인 등록 & 업데이트 감지 ─────────
+// ───────── 업데이트 감지 (버전 기반) ─────────
 // 업데이트 시 아래 CACHE_VERSION 숫자만 올리세요
-const CACHE_VERSION = 'leeson-v2.2.0';
+const CACHE_VERSION = 'leeson-v2.1.0';
 
-function registerSW() {
-  if (!('serviceWorker' in navigator)) return;
-
-  const swCode = `
-const CACHE_NAME = '${CACHE_VERSION}';
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(['/','./index.html'])));
-  self.skipWaiting();
-});
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(keys =>
-    Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-  ));
-  self.clients.claim();
-});
-self.addEventListener('fetch', e => {
-  if (e.request.url.includes('script.google.com') || e.request.url.includes('googleapis.com') || e.request.url.includes('fonts.')) return;
-  e.respondWith(caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
-    if (res && res.status === 200) {
-      const clone = res.clone();
-      caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
-    }
-    return res;
-  })));
-});
-`;
-
-  const blob = new Blob([swCode], {type: 'application/javascript'});
-  const swUrl = URL.createObjectURL(blob);
-
-  navigator.serviceWorker.register(swUrl).then(reg => {
-    reg.addEventListener('updatefound', () => {
-      const nw = reg.installing;
-      nw.addEventListener('statechange', () => {
-        if (nw.state === 'installed' && navigator.serviceWorker.controller) {
-          showUpdateBanner();
-        }
-      });
-    });
-  });
-
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.location.reload();
-  });
-}
-
-registerSW();
+(function checkUpdate() {
+  const saved = localStorage.getItem('leeson_cache_version');
+  if (saved && saved !== CACHE_VERSION) {
+    // 버전 다르면 배너 표시
+    setTimeout(showUpdateBanner, 500);
+  }
+  localStorage.setItem('leeson_cache_version', CACHE_VERSION);
+})();
 
 function showUpdateBanner() {
   const b = document.getElementById('update-banner');
@@ -2335,11 +2296,11 @@ function doUpdate() {
   if ('caches' in window) {
     caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
   }
-  navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
-  setTimeout(() => window.location.reload(true), 400);
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+  }
+  setTimeout(() => window.location.reload(true), 300);
 }
-
-
 </script>
 
 </body>
