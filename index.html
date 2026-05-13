@@ -2274,42 +2274,69 @@ function obNext() {
   }
 }
 
-// ───────── Service Worker 등록 & 업데이트 감지 ─────────
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').then(reg => {
+// ───────── SW 인라인 등록 & 업데이트 감지 ─────────
+// 업데이트 시 아래 CACHE_VERSION 숫자만 올리세요
+const CACHE_VERSION = 'leeson-v2.2.0';
+
+function registerSW() {
+  if (!('serviceWorker' in navigator)) return;
+
+  const swCode = `
+const CACHE_NAME = '${CACHE_VERSION}';
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(['/','./index.html'])));
+  self.skipWaiting();
+});
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys =>
+    Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+  ));
+  self.clients.claim();
+});
+self.addEventListener('fetch', e => {
+  if (e.request.url.includes('script.google.com') || e.request.url.includes('googleapis.com') || e.request.url.includes('fonts.')) return;
+  e.respondWith(caches.match(e.request).then(cached => cached || fetch(e.request).then(res => {
+    if (res && res.status === 200) {
+      const clone = res.clone();
+      caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+    }
+    return res;
+  })));
+});
+`;
+
+  const blob = new Blob([swCode], {type: 'application/javascript'});
+  const swUrl = URL.createObjectURL(blob);
+
+  navigator.serviceWorker.register(swUrl).then(reg => {
     reg.addEventListener('updatefound', () => {
-      const newWorker = reg.installing;
-      newWorker.addEventListener('statechange', () => {
-        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+      const nw = reg.installing;
+      nw.addEventListener('statechange', () => {
+        if (nw.state === 'installed' && navigator.serviceWorker.controller) {
           showUpdateBanner();
         }
       });
     });
   });
 
-  // 컨트롤러 변경 시 자동 새로고침
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     window.location.reload();
   });
 }
 
+registerSW();
+
 function showUpdateBanner() {
-  document.getElementById('update-banner').style.display = 'block';
+  const b = document.getElementById('update-banner');
+  if (b) b.style.display = 'block';
 }
 
 function doUpdate() {
-  navigator.serviceWorker.getRegistration().then(reg => {
-    if (reg && reg.waiting) {
-      reg.waiting.postMessage({ type: 'SKIP_WAITING' });
-    }
-  });
-  // 캐시 전체 삭제 후 새로고침
   if ('caches' in window) {
-    caches.keys().then(keys => {
-      keys.forEach(k => caches.delete(k));
-    });
+    caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
   }
-  setTimeout(() => window.location.reload(true), 300);
+  navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+  setTimeout(() => window.location.reload(true), 400);
 }
 
 
